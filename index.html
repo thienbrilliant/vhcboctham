@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Viet Haxball Cup | SS14 — Live Draw</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;800&family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#071726;
+  --panel:#0b2233;
+  --accent:#00c2ff;
+  --gold:#ffd54d;
+  --muted:#9fb8cc;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui;color:#e8f9ff;background:linear-gradient(180deg,#031124,#071726)}
+.container{max-width:1400px;margin:12px auto;padding:16px;display:grid;grid-template-rows:auto 1fr auto;gap:14px}
+.header{display:flex;align-items:center;gap:12px}
+.title{font-family:Orbitron;font-weight:800;color:var(--accent);font-size:20px}
+.subtitle{color:var(--muted);font-size:13px}
+.layout{display:grid;grid-template-columns:1fr 360px;gap:14px;align-items:start}
+.card{border-radius:12px;padding:14px;border:1px solid rgba(255,255,255,0.04);box-shadow:0 22px 70px rgba(0,0,0,0.6);background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01))}
+.bracket .pair-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px;max-height:480px;overflow:auto;padding-right:6px}
+.pair{display:flex;align-items:center;justify-content:space-between;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.03)}
+.slot{display:flex;gap:10px;align-items:center}
+.mini{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(180deg,#022434,#05354a);color:var(--muted);font-weight:800}
+.name{font-weight:800;min-width:140px;color:#dff7ff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vs{color:var(--muted);font-weight:800}
+.pots-wrap{margin-top:14px}
+.pots{display:flex;gap:20px;align-items:flex-end;justify-content:center;flex-wrap:wrap}
+.pot{width:320px;height:260px;border-radius:12px;background:linear-gradient(180deg,#052b3b,#063246);border:1px solid rgba(255,255,255,0.03);display:flex;flex-direction:column;align-items:center;padding:12px;position:relative;box-shadow:0 18px 60px rgba(0,0,0,0.6)}
+.pot h4{margin:0;color:var(--gold);font-family:Orbitron}
+.pot-bowl{width:100%;flex:1;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:10px;padding:6px}
+.ball{width:72px;height:72px;border-radius:50%;display:grid;place-items:center;font-weight:800;background:linear-gradient(180deg,#ffd54d,#ffb400);color:#071726;box-shadow:0 20px 60px rgba(0,0,0,0.6);cursor:pointer;user-select:none}
+.ball.hidden{background:linear-gradient(180deg,#02313f,#022b36);color:transparent;box-shadow: inset 0 0 8px rgba(255,255,255,0.02)}
+.reveal{position:fixed;left:0;top:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:9999}
+.reveal-card{width:min(900px,92%);height:420px;border-radius:14px;background:linear-gradient(180deg,#02212a,#041f29);display:flex;align-items:center;justify-content:center;gap:28px;padding:24px;box-shadow:0 60px 160px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.03)}
+.reveal-ball{width:220px;height:220px;border-radius:50%;display:grid;place-items:center;font-family:Orbitron;font-weight:800;font-size:28px;background:linear-gradient(180deg,#00c2ff,#0086d1);color:#021322;box-shadow:0 40px 140px rgba(0,0,0,0.6)}
+.reveal-text{font-size:24px;font-weight:700;color:#dff7ff}
+.footer{margin-top:8px;color:var(--muted);text-align:center;font-size:13px}
+@media (max-width:1100px){
+  .layout{grid-template-columns:1fr}
+  .pots{flex-direction:column;align-items:center}
+  .pot{width:92%;}
+  .pair-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div>
+      <div class="title">Viet Haxball Cup | SS14 — Live Draw</div>
+      <div class="subtitle">FIFA-style: 3 pots dưới • Bóng GIẤU tên • Bracket trên</div>
+    </div>
+  </div>
+
+  <div class="layout">
+    <div class="bracket card" id="bracketCard">
+      <h3>Bracket — Các cặp đấu (trống lúc đầu)</h3>
+      <div class="pair-grid" id="pairGrid"></div>
+    </div>
+
+    <div class="card" style="display:none">
+      <!-- right controls hidden when using JSON -->
+    </div>
+  </div>
+
+  <div class="pots-wrap card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <div style="font-weight:800;color:var(--gold)">Pots — Bấm vào quả bóng để rút (bóng GIẤU tên)</div>
+      <div style="color:var(--muted);font-size:13px">Pot A (5) · Pot B (5) · Pot C (4)</div>
+    </div>
+    <div class="pots" id="potsArea"></div>
+  </div>
+
+  <div class="footer">Made for Viet Haxball Cup | SS14 — Click-to-draw live • OBS friendly</div>
+</div>
+
+<div id="revealRoot" class="reveal" style="display:none">
+  <div class="reveal-card" id="revealCard">
+    <div class="reveal-ball" id="revealBall">TEAM</div>
+    <div class="reveal-text" id="revealText">Đang reveal...</div>
+  </div>
+</div>
+
+<audio id="drumAudio" src="https://www.soundjay.com/misc/sounds/drum-roll-1.mp3" preload="auto"></audio>
+<audio id="popAudio" src="https://www.soundjay.com/button/sounds/button-16.mp3" preload="auto"></audio>
+<audio id="applauseAudio" src="https://www.soundjay.com/human/sounds/applause-8.mp3" preload="auto"></audio>
+
+<script>
+const MAX = 14;
+let teams=[],pots=[[],[],[]],drawn=[],lastAdded=null;
+const potsArea = document.getElementById('potsArea');
+const pairGrid = document.getElementById('pairGrid');
+const revealRoot = document.getElementById('revealRoot');
+const revealBall = document.getElementById('revealBall');
+const revealText = document.getElementById('revealText');
+const confettiRoot = document.getElementById('confetti');
+
+const drumAudio=document.getElementById('drumAudio');
+const popAudio=document.getElementById('popAudio');
+const applauseAudio=document.getElementById('applauseAudio');
+
+function idGen(){ return 't'+Math.random().toString(36).slice(2,9); }
+function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]];} return a; }
+function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
+function play(a){ try{ a.pause();a.currentTime=0;a.play(); }catch(e){} }
+function shortLabel(name){ if(!name) return ''; return name.length<=10?name:name.split(' ').map(p=>p[0]).slice(0,3).join(''); }
+
+/* fetch teams.json */
+async function fetchTeams(){
+  const res=await fetch('teams.json');
+  const data=await res.json();
+  teams = data.map((t,i)=>({id:'t'+i,name:t.name,logo:t.logo}));
+  preparePots();
+}
+
+/* prepare pots and build pairs */
+function preparePots(){
+  pots=[[],[],[]];
+  const idx=shuffle([...Array(teams.length).keys()]);
+  const quotas=[5,5,4];
+  let p=0;
+  idx.forEach(i=>{ while(pots[p].length>=quotas[p]) p++; pots[p].push(teams[i]); });
+  drawn=[]; lastAdded=null;
+  renderPots(); buildPairs();
+}
+
+/* render 3 pots */
+function renderPots(){
+  potsArea.innerHTML='';
+  const labels=['Pot A','Pot B','Pot C'];
+  pots.forEach((pot,pi)=>{
+    const el=document.createElement('div'); el.className='pot';
+    el.innerHTML=`<h4>${labels[pi]}</h4><div class="pot-bowl" id="pot-${pi}"></div><div class="count">${pot.length} đội</div>`;
+    potsArea.appendChild(el);
+    const bowl=el.querySelector('.pot-bowl');
+    pot.forEach((t,ti)=>{
+      const b=document.createElement('div');
+      b.className='ball hidden'; b.dataset.tid=t.id; b.dataset.p=pi; b.dataset.i=ti; b.textContent='?';
+      b.addEventListener('click',onBallClick); bowl.appendChild(b);
+    });
+  });
+}
+
+/* build bracket (7 pairs) */
+function buildPairs(){
+  pairGrid.innerHTML='';
+  for(let i=0;i<7;i++){
+    const el=document.createElement('div'); el.className='pair'; el.dataset.i=i;
+    el.innerHTML=`<div class="slot"><div class="mini" id="mini-${i}-0">${i*2+1}</div><div class="name" id="n-${i}-0"><span class="placeholder">???</span></div></div>
+    <div class="vs">VS</div>
+    <div class="slot"><div class="name" id="n-${i}-1"><span class="placeholder">???</span></div><div class="mini" id="mini-${i}-1">${i*2+2}</div></div>`;
+    pairGrid.appendChild(el);
+  }
+}
+
+/* assign next slot */
+function assignNextSlot(team){
+  for(let i=0;i<7;i++){
+    const left = document.getElementById(`n-${i}-0`).textContent;
+    const right = document.getElementById(`n-${i}-1`).textContent;
+    if(!left || left.includes('???')){ document.getElementById(`n-${i}-0`).textContent=team.name; return {pairIndex:i,side:0,targetEl: document.getElementById(`mini-${i}-0`)};}
+    if(!right || right.includes('???')){ document.getElementById(`n-${i}-1`).textContent=team.name; return {pairIndex:i,side:1,targetEl: document.getElementById(`mini-${i}-1`)};}
+  }
+  return {pairIndex:null,side:null,targetEl:null};
+}
+
+/* animate reveal */
+async function animateReveal(team,targetEl){
+  revealBall.textContent=team.name;
+  revealText.textContent=`Đội: ${team.name}`;
+  revealRoot.style.display='flex'; revealRoot.style.opacity=0;
+  revealRoot.animate([{opacity:0},{opacity:1}],{duration:220});
+  play(popAudio);
+  const clone=document.createElement('div'); clone.className='ball'; clone.style.position='fixed';
+  const startLeft=window.innerWidth/2-36,startTop=window.innerHeight-140;
+  clone.style.left=startLeft+'px'; clone.style.top=startTop+'px'; clone.style.width='72px'; clone.style.height='72px'; clone.style.zIndex=11000;
+  clone.textContent=shortLabel(team.name); document.body.appendChild(clone);
+  const rectTo=targetEl.getBoundingClientRect();
+  const dx=(rectTo.left+rectTo.width/2)-(startLeft+36);
+  const dy=(rectTo.top+rectTo.height/2)-(startTop+36);
+  clone.style.transition='transform 900ms cubic-bezier(.22,.9,.25,1), opacity 300ms';
+  requestAnimationFrame(()=>{ clone.style.transform=`translate(${dx}px,${dy}px) scale(0.9)`; });
+  await sleep(920); clone.style.opacity='0'; await sleep(120); clone.remove();
+  revealBall.animate([{transform:'scale(.6)'},{transform:'scale(1.04)'},{transform:'scale(1)'}],{duration:900});
+  play(applauseAudio); await sleep(1400); revealRoot.style.display='none';
+}
+
+/* on click ball */
+async function onBallClick(e){
+  const ballEl=e.currentTarget, potIndex=parseInt(ballEl.dataset.p), tid=ballEl.dataset.tid;
+  const pot=pots[potIndex]; const idx=pot.findIndex(x=>x.id===tid); if(idx===-1)return;
+  const team=pot.splice(idx,1)[0]; renderPots();
+  const assigned=assignNextSlot(team);
+  drawn.push({team,fromPot:potIndex,assigned}); lastAdded={team,fromPot:potIndex,assigned};
+  await animateReveal(team,assigned.targetEl);
+}
+
+/* init */
+fetchTeams();
+</script>
+</body>
+</html>
