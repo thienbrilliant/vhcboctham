@@ -3,94 +3,96 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Viet Haxball Cup | SS14 — Live Draw (Broadcast)</title>
-
+<title>Viet Haxball Cup | SS14 — Live Draw (Ultra Cinematic)</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;800&family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg1:#021726; --accent:#00c2ff; --gold:#ffd54d; --muted:#93b9ce;
+  --bg:#031224; --accent:#00c2ff; --gold:#ffd54d; --muted:#9fb8cc;
 }
+
+/* reset & viewport lock */
 *{box-sizing:border-box}
-html,body{height:100%;margin:0;background:linear-gradient(180deg,#041726,#021220);font-family:Inter,system-ui,Roboto,Arial;color:#e8f9ff;overflow:hidden}
-.container {
-  height:100vh;
-  display:grid;
-  grid-template-rows: 10vh 40vh 20vh 30vh; /* header / bracket / reveal / pots */
-  gap:8px;
-  padding:12px;
-  max-width:1920px;
-  margin:0 auto;
-}
+html,body{height:100%;margin:0;overflow:hidden;background:linear-gradient(180deg,#021826,#031224);font-family:Inter,system-ui,Roboto,Arial;color:#e8f9ff;-webkit-font-smoothing:antialiased}
+.container{height:100vh;display:grid;grid-template-rows:10vh 40vh 20vh 30vh;gap:10px;padding:12px;max-width:1920px;margin:0 auto}
 
 /* header */
-.header {
-  display:flex;align-items:center;justify-content:space-between;padding:6px 18px;
-}
-.brand { font-family:Orbitron;font-weight:800;color:var(--accent); font-size:20px }
-.hint { color:var(--muted); font-size:13px }
+.header{display:flex;align-items:center;justify-content:space-between;padding:6px 18px}
+.brand{font-family:Orbitron;font-weight:800;color:var(--accent);font-size:20px}
+.controls{display:flex;gap:8px;align-items:center}
+.btn{background:var(--accent);color:#021322;border:none;padding:10px 12px;border-radius:10px;font-weight:800;cursor:pointer}
+.btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)}
+.toggle{color:var(--muted);font-size:13px}
 
-/* BRACKET (top) */
-.bracket {
-  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-  border-radius:12px; padding:12px; display:flex; flex-direction:column; gap:8px;
-  box-shadow: 0 28px 80px rgba(0,0,0,0.6);
-  overflow:hidden;
-}
-.bracket .title { font-family:Orbitron;color:var(--gold); font-weight:700; font-size:18px }
-.pair-grid {
-  display:grid;
-  grid-template-columns: repeat(4, 1fr); /* try to fit 7 pairs in one visual block */
-  gap:10px;
-  width:100%;
-  height:100%;
-  align-content: start;
-}
-.pair {
-  display:flex; flex-direction:column; gap:6px;
-  padding:10px; border-radius:10px; border:1px solid rgba(255,255,255,0.03);
-  background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
-  min-height:56px;
-}
-.pair-row { display:flex; align-items:center; justify-content:space-between; gap:8px }
-.slot { display:flex; gap:8px; align-items:center }
-.mini { width:44px; height:44px; border-radius:50%; display:grid; place-items:center; background:linear-gradient(180deg,#022434,#05354a); color:var(--muted); font-weight:800; font-size:14px }
-.name { font-weight:800; color:#dff7ff; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:14px; }
-.vs { color:var(--muted); font-weight:800; font-size:12px }
+/* bracket */
+.bracket{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border-radius:12px;padding:12px;box-shadow:0 28px 80px rgba(0,0,0,0.6);overflow:hidden}
+.bracket .title{font-family:Orbitron;color:var(--gold);font-weight:700;font-size:18px}
+.pair-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;height:100%;align-content:start}
+.pair{background:linear-gradient(180deg,rgba(255,255,255,0.01),transparent);padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);min-height:64px;display:flex;flex-direction:column;justify-content:center}
+.pair-row{display:flex;align-items:center;justify-content:space-between}
+.slot{display:flex;gap:10px;align-items:center}
+.mini{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(180deg,#022434,#05354a);color:var(--muted);font-weight:800}
+.name{font-weight:800;color:#dff7ff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vs{color:var(--muted);font-weight:800}
 
-/* REVEAL zone (center) */
-.reveal-zone { display:flex; align-items:center; justify-content:center; position:relative; }
-.reveal-card { width:80%; height:90%; border-radius:14px; background:linear-gradient(180deg,#022c34,#03282f); display:flex; align-items:center; justify-content:center; gap:28px; padding:22px; box-shadow:0 40px 160px rgba(0,0,0,0.6); border:1px solid rgba(255,255,255,0.03); }
-.reveal-ball { width:260px; height:260px; border-radius:50%; display:grid; place-items:center; font-family:Orbitron; font-weight:800; font-size:32px; background:linear-gradient(180deg,#00c2ff,#0086d1); color:#021322; box-shadow:0 60px 200px rgba(0,0,0,0.6); }
-.reveal-text { color:#dff7ff; font-size:20px; font-weight:700; text-align:center }
+/* reveal region */
+.reveal-zone{display:flex;align-items:center;justify-content:center}
+.reveal-card{width:80%;height:90%;border-radius:14px;background:linear-gradient(180deg,#022c34,#03282f);display:flex;align-items:center;justify-content:center;gap:28px;padding:22px;box-shadow:0 40px 160px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.03)}
+.reveal-ball{width:260px;height:260px;border-radius:50%;display:grid;place-items:center;font-family:Orbitron;font-weight:900;font-size:32px;background:linear-gradient(180deg,#00c2ff,#0086d1);color:#021322;box-shadow:0 60px 200px rgba(0,0,0,0.6)}
+.reveal-text{color:#dff7ff;font-size:20px;font-weight:700;text-align:center}
 
-/* POTS (bottom) */
-.pots-row { display:flex; align-items:center; justify-content:space-evenly; gap:20px; padding:8px; height:100%; }
-.pot {
-  width:30%; height:100%;
-  border-radius:12px; background:linear-gradient(180deg,#052b3b,#063246);
-  border:1px solid rgba(255,255,255,0.03); display:flex; flex-direction:column; align-items:center; padding:12px; position:relative;
-  box-shadow:0 18px 60px rgba(0,0,0,0.6);
+/* pots bottom */
+.pots-row{display:flex;align-items:center;justify-content:space-around;gap:20px;padding:8px;height:100%}
+.pot{width:30%;height:100%;border-radius:12px;background:linear-gradient(180deg,#052b3b,#063246);border:1px solid rgba(255,255,255,0.03);display:flex;flex-direction:column;align-items:center;padding:12px;position:relative;box-shadow:0 18px 60px rgba(0,0,0,0.6)}
+.pot h4{margin:0;color:var(--gold);font-family:Orbitron;font-weight:700}
+.pot-bowl{width:100%;flex:1;display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:nowrap}
+.ball{width:82px;height:82px;border-radius:50%;display:grid;place-items:center;font-weight:900;background:linear-gradient(180deg,#ffd54d,#ffb400);color:#021322;box-shadow:0 24px 80px rgba(0,0,0,0.6);cursor:pointer}
+.ball.hidden{background:linear-gradient(180deg,#02313f,#022b36);color:transparent;box-shadow:inset 0 0 12px rgba(255,255,255,0.02)}
+.pot .count{position:absolute;right:12px;bottom:12px;color:var(--muted);font-size:13px}
+
+/* confetti */
+.confetti{position:fixed;left:0;top:0;right:0;bottom:0;pointer-events:none;z-index:9999}
+
+/* persistent reveal overlay (dialog style) */
+.reveal-overlay{position:fixed;left:0;top:0;right:0;bottom:0;display:flex;align-items:center;justify-content:center;pointer-events:auto;z-index:12000}
+.reveal-full{width:min(980px,94%);height:460px;border-radius:14px;background:linear-gradient(180deg,#012022,#02242a);display:flex;align-items:center;justify-content:center;gap:24px;padding:20px;box-shadow:0 60px 200px rgba(0,0,0,0.7);border:1px solid rgba(255,255,255,0.04)}
+.reveal-full .rball{width:320px;height:320px;border-radius:50%;display:grid;place-items:center;font-family:Orbitron;font-weight:900;font-size:34px;background:linear-gradient(180deg,#00e0ff,#006fb8);color:#021322;box-shadow:0 80px 260px rgba(0,0,0,0.7)}
+.reveal-full .rtext{color:#e6fffe;font-weight:800;font-size:20px}
+
+/* ================= CINEMATIC EFFECTS (MAX) ================= */
+@keyframes ballUltraSpin {
+  0%   { transform: scale(0.5) rotate(0deg); filter: brightness(1); }
+  40%  { transform: scale(1.12) rotate(720deg); filter: brightness(1.9); }
+  70%  { transform: scale(0.98) rotate(1080deg); filter: brightness(2.1); }
+  100% { transform: scale(1) rotate(1440deg); filter: brightness(1.3); }
 }
-.pot h4{ margin:0; color:var(--gold); font-family:Orbitron; font-weight:700; font-size:18px; }
-.pot-bowl { width:100%; flex:1; display:flex; align-items:center; justify-content:center; gap:12px; }
-.ball { width:76px; height:76px; border-radius:50%; display:grid; place-items:center; font-weight:800; background:linear-gradient(180deg,#ffd54d,#ffb400); color:#021322; box-shadow:0 20px 80px rgba(0,0,0,0.6); cursor:pointer }
-.ball.hidden { background:linear-gradient(180deg,#02313f,#022b36); color:transparent; box-shadow: inset 0 0 12px rgba(255,255,255,0.02); }
-.pot .count { position:absolute; right:12px; bottom:12px; color:var(--muted); font-size:13px }
-
-/* small controls */
-.controls { display:flex; gap:8px; align-items:center; }
-.btn { background:var(--accent); color:#021322; border:none; padding:10px 12px; border-radius:10px; font-weight:800; cursor:pointer }
-.btn.ghost { background:transparent; color:var(--muted); border:1px solid rgba(255,255,255,0.03) }
-
-/* reveal overlay that stays until dismiss */
-.reveal-overlay { position:fixed; left:0; top:0; right:0; bottom:0; display:flex; align-items:center; justify-content:center; pointer-events:auto; z-index:12000; }
-
-@media (max-width:1200px) {
-  .pair-grid { grid-template-columns: repeat(2,1fr) }
-  .pot { width:90% }
-  .reveal-card { width:92% }
-  .reveal-ball { width:200px; height:200px; font-size:24px }
+@keyframes ballExplosion {
+  0% { box-shadow: 0 0 0 rgba(255,255,255,0); }
+  100% { box-shadow: 0 0 30px rgba(0,194,255,0.9), 0 0 80px rgba(255,213,77,0.95), 0 0 160px rgba(255,255,255,0.7); }
 }
+@keyframes textRevealEpic {
+  0% { opacity:0; transform: scale(0.4); letter-spacing: 8px; filter: blur(6px) }
+  60% { opacity:1; transform: scale(1.08); letter-spacing:2px; filter: blur(0) }
+  100% { transform: scale(1); letter-spacing:1px; filter: blur(0) }
+}
+@keyframes bracketDrop {
+  0% { transform: translateY(-36px) scale(0.86); opacity:0 }
+  100% { transform: translateY(0) scale(1); opacity:1 }
+}
+@keyframes bracketGlowStrong {
+  0% { box-shadow: 0 0 0 rgba(255,213,77,0); }
+  100% { box-shadow: 0 0 30px rgba(255,213,77,1); }
+}
+@keyframes cameraShake {
+  0%{ transform: translate(0,0) }
+  20%{ transform: translate(-4px,2px) }
+  40%{ transform: translate(3px,-2px) }
+  60%{ transform: translate(-2px,3px) }
+  80%{ transform: translate(2px,-1px) }
+  100%{ transform: translate(0,0) }
+}
+
+/* responsive */
+@media (max-width:1200px){ .pair-grid{grid-template-columns:repeat(2,1fr)} .pot{width:90%} .reveal-full{height:380px} .reveal-full .rball{width:220px;height:220px;font-size:20px} }
 </style>
 </head>
 <body>
@@ -99,28 +101,28 @@ html,body{height:100%;margin:0;background:linear-gradient(180deg,#041726,#021220
     <div class="header">
       <div class="brand">Viet Haxball Cup | SS14 — Live Draw</div>
       <div class="controls">
-        <button id="btnExport" class="btn ghost">Export log</button>
-        <button id="btnUndo" class="btn ghost">Undo</button>
-        <button id="btnObs" class="btn ghost">OBS: OFF</button>
-        <label style="color:var(--muted);font-size:13px;margin-left:8px"><input id="musicToggle" type="checkbox"> Music</label>
+        <button id="btnExport" class="btn btn ghost">Export</button>
+        <button id="btnUndo" class="btn btn ghost">Undo</button>
+        <button id="btnObs" class="btn btn ghost">OBS: OFF</button>
+        <label class="toggle"><input id="musicToggle" type="checkbox"> Music</label>
       </div>
     </div>
 
     <!-- bracket -->
-    <div class="bracket" id="bracket">
+    <div class="bracket">
       <div class="title">Bracket — Các cặp đấu</div>
       <div class="pair-grid" id="pairGrid"></div>
     </div>
 
-    <!-- reveal zone -->
+    <!-- reveal -->
     <div class="reveal-zone">
-      <div class="reveal-card" role="dialog" aria-hidden="true">
+      <div class="reveal-card" aria-hidden="true">
         <div class="reveal-ball" id="revealBall">???</div>
         <div class="reveal-text" id="revealText">Chờ quả bóng được mở...</div>
       </div>
     </div>
 
-    <!-- pots row -->
+    <!-- pots -->
     <div class="pots-row">
       <div class="pot" id="potA"><h4>Pot A</h4><div class="pot-bowl" id="bowlA"></div><div class="count" id="countA">0</div></div>
       <div class="pot" id="potB"><h4>Pot B</h4><div class="pot-bowl" id="bowlB"></div><div class="count" id="countB">0</div></div>
@@ -130,19 +132,18 @@ html,body{height:100%;margin:0;background:linear-gradient(180deg,#041726,#021220
 
   <!-- reveal overlay (persistent) -->
   <div id="revealOverlay" class="reveal-overlay" style="display:none">
-    <div class="reveal-card" id="revealFullCard" style="cursor:default">
-      <div class="reveal-ball" id="revealBallBig">TEAM</div>
+    <div class="reveal-full" id="revealFullCard" role="dialog">
+      <div class="rball" id="rball">?</div>
       <div style="display:flex;flex-direction:column;gap:12px;align-items:flex-start;">
-        <div class="reveal-text" id="revealTextBig">Đang reveal...</div>
+        <div class="rtext" id="rtext">Đang mở quả bóng...</div>
         <div style="display:flex;gap:8px;">
           <button id="dismissReveal" class="btn">Dismiss</button>
-          <button id="keepReveal" class="btn ghost">Keep (lock)</button>
+          <button id="keepReveal" class="btn btn ghost">Keep (lock)</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- confetti container -->
   <div id="confetti" class="confetti"></div>
 
   <!-- audio -->
@@ -152,76 +153,69 @@ html,body{height:100%;margin:0;background:linear-gradient(180deg,#041726,#021220
   <audio id="audioBG" src="assets/epic.mp3" preload="auto" loop></audio>
 
 <script>
-/* Clean broadcast-free live draw
-   - loads teams.json
-   - 3 pots bottom, balls hidden, reveal persistent until dismiss
-   - no controller, Undo/Export local
+/* Ultra cinematic live draw (no controller)
+ - loads teams.json
+ - 3 pots (5/5/4) bottom, balls hidden
+ - cinematic reveal: ballUltraSpin -> nameReveal -> drop to bracket
+ - lock logic: avoid same-pot vs same-pot in same pair
+ - persistent reveal until Dismiss/Space/Enter
+ - Undo & Export
 */
 
 const MAX = 14;
 let teams = [];
-let pots = [[],[],[]];
-let log = [];
+let pots = [[],[],[]]; // arrays of {id,name,logo,pot}
+let history = []; // log entries
 let lastLocked = false;
 
 /* DOM */
 const pairGrid = document.getElementById('pairGrid');
-const bowlA = document.getElementById('bowlA');
-const bowlB = document.getElementById('bowlB');
-const bowlC = document.getElementById('bowlC');
-const countA = document.getElementById('countA');
-const countB = document.getElementById('countB');
-const countC = document.getElementById('countC');
+const bowlA = document.getElementById('bowlA'), bowlB = document.getElementById('bowlB'), bowlC = document.getElementById('bowlC');
+const countA = document.getElementById('countA'), countB = document.getElementById('countB'), countC = document.getElementById('countC');
+const revealBall = document.getElementById('revealBall'), revealText = document.getElementById('revealText');
+const revealOverlay = document.getElementById('revealOverlay'), rball = document.getElementById('rball'), rtext = document.getElementById('rtext');
+const dismissReveal = document.getElementById('dismissReveal'), keepReveal = document.getElementById('keepReveal');
+const confettiRoot = document.getElementById('confetti');
+const audioDrum = document.getElementById('audioDrum'), audioPop = document.getElementById('audioPop'), audioApplause = document.getElementById('audioApplause'), audioBG = document.getElementById('audioBG');
 
-const revealBall = document.getElementById('revealBall');
-const revealText = document.getElementById('revealText');
-const revealOverlay = document.getElementById('revealOverlay');
-const revealBallBig = document.getElementById('revealBallBig');
-const revealTextBig = document.getElementById('revealTextBig');
-const dismissReveal = document.getElementById('dismissReveal');
-const keepReveal = document.getElementById('keepReveal');
-
-const audioDrum = document.getElementById('audioDrum');
-const audioPop = document.getElementById('audioPop');
-const audioApplause = document.getElementById('audioApplause');
-const audioBG = document.getElementById('audioBG');
-
-const btnUndo = document.getElementById('btnUndo');
-const btnExport = document.getElementById('btnExport');
-const btnObs = document.getElementById('btnObs');
-const musicToggle = document.getElementById('musicToggle');
+const btnUndo = document.getElementById('btnUndo'), btnExport = document.getElementById('btnExport'), btnObs = document.getElementById('btnObs'), musicToggle = document.getElementById('musicToggle');
+const app = document.getElementById('app');
 
 function idGen(){ return 't'+Math.random().toString(36).slice(2,9); }
 function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
 function play(a){ try{ a.currentTime = 0; a.play(); }catch(e){} }
-function shortLabel(s){ if(!s) return ''; return s.length<=10? s: s.split(' ').map(p=>p[0]).slice(0,3).join(''); }
+function shortLabel(s){ if(!s) return ''; return s.length<=10?s:s.split(' ').map(p=>p[0]).slice(0,3).join(''); }
 
-/* load teams.json */
+/* Load teams.json */
 async function loadTeams(){
   try{
-    const r = await fetch('teams.json', {cache: "no-store"});
-    let data = await r.json();
-    data = data.slice(0, MAX);
-    teams = data.map((t,i)=>({ id: idGen(), name: t.name || `Đội ${i+1}`, logo: t.logo || '' }));
+    const res = await fetch('teams.json', {cache:'no-store'});
+    const data = await res.json();
+    teams = data.slice(0,MAX).map((t,i)=>({id:idGen(),name:t.name||`Đội ${i+1}`,logo:t.logo||''}));
   }catch(e){
-    teams = Array.from({length:MAX}, (_,i)=>({ id:idGen(), name:`Đội ${i+1}`, logo:'' }));
+    // fallback default
+    teams = Array.from({length:MAX},(_,i)=>({id:idGen(),name:`Đội ${i+1}`,logo:''}));
   }
   preparePots();
 }
 
-/* distribute into 5/5/4 (random order) */
+/* Prepare pots randomly (5/5/4) */
 function preparePots(){
-  pots = [[],[],[]];
+  pots = [[],[],[]]; history = []; lastLocked = false;
   const idx = shuffle([...Array(teams.length).keys()]);
   const quotas = [5,5,4];
   let p = 0;
-  idx.forEach(i=>{ while(pots[p].length >= quotas[p]) p++; pots[p].push(teams[i]); });
-  log = []; lastLocked = false;
+  idx.forEach(i=>{
+    while(pots[p].length >= quotas[p]) p++;
+    const t = Object.assign({}, teams[i]);
+    t.pot = p;
+    pots[p].push(t);
+  });
   renderPots(); buildPairs();
   updateCounts();
 }
 
-/* build 7 empty pairs */
+/* Render bracket (7 pairs) */
 function buildPairs(){
   pairGrid.innerHTML = '';
   for(let i=0;i<7;i++){
@@ -231,94 +225,181 @@ function buildPairs(){
   }
 }
 
-/* render pots (hidden balls) */
+/* Render pots bottom (balls hidden) */
 function renderPots(){
   bowlA.innerHTML=''; bowlB.innerHTML=''; bowlC.innerHTML='';
-  pots[0].forEach((t, idx)=> {
-    const b = document.createElement('div'); b.className='ball hidden'; b.dataset.p=0; b.dataset.i=idx; b.dataset.tid=t.id; b.textContent='?'; b.addEventListener('click', onBallClick); bowlA.appendChild(b);
-  });
-  pots[1].forEach((t, idx)=> {
-    const b = document.createElement('div'); b.className='ball hidden'; b.dataset.p=1; b.dataset.i=idx; b.dataset.tid=t.id; b.textContent='?'; b.addEventListener('click', onBallClick); bowlB.appendChild(b);
-  });
-  pots[2].forEach((t, idx)=> {
-    const b = document.createElement('div'); b.className='ball hidden'; b.dataset.p=2; b.dataset.i=idx; b.dataset.tid=t.id; b.textContent='?'; b.addEventListener('click', onBallClick); bowlC.appendChild(b);
-  });
+  pots[0].forEach((t,idx)=>{ const b = document.createElement('div'); b.className='ball hidden'; b.dataset.tid=t.id; b.dataset.p=0; b.dataset.i=idx; b.textContent='?'; b.addEventListener('click', onBallClick); bowlA.appendChild(b); });
+  pots[1].forEach((t,idx)=>{ const b = document.createElement('div'); b.className='ball hidden'; b.dataset.tid=t.id; b.dataset.p=1; b.dataset.i=idx; b.textContent='?'; b.addEventListener('click', onBallClick); bowlB.appendChild(b); });
+  pots[2].forEach((t,idx)=>{ const b = document.createElement('div'); b.className='ball hidden'; b.dataset.tid=t.id; b.dataset.p=2; b.dataset.i=idx; b.textContent='?'; b.addEventListener('click', onBallClick); bowlC.appendChild(b); });
   updateCounts();
 }
 
-/* counts update */
+/* Counts */
 function updateCounts(){
   countA.textContent = pots[0].length + ' đội';
   countB.textContent = pots[1].length + ' đội';
   countC.textContent = pots[2].length + ' đội';
 }
 
+/* pick random from pot (for keyboard use) */
+async function drawFromPot(potIndex){
+  if(!pots[potIndex] || pots[potIndex].length===0) return;
+  const i = Math.floor(Math.random()*pots[potIndex].length);
+  const team = pots[potIndex].splice(i,1)[0];
+  renderPots();
+  const assigned = findSlotForTeam(team);
+  history.push({ts:new Date().toISOString(), team:team.name, pot:team.pot, pairIndex:assigned.pairIndex, side:assigned.side});
+  await cinematicReveal(team, assigned);
+  updateCounts();
+}
+
 /* click handler */
 async function onBallClick(e){
-  const el = e.currentTarget; const potIndex = parseInt(el.dataset.p); const tid = el.dataset.tid;
-  const pot = pots[potIndex]; const idx = pot.findIndex(x=>x.id === tid); if(idx === -1) return;
-  // mini suspense
+  const el = e.currentTarget;
+  const potIndex = parseInt(el.dataset.p);
+  const tid = el.dataset.tid;
+  const pot = pots[potIndex]; const idx = pot.findIndex(x=>x.id===tid);
+  if(idx===-1) return;
   await miniCountdown(2);
-  const team = pot.splice(idx,1)[0];
+  const team = pots[potIndex].splice(idx,1)[0];
   renderPots();
-  const assigned = assignNextSlot(team);
-  log.push({ ts: new Date().toISOString(), team: team.name, pot: potIndex, pairIndex: assigned.pairIndex, side: assigned.side });
-  // cinematic reveal
+  const assigned = findSlotForTeam(team);
+  history.push({ts:new Date().toISOString(), team:team.name, pot:team.pot, pairIndex:assigned.pairIndex, side:assigned.side});
   await cinematicReveal(team, assigned);
+  updateCounts();
 }
 
-/* assign next empty slot left->right */
-function assignNextSlot(team){
+/* FIND SLOT: lock logic to avoid same-pot vs same-pot */
+function findSlotForTeam(team){
+  // Prefer slots where opposite occupied by different pot or empty.
   for(let i=0;i<7;i++){
-    const nL = document.getElementById(`n-${i}-0`);
-    const nR = document.getElementById(`n-${i}-1`);
-    const left = nL ? nL.textContent : '';
-    const right = nR ? nR.textContent : '';
-    if(!left || left.includes('???')) { if(nL) nL.textContent = team.name; return { pairIndex:i, side:0, targetEl: document.getElementById(`mini-${i}-0`) }; }
-    if(!right || right.includes('???')) { if(nR) nR.textContent = team.name; return { pairIndex:i, side:1, targetEl: document.getElementById(`mini-${i}-1`) }; }
+    const leftEl = document.getElementById(`n-${i}-0`);
+    const rightEl = document.getElementById(`n-${i}-1`);
+    const leftText = leftEl ? leftEl.textContent : '';
+    const rightText = rightEl ? rightEl.textContent : '';
+
+    // if left empty and either right empty or right's pot !== team.pot -> choose left
+    if((!leftText || leftText.includes('???'))){
+      if(!rightText || rightText.includes('???')) {
+        // both empty -> safe to assign left now (the other side will check later)
+        return {pairIndex:i, side:0};
+      } else {
+        // right occupied -> need check pot stored on right
+        const rightPot = rightEl.dataset.pot;
+        if(String(rightPot) !== String(team.pot)){
+          return {pairIndex:i, side:0};
+        }
+      }
+    }
+
+    // if right empty and left occupied with different pot -> choose right
+    if((!rightText || rightText.includes('???'))){
+      const leftPot = leftEl.dataset.pot;
+      if(!leftText || leftText.includes('???')) {
+        // both empty -> can choose right if needed
+        return {pairIndex:i, side:1};
+      } else {
+        if(String(leftPot) !== String(team.pot)){
+          return {pairIndex:i, side:1};
+        }
+      }
+    }
   }
-  return { pairIndex:null, side:null, targetEl:null };
+
+  // fallback: find any empty slot
+  for(let i=0;i<7;i++){
+    const leftEl = document.getElementById(`n-${i}-0`);
+    const rightEl = document.getElementById(`n-${i}-1`);
+    if(leftEl && leftEl.textContent.includes('???')) return {pairIndex:i, side:0};
+    if(rightEl && rightEl.textContent.includes('???')) return {pairIndex:i, side:1};
+  }
+
+  // if none, just return null (shouldn't happen)
+  return {pairIndex:null, side:null};
 }
 
-/* cinematic reveal - shows big overlay and DOES NOT auto-hide */
+/* CINEMATIC REVEAL: ultra spin -> epic reveal -> drop into bracket (after reveal finished) */
 async function cinematicReveal(team, assigned){
-  // small center card update first
-  revealBall.textContent = '???'; revealText.textContent = 'MỞ QUẢ BÓNG...';
+  // stage1: small center update and drum
+  revealBall.textContent = '...'; revealText.textContent = 'MỞ QUẢ BÓNG...';
   play(audioDrum);
-  await sleep(1000);
+  await sleep(900);
 
-  // big overlay appear with dramatic pause
-  revealBallBig.textContent = '???'; revealTextBig.textContent = 'MỞ QUẢ BÓNG';
+  // show big overlay with ultra spin
+  rball.textContent = '?'; rtext.textContent = 'ĐANG MỞ QUẢ BÓNG...';
   revealOverlay.style.display = 'flex';
-  play(audioPop);
-  await sleep(600);
+  rball.style.animation = 'ballUltraSpin 2.6s cubic-bezier(.1,.9,.2,1), ballExplosion 1.4s ease-in-out';
+  play(audioDrum);
+  await sleep(2600);
 
-  // reveal real name
-  revealBallBig.textContent = team.name; revealTextBig.textContent = `Clan: ${team.name}`;
-  revealBall.textContent = team.name; revealText.textContent = `Clan: ${team.name}`;
+  // reveal epic
+  rball.style.animation = 'none';
+  rball.textContent = team.name;
+  rball.style.animation = 'textRevealEpic 1s ease-out';
+  rtext.textContent = `CLAN: ${team.name}`;
   play(audioApplause);
   burstConfetti();
-  // WAIT here until user dismiss OR press Space/Enter
-  await waitForDismiss();
+  cameraShake();
+  await sleep(2600);
+
+  // now animate the "drop" of the name into bracket
+  if(assigned && assigned.pairIndex !== null){
+    const targetEl = document.getElementById(`n-${assigned.pairIndex}-${assigned.side}`);
+    // create a floating name element that flies to the bracket cell
+    const float = document.createElement('div');
+    float.style.position = 'fixed';
+    float.style.left = (window.innerWidth/2 - 80) + 'px';
+    float.style.top = (window.innerHeight/2 - 40) + 'px';
+    float.style.padding = '10px 18px';
+    float.style.borderRadius = '8px';
+    float.style.background = 'linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.92))';
+    float.style.color = '#021322';
+    float.style.fontWeight = '800';
+    float.style.boxShadow = '0 18px 60px rgba(0,0,0,0.6)';
+    float.style.zIndex = 13000;
+    float.textContent = team.name;
+    document.body.appendChild(float);
+
+    // compute transform to target
+    const fromRect = float.getBoundingClientRect();
+    const toRect = targetEl.getBoundingClientRect();
+    const dx = (toRect.left + toRect.width/2) - (fromRect.left + fromRect.width/2);
+    const dy = (toRect.top + toRect.height/2) - (fromRect.top + fromRect.height/2);
+
+    // animate float
+    float.animate([{ transform: 'translate(0, -20px) scale(1.05)', opacity: 1 }, { transform: `translate(${dx}px, ${dy}px) scale(0.9)`, opacity: 0.0 }], { duration: 900, easing: 'cubic-bezier(.22,.9,.25,1)' });
+    // briefly show bracket glow then set text
+    await sleep(920);
+    targetEl.textContent = team.name;
+    targetEl.dataset.pot = team.pot; // store pot on element to help lock logic
+    targetEl.style.animation = 'bracketDrop 0.6s ease-out, bracketGlowStrong 1.2s ease-out';
+    try{ float.remove(); }catch(e){}
+  }
+
+  // push log already stored in history
+  // Wait for user to dismiss (persistent)
+  await waitForRevealDismiss();
   revealOverlay.style.display = 'none';
+  // clean animations
+  rball.style.animation = 'none';
 }
 
-/* wait for dismiss or lock (keep) */
-function waitForDismiss(){
+/* wait for reveal dismiss or lock */
+function waitForRevealDismiss(){
   return new Promise(resolve=>{
     if(lastLocked) return resolve();
-    function onKey(e){ if(e.code==='Space' || e.key==='Enter') clean(); }
-    function onDismissClick(){ clean(); }
-    function onKeepClick(){ lastLocked = true; }
+    function onKey(e){ if(e.code==='Space' || e.key==='Enter'){ clean(); } }
+    function onDismiss(){ clean(); }
+    function onKeep(){ lastLocked = true; }
     function clean(){
       window.removeEventListener('keydown', onKey);
-      dismissReveal.removeEventListener('click', onDismissClick);
-      keepReveal.removeEventListener('click', onKeepClick);
+      dismissReveal.removeEventListener('click', onDismiss);
+      keepReveal.removeEventListener('click', onKeep);
       setTimeout(()=>resolve(), 80);
     }
     window.addEventListener('keydown', onKey);
-    dismissReveal.addEventListener('click', onDismissClick);
-    keepReveal.addEventListener('click', onKeepClick);
+    dismissReveal.addEventListener('click', onDismiss);
+    keepReveal.addEventListener('click', onKeep);
   });
 }
 
@@ -333,33 +414,40 @@ async function miniCountdown(sec=2){
   revealBall.textContent = '...';
 }
 
-/* confetti */
+/* confetti burst */
 function burstConfetti(){
-  const root = document.getElementById('confetti'); root.innerHTML = '';
+  confettiRoot.innerHTML = '';
   const colors = ['#00c2ff','#ffd54d','#ff6b6b','#8ef0ff'];
-  for(let i=0;i<90;i++){
+  for(let i=0;i<110;i++){
     const p = document.createElement('div');
-    p.style.position='absolute'; p.style.left = Math.random()*100 + '%'; p.style.top='-8%';
+    p.style.position='absolute'; p.style.left = Math.random()*100 + '%'; p.style.top = '-8%';
     p.style.width = (6+Math.random()*8) + 'px'; p.style.height = (10+Math.random()*12) + 'px';
-    p.style.background = colors[Math.floor(Math.random()*colors.length)]; p.style.opacity = 0.95; root.appendChild(p);
-    const dur = 1500 + Math.random()*2000;
+    p.style.background = colors[Math.floor(Math.random()*colors.length)]; p.style.opacity = 0.96; confettiRoot.appendChild(p);
+    const dur = 1400 + Math.random()*2000;
     p.animate([{transform:`translateY(0) rotate(${Math.random()*360}deg)`},{transform:`translateY(${window.innerHeight+200}px) rotate(${Math.random()*720}deg)`}], { duration: dur, easing:'cubic-bezier(.2,.7,.3,1)'});
-    setTimeout(()=>{ try{ p.remove(); }catch(e){} }, dur+200);
+    setTimeout(()=>{ try{ p.remove(); }catch(e){} }, dur+220);
   }
 }
 
-/* undo last: remove last log entry and return to pot (append to that pot) */
+/* camera shake */
+function cameraShake(){
+  app.style.animation = 'cameraShake 0.42s ease-in-out';
+  setTimeout(()=> app.style.animation = 'none', 440);
+}
+
+/* undo last: remove last log entry and push back into pot */
 function undoLast(){
-  if(!log.length) return;
-  const last = log.pop();
-  // remove team from bracket cells
+  if(history.length===0) return;
+  const last = history.pop();
+  // remove name from bracket
   for(let i=0;i<7;i++){
     for(let s=0;s<2;s++){
       const el = document.getElementById(`n-${i}-${s}`);
       if(el && el.textContent === last.team){
         el.textContent = '???';
-        // return to pot
-        pots[last.pot].push({ id: idGen(), name: last.team, logo: '' });
+        delete el.dataset.pot;
+        // return to pot (append)
+        pots[last.pot].push({ id:idGen(), name:last.team, logo:'' , pot: last.pot});
         renderPots();
         return;
       }
@@ -367,38 +455,40 @@ function undoLast(){
   }
 }
 
-/* export log to json & csv downloads */
+/* export log */
 function exportLog(){
-  if(!log.length){ alert('Chưa có dữ liệu.'); return; }
-  const jsonBlob = new Blob([JSON.stringify(log, null, 2)], { type: 'application/json' });
-  const csv = log.map(r=>`"${r.ts}","${r.team}","${r.pot}","${r.pairIndex}","${r.side}"`).join('\n');
+  if(history.length===0){ alert('Chưa có dữ liệu.'); return; }
+  const jsonBlob = new Blob([JSON.stringify(history, null, 2)], { type: 'application/json' });
+  const csv = history.map(r=>`"${r.ts}","${r.team}","${r.pot}","${r.pairIndex}","${r.side}"`).join('\n');
   const csvBlob = new Blob([csv], { type: 'text/csv' });
-  downloadBlob(jsonBlob, 'vh_draw_log.json');
-  downloadBlob(csvBlob, 'vh_draw_log.csv');
+  downloadBlob(jsonBlob, 'vh_draw_log.json'); downloadBlob(csvBlob, 'vh_draw_log.csv');
 }
-function downloadBlob(blob, filename){ const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=filename; document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 500); }
+function downloadBlob(blob, filename){ const a=document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = filename; document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 500); }
 
-/* helper shuffle */
+/* helpers */
 function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
 
 /* UI wiring */
-document.getElementById('btnUndo').addEventListener('click', undoLast);
-document.getElementById('btnExport').addEventListener('click', exportLog);
-document.getElementById('btnObs').addEventListener('click', ()=>{
-  const isOn = document.body.style.background === 'transparent';
-  if(!isOn){ document.querySelectorAll('.controls, .btn').forEach(x=>x.classList.add('obsHide')); document.body.style.background='transparent'; document.getElementById('btnObs').textContent='OBS: ON'; }
-  else { document.querySelectorAll('.controls, .btn').forEach(x=>x.classList.remove('obsHide')); document.body.style.background=''; document.getElementById('btnObs').textContent='OBS: OFF'; }
+btnUndo.addEventListener('click', ()=> undoLast());
+btnExport.addEventListener('click', ()=> exportLog());
+btnObs.addEventListener('click', ()=>{
+  const on = document.body.style.background === 'transparent';
+  if(!on){ document.querySelectorAll('.controls, .btn').forEach(x=>x.classList.add('obsHide')); document.body.style.background='transparent'; btnObs.textContent='OBS: ON'; }
+  else { document.querySelectorAll('.controls, .btn').forEach(x=>x.classList.remove('obsHide')); document.body.style.background=''; btnObs.textContent='OBS: OFF'; }
 });
-musicToggle.addEventListener('change', (e)=>{ if(e.target.checked) audioBG.play(); else audioBG.pause(); });
-
-window.addEventListener('keydown', (e)=>{ if(e.key==='u') undoLast(); if(e.key==='x') exportLog(); if(e.code==='Space'){ if(revealOverlay.style.display === 'flex' && !lastLocked){ revealOverlay.style.display='none'; } } });
+musicToggle.addEventListener('change',(e)=>{ if(e.target.checked) audioBG.play(); else audioBG.pause(); });
+window.addEventListener('keydown',(e)=>{ if(e.key==='u') undoLast(); if(e.key==='x') exportLog(); if(e.code==='Space'){ if(revealOverlay.style.display==='flex' && !lastLocked){ revealOverlay.style.display='none'; } } });
 
 /* init */
-async function loadAndStart(){
-  try{ const r = await fetch('teams.json', { cache: 'no-store' }); let data = await r.json(); data = data.slice(0, MAX); teams = data.map((t,i)=>({ id: idGen(), name: t.name || `Đội ${i+1}`, logo: t.logo || '' })); } catch(e){ teams = Array.from({length:MAX}, (_,i)=>({ id:idGen(), name:`Đội ${i+1}`, logo:'' })); }
-  preparePots();
-}
-loadAndStart();
+(async function init(){
+  await loadTeams();
+  // keyboard shortcuts for drawing from pots
+  window.addEventListener('keydown', async (e)=>{
+    if(e.key === '1') await drawFromPot(0);
+    if(e.key === '2') await drawFromPot(1);
+    if(e.key === '3') await drawFromPot(2);
+  });
+})();
 
 </script>
 </body>
