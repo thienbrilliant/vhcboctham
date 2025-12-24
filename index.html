@@ -3,17 +3,17 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Viet Haxball Cup | SS14 — Live Draw (Ultra Cinematic)</title>
+<title>Viet Haxball Cup | SS14 — Ultra Cinematic Live Draw</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;800&family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#031224; --accent:#00c2ff; --gold:#ffd54d; --muted:#9fb8cc;
-  --ball-contrast: #00bfff;
-  --ball-contrast-2: #ff9f1c;
+  --high-contrast: #ffffff;
 }
+/* reset + viewport lock */
 *{box-sizing:border-box}
-html,body{height:100%;margin:0;overflow:hidden;background:linear-gradient(180deg,#021826,#031224);font-family:Inter,system-ui,Roboto,Arial;color:#e8f9ff;-webkit-font-smoothing:antialiased}
-.container{height:100vh;display:grid;grid-template-rows:10vh 40vh 20vh 30vh;gap:10px;padding:12px;max-width:1920px;margin:0 auto}
+html,body{height:100%;margin:0;overflow:hidden;background:linear-gradient(180deg,#021826,#031224);font-family:Inter,system-ui,Roboto,Arial;color:#e8f9ff}
+.container{height:100vh;display:grid;grid-template-rows:10vh 38vh 22vh 30vh;gap:10px;padding:12px;max-width:1920px;margin:0 auto}
 
 /* header */
 .header{display:flex;align-items:center;justify-content:space-between;padding:6px 18px}
@@ -34,91 +34,38 @@ html,body{height:100%;margin:0;overflow:hidden;background:linear-gradient(180deg
 .name{font-weight:800;color:#dff7ff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .vs{color:var(--muted);font-weight:800}
 
-/* reveal region (center persistent) */
+/* reveal region (main small card visible during stream) */
 .reveal-zone{display:flex;align-items:center;justify-content:center}
-.reveal-card{width:80%;height:90%;border-radius:14px;background:linear-gradient(180deg,#022c34,#03282f);display:flex;align-items:center;justify-content:center;gap:28px;padding:22px;box-shadow:0 40px 160px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.03)}
-/* central persistent bubble (shows last opened logo/name after dismiss) */
-.reveal-ball{width:220px;height:220px;border-radius:50%;display:grid;place-items:center;font-family:Orbitron;font-weight:900;font-size:28px;background:linear-gradient(180deg,#00c2ff,#0086d1);color:#021322;box-shadow:0 60px 200px rgba(0,0,0,0.6)}
-.reveal-text{color:#dff7ff;font-size:20px;font-weight:700;text-align:center;margin-left:18px}
+.reveal-card{width:80%;height:90%;border-radius:14px;background:linear-gradient(180deg,#022c34,#03282f);display:flex;align-items:center;justify-content:center;gap:24px;padding:22px;box-shadow:0 40px 160px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.03)}
+.reveal-ball{width:220px;height:220px;border-radius:50%;display:grid;place-items:center;font-family:Orbitron;font-weight:900;font-size:28px;background:linear-gradient(180deg,#00d1ff,#0091d1);color:#021322;box-shadow:0 60px 200px rgba(0,0,0,0.6)}
+.reveal-text{color:#dff7ff;font-size:20px;font-weight:700;text-align:left}
 
 /* pots bottom */
 .pots-row{display:flex;align-items:center;justify-content:space-around;gap:20px;padding:8px;height:100%}
-.pot{width:30%;height:100%;border-radius:12px;background:linear-gradient(180deg,#052b3b,#063246);border:1px solid rgba(255,255,255,0.03);display:flex;flex-direction:column;align-items:center;padding:12px;position:relative;box-shadow:0 18px 60px rgba(0,0,0,0.6)}
+.pot{width:30%;height:100%;border-radius:12px;background:linear-gradient(180deg,#072b38,#063246);border:1px solid rgba(255,255,255,0.03);display:flex;flex-direction:column;align-items:center;padding:12px;position:relative;box-shadow:0 18px 60px rgba(0,0,0,0.6)}
 .pot h4{margin:0;color:var(--gold);font-family:Orbitron;font-weight:700}
-.pot-bowl{width:100%;flex:1;display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:nowrap}
-
-/* BALL styles: brighter + high-contrast outline (colorblind-friendly) */
-.ball {
-  width:86px;
-  height:86px;
-  border-radius:50%;
-  display:grid;
-  place-items:center;
-  font-weight:900;
-  color:transparent; /* hide text in pot */
-  box-shadow: 0 28px 90px rgba(0,0,0,0.65);
-  cursor:pointer;
-  border:6px solid rgba(255,255,255,0.08);
-  background: linear-gradient(180deg, var(--ball-contrast), #0086d1);
-  position:relative;
-  transition: transform .18s ease, box-shadow .18s ease;
-}
-/* extra visual cue for colorblind: inner dot & thick border */
-.ball::after{
-  content:'';
-  width:18px;height:18px;border-radius:50%;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:rgba(255,255,255,0.95);
-  box-shadow: inset 0 0 8px rgba(0,0,0,0.25);
-}
-/* alternative palette for some balls to avoid same color repetition */
-.ball.alt1{ background: linear-gradient(180deg,#ff9f1c,#ff7a00); }
-.ball.alt2{ background: linear-gradient(180deg,#8ef06f,#3dbb2b); }
-.ball.alt3{ background: linear-gradient(180deg,#ff6b6b,#ff3b3b); }
-
-/* hidden state (still visible but darker) */
-.ball.hidden{ background: linear-gradient(180deg, rgba(0,0,0,0.12), rgba(0,0,0,0.2)); color:transparent; filter: grayscale(30%); opacity:0.9; border:6px solid rgba(255,255,255,0.02); }
+.pot-bowl{width:100%;flex:1;display:flex;align-items:center;justify-content:space-evenly;gap:10px;flex-wrap:nowrap}
+.ball{width:84px;height:84px;border-radius:50%;display:grid;place-items:center;font-weight:900;background:linear-gradient(180deg,#00c2ff,#00a2ff);color:#021322;box-shadow:0 30px 100px rgba(0,0,0,0.6);cursor:pointer;border:4px solid rgba(255,255,255,0.9)}
+.ball.alt{background:linear-gradient(180deg,#ffd54d,#ffb400);border-color:#fff}
+.ball.hidden{color:transparent; /* keep symbol invisible until reveal */ box-shadow:0 30px 100px rgba(0,0,0,0.6), inset 0 0 40px rgba(255,255,255,0.02)}
 .pot .count{position:absolute;right:12px;bottom:12px;color:var(--muted);font-size:13px}
 
 /* confetti */
 .confetti{position:fixed;left:0;top:0;right:0;bottom:0;pointer-events:none;z-index:9999}
 
-/* reveal overlay (modal) */
+/* reveal overlay (big) */
 .reveal-overlay{position:fixed;left:0;top:0;right:0;bottom:0;display:flex;align-items:center;justify-content:center;pointer-events:auto;z-index:12000}
 .reveal-full{width:min(980px,94%);height:460px;border-radius:14px;background:linear-gradient(180deg,#012022,#02242a);display:flex;align-items:center;justify-content:center;gap:24px;padding:20px;box-shadow:0 60px 200px rgba(0,0,0,0.7);border:1px solid rgba(255,255,255,0.04)}
 .reveal-full .rball{width:320px;height:320px;border-radius:50%;display:grid;place-items:center;font-family:Orbitron;font-weight:900;font-size:34px;background:linear-gradient(180deg,#00e0ff,#006fb8);color:#021322;box-shadow:0 80px 260px rgba(0,0,0,0.7)}
 .reveal-full .rtext{color:#e6fffe;font-weight:800;font-size:20px}
 
-/* cinematic */
-@keyframes ballUltraSpin {
-  0%   { transform: scale(0.5) rotate(0deg); filter: brightness(1); }
-  40%  { transform: scale(1.12) rotate(720deg); filter: brightness(1.9); }
-  70%  { transform: scale(0.98) rotate(1080deg); filter: brightness(2.1); }
-  100% { transform: scale(1) rotate(1440deg); filter: brightness(1.3); }
-}
-@keyframes ballExplosion {
-  0% { box-shadow: 0 0 0 rgba(255,255,255,0); }
-  100% { box-shadow: 0 0 30px rgba(0,194,255,0.9), 0 0 80px rgba(255,213,77,0.95), 0 0 160px rgba(255,255,255,0.7); }
-}
-@keyframes textRevealEpic {
-  0% { opacity:0; transform: scale(0.4); letter-spacing: 8px; filter: blur(6px) }
-  60% { opacity:1; transform: scale(1.08); letter-spacing:2px; filter: blur(0) }
-  100% { transform: scale(1); letter-spacing:1px; filter: blur(0) }
-}
-@keyframes bracketDrop {
-  0% { transform: translateY(-36px) scale(0.86); opacity:0 }
-  100% { transform: translateY(0) scale(1); opacity:1 }
-}
-@keyframes bracketGlowStrong {
-  0% { box-shadow: 0 0 0 rgba(255,213,77,0); }
-  100% { box-shadow: 0 0 30px rgba(255,213,77,1); }
-}
-@keyframes cameraShake {
-  0%{ transform: translate(0,0) }
-  20%{ transform: translate(-4px,2px) }
-  40%{ transform: translate(3px,-2px) }
-  60%{ transform: translate(-2px,3px) }
-  80%{ transform: translate(2px,-1px) }
-  100%{ transform: translate(0,0) }
-}
+/* ========== cinematic effects ========== */
+@keyframes ballUltraSpin { 0%{transform:scale(.55)rotate(0)}40%{transform:scale(1.14)rotate(720deg)}70%{transform:scale(.98)rotate(1080deg)}100%{transform:scale(1)rotate(1440deg)} }
+@keyframes ballExplosion { 0%{box-shadow:0 0 0 rgba(255,255,255,0)} 100%{box-shadow:0 0 30px rgba(0,194,255,0.95),0 0 100px rgba(255,213,77,0.95),0 0 200px rgba(255,255,255,0.6)} }
+@keyframes textRevealEpic { 0%{opacity:0;transform:scale(.4);filter:blur(6px)}60%{opacity:1;transform:scale(1.08)}100%{transform:scale(1)} }
+@keyframes dropFade { 0%{transform:translateY(-40px);opacity:0}100%{transform:translateY(0);opacity:1} }
+@keyframes bracketGlowStrong { 0%{box-shadow:0 0 0 rgba(255,213,77,0)}100%{box-shadow:0 0 30px rgba(255,213,77,1)} }
+@keyframes cameraShake { 0%{transform:translate(0,0)}20%{transform:translate(-6px,3px)}40%{transform:translate(5px,-3px)}60%{transform:translate(-3px,4px)}80%{transform:translate(2px,-1px)}100%{transform:translate(0,0)} }
 
 /* responsive */
 @media (max-width:1200px){ .pair-grid{grid-template-columns:repeat(2,1fr)} .pot{width:90%} .reveal-full{height:380px} .reveal-full .rball{width:220px;height:220px;font-size:20px} }
@@ -143,15 +90,15 @@ html,body{height:100%;margin:0;overflow:hidden;background:linear-gradient(180deg
       <div class="pair-grid" id="pairGrid"></div>
     </div>
 
-    <!-- reveal (persistent center) -->
+    <!-- reveal (MAIN visible area) -->
     <div class="reveal-zone">
-      <div class="reveal-card" aria-hidden="true">
+      <div class="reveal-card" id="revealCard" aria-hidden="true">
         <div class="reveal-ball" id="revealBall">...</div>
-        <div class="reveal-text" id="revealText">MỞ QUẢ BÓNG...</div>
+        <div class="reveal-text" id="revealText" style="max-width:50%;">MỞ QUẢ BÓNG...</div>
       </div>
     </div>
 
-    <!-- pots -->
+    <!-- pots row -->
     <div class="pots-row">
       <div class="pot" id="potA"><h4>Pot A</h4><div class="pot-bowl" id="bowlA"></div><div class="count" id="countA">0</div></div>
       <div class="pot" id="potB"><h4>Pot B</h4><div class="pot-bowl" id="bowlB"></div><div class="count" id="countB">0</div></div>
@@ -159,7 +106,7 @@ html,body{height:100%;margin:0;overflow:hidden;background:linear-gradient(180deg
     </div>
   </div>
 
-  <!-- reveal overlay (modal) -->
+  <!-- big overlay reveal (persistent until dismiss) -->
   <div id="revealOverlay" class="reveal-overlay" style="display:none">
     <div class="reveal-full" id="revealFullCard" role="dialog">
       <div class="rball" id="rball">?</div>
@@ -179,23 +126,25 @@ html,body{height:100%;margin:0;overflow:hidden;background:linear-gradient(180deg
   <audio id="audioDrum" src="https://www.soundjay.com/misc/sounds/drum-roll-1.mp3" preload="auto"></audio>
   <audio id="audioPop" src="https://www.soundjay.com/button/sounds/button-16.mp3" preload="auto"></audio>
   <audio id="audioApplause" src="https://www.soundjay.com/human/sounds/applause-8.mp3" preload="auto"></audio>
+  <audio id="audioGasp" src="https://www.soundjay.com/human/sounds/gasp-1.mp3" preload="auto"></audio>
   <audio id="audioBG" src="assets/epic.mp3" preload="auto" loop></audio>
 
 <script>
-/* Ultra cinematic live draw – updated per request
- - brighter balls (colorblind-friendly), no small name badges in pot
- - ball removed from pot immediately on click
- - reveal overlay shows epic animation, THEN only on Dismiss -> drop name into bracket
- - after dismiss, central persistent bubble shows logo/name of opened team
- - history (log) appended after drop completes
+/* Ultra cinematic live draw — FINAL
+  - Random bracket placement (respecting pot constraints)
+  - Ball removed when drawn
+  - No small names inside pots
+  - Reveal overlay: show epic animation, keep until Dismiss
+  - After Dismiss: main reveal area displays logo + name, and name "drops" to bracket with animation
+  - Bright, high-contrast balls (colorblind-friendly)
 */
 
 const MAX = 14;
 let teams = [];
-let pots = [[],[],[]]; // arrays of {id,name,logo,pot}
-let history = []; // saved records
-let pending = null; // {team, assigned} waiting for dismiss
+let pots = [[],[],[]]; // each item: {id,name,logo,pot}
+let history = []; // entries for export
 let lastLocked = false;
+let currentDraw = null; // {team,assigned,fromPot}
 
 /* DOM */
 const pairGrid = document.getElementById('pairGrid');
@@ -205,30 +154,29 @@ const revealBall = document.getElementById('revealBall'), revealText = document.
 const revealOverlay = document.getElementById('revealOverlay'), rball = document.getElementById('rball'), rtext = document.getElementById('rtext');
 const dismissReveal = document.getElementById('dismissReveal'), keepReveal = document.getElementById('keepReveal');
 const confettiRoot = document.getElementById('confetti');
-const audioDrum = document.getElementById('audioDrum'), audioPop = document.getElementById('audioPop'), audioApplause = document.getElementById('audioApplause'), audioBG = document.getElementById('audioBG');
+const audioDrum = document.getElementById('audioDrum'), audioPop = document.getElementById('audioPop'), audioApplause = document.getElementById('audioApplause'), audioGasp = document.getElementById('audioGasp'), audioBG = document.getElementById('audioBG');
 const btnUndo = document.getElementById('btnUndo'), btnExport = document.getElementById('btnExport'), btnObs = document.getElementById('btnObs'), musicToggle = document.getElementById('musicToggle');
 const app = document.getElementById('app');
 
 function idGen(){ return 't'+Math.random().toString(36).slice(2,9); }
 function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
 function play(a){ try{ a.currentTime = 0; a.play(); }catch(e){} }
-function shortLabel(s){ if(!s) return ''; return s.length<=12?s:s.split(' ').map(p=>p[0]).slice(0,3).join(''); }
 
 /* load teams.json */
 async function loadTeams(){
   try{
     const res = await fetch('teams.json', {cache:'no-store'});
     const data = await res.json();
-    teams = data.slice(0,MAX).map((t,i)=>({id:idGen(),name:t.name||`Đội ${i+1}`,logo:t.logo||''}));
+    teams = data.slice(0, MAX).map((t,i)=>({ id:idGen(), name:t.name||`Đội ${i+1}`, logo:t.logo||'' }));
   }catch(e){
-    teams = Array.from({length:MAX},(_,i)=>({id:idGen(),name:`Đội ${i+1}`,logo:''}));
+    teams = Array.from({length:MAX},(_,i)=>({ id:idGen(), name:`Đội ${i+1}`, logo:'' }));
   }
   preparePots();
 }
 
-/* prepare pots random (5/5/4) */
+/* distribute randomly into pots (5/5/4) */
 function preparePots(){
-  pots = [[],[],[]]; history = []; pending = null; lastLocked = false;
+  pots = [[],[],[]]; history = []; lastLocked = false; currentDraw = null;
   const idx = shuffle([...Array(teams.length).keys()]);
   const quotas = [5,5,4];
   let p = 0;
@@ -238,209 +186,242 @@ function preparePots(){
     t.pot = p;
     pots[p].push(t);
   });
-  renderPots(); buildPairs();
+  renderPots();
+  buildPairs();
   updateCounts();
 }
 
-/* render bracket */
+/* build empty bracket (7 pairs) */
 function buildPairs(){
   pairGrid.innerHTML = '';
   for(let i=0;i<7;i++){
-    const el = document.createElement('div'); el.className='pair'; el.dataset.i = i;
+    const el = document.createElement('div'); el.className='pair'; el.dataset.i=i;
     el.innerHTML = `<div class="pair-row"><div class="slot"><div class="mini" id="mini-${i}-0">${i*2+1}</div><div class="name" id="n-${i}-0"><span class="placeholder">???</span></div></div><div class="vs">VS</div><div class="slot"><div class="name" id="n-${i}-1"><span class="placeholder">???</span></div><div class="mini" id="mini-${i}-1">${i*2+2}</div></div></div>`;
     pairGrid.appendChild(el);
   }
 }
 
-/* render pots (hidden balls) – use alternating colors for visibility */
+/* render pots — balls hidden (no names) and bright contrast */
 function renderPots(){
-  bowlA.innerHTML=''; bowlB.innerHTML=''; bowlC.innerHTML='';
-  const alts = ['','alt1','alt2','alt3'];
-  pots[0].forEach((t,idx)=>{ const b = document.createElement('div'); b.className='ball '+alts[idx%alts.length]; b.dataset.tid=t.id; b.dataset.p=0; b.dataset.i=idx; b.textContent='?'; b.addEventListener('click', onBallClick); bowlA.appendChild(b); });
-  pots[1].forEach((t,idx)=>{ const b = document.createElement('div'); b.className='ball '+alts[idx%alts.length]; b.dataset.tid=t.id; b.dataset.p=1; b.dataset.i=idx; b.textContent='?'; b.addEventListener('click', onBallClick); bowlB.appendChild(b); });
-  pots[2].forEach((t,idx)=>{ const b = document.createElement('div'); b.className='ball '+alts[idx%alts.length]; b.dataset.tid=t.id; b.dataset.p=2; b.dataset.i=idx; b.textContent='?'; b.addEventListener('click', onBallClick); bowlC.appendChild(b); });
+  bowlA.innerHTML = ''; bowlB.innerHTML=''; bowlC.innerHTML='';
+  pots[0].forEach((t,idx)=> {
+    const b = document.createElement('div');
+    b.className = 'ball hidden';
+    b.dataset.tid = t.id; b.dataset.p = 0; b.dataset.i = idx;
+    // accessible label for screenreaders
+    b.setAttribute('aria-label', `Bóng Pot A vị trí ${idx+1}`);
+    // visual: show symbol (e.g. initials) but keep colorblind friendly border
+    b.textContent = ''; // keep blank so not revealing
+    b.addEventListener('click', onBallClick);
+    bowlA.appendChild(b);
+  });
+  pots[1].forEach((t,idx)=> {
+    const b = document.createElement('div'); b.className='ball alt hidden'; b.dataset.tid=t.id; b.dataset.p=1; b.dataset.i=idx; b.setAttribute('aria-label', `Bóng Pot B vị trí ${idx+1}`); b.textContent=''; b.addEventListener('click', onBallClick); bowlB.appendChild(b);
+  });
+  pots[2].forEach((t,idx)=> {
+    const b = document.createElement('div'); b.className='ball hidden'; b.dataset.tid=t.id; b.dataset.p=2; b.dataset.i=idx; b.setAttribute('aria-label', `Bóng Pot C vị trí ${idx+1}`); b.textContent=''; b.addEventListener('click', onBallClick); bowlC.appendChild(b);
+  });
   updateCounts();
 }
 
-/* counts update */
-function updateCounts(){ countA.textContent = pots[0].length + ' đội'; countB.textContent = pots[1].length + ' đội'; countC.textContent = pots[2].length + ' đội'; }
+/* update counts */
+function updateCounts(){
+  countA.textContent = `${pots[0].length} đội`;
+  countB.textContent = `${pots[1].length} đội`;
+  countC.textContent = `${pots[2].length} đội`;
+}
 
-/* draw from pot (keyboard support) */
+/* draw random from pot via keyboard or click */
 async function drawFromPot(potIndex){
   if(!pots[potIndex] || pots[potIndex].length===0) return;
-  const i = Math.floor(Math.random()*pots[potIndex].length);
-  // remove from pot immediately to avoid duplicate selects
-  const team = pots[potIndex].splice(i,1)[0];
-  renderPots();
-  const assigned = findSlotForTeam(team);
-  // set pending – don't push to history yet
-  pending = { team, assigned };
-  await cinematicRevealPending();
-  updateCounts();
+  const i = Math.floor(Math.random() * pots[potIndex].length);
+  await doDraw(potIndex, i);
 }
 
-/* on click ball */
+/* onBallClick: find team in pot and draw */
 async function onBallClick(e){
   const el = e.currentTarget;
   const potIndex = parseInt(el.dataset.p);
   const tid = el.dataset.tid;
-  const pot = pots[potIndex]; const idx = pot.findIndex(x=>x.id===tid);
-  if(idx===-1) return;
-  // remove ball from pot (visual disappear)
-  const team = pots[potIndex].splice(idx,1)[0];
+  const pot = pots[potIndex];
+  const idx = pot.findIndex(x=>x.id === tid);
+  if(idx === -1) return;
+  await doDraw(potIndex, idx);
+}
+
+/* doDraw: core flow when a ball is clicked or keyboard draw */
+async function doDraw(potIndex, idxInPot){
+  // remove ball from pot immediately (so it can't be clicked again) and re-render
+  const team = pots[potIndex].splice(idxInPot,1)[0];
   renderPots();
-  const assigned = findSlotForTeam(team);
-  pending = { team, assigned };
-  await cinematicRevealPending();
-  updateCounts();
+  // choose random valid slot (respect pot constraints), but keep randomness
+  const assigned = chooseRandomValidSlot(team);
+  // store current drawing; do not put name into bracket yet
+  currentDraw = { team, assigned, fromPot: potIndex, ts: new Date().toISOString() };
+  // push to history now (we'll update pairIndex/side done)
+  history.push({ ts: currentDraw.ts, team: team.name, pot: team.pot, pairIndex: assigned ? assigned.pairIndex : null, side: assigned ? assigned.side : null });
+  // cinematic reveal sequence (overlay)
+  await cinematicRevealSequence(team);
+  // AFTER reveal, WAIT FOR DISMISS to drop into bracket (handled by dismiss handler)
 }
 
-/* find slot respecting lock logic (avoid same pot vs same pot) */
-function findSlotForTeam(team){
+/* chooseRandomValidSlot(team) -> return {pairIndex, side} or null */
+function chooseRandomValidSlot(team){
+  const candidates = [];
   for(let i=0;i<7;i++){
-    const leftEl = document.getElementById(`n-${i}-0`), rightEl = document.getElementById(`n-${i}-1`);
-    const leftText = leftEl ? leftEl.textContent : '', rightText = rightEl ? rightEl.textContent : '';
-    // left empty
-    if((!leftText || leftText.includes('???'))){
-      if(!rightText || rightText.includes('???')) return { pairIndex:i, side:0 };
-      const rightPot = rightEl.dataset.pot;
-      if(String(rightPot) !== String(team.pot)) return { pairIndex:i, side:0 };
+    const leftEl = document.getElementById(`n-${i}-0`);
+    const rightEl = document.getElementById(`n-${i}-1`);
+    const leftText = leftEl ? leftEl.textContent : '';
+    const rightText = rightEl ? rightEl.textContent : '';
+    // left possible?
+    if(leftEl && (leftText.includes('???'))){
+      // left OK if right empty or right's pot != team.pot
+      if(!rightText || rightText.includes('???')) candidates.push({pairIndex:i, side:0});
+      else {
+        const rp = rightEl.dataset.pot;
+        if(String(rp) !== String(team.pot)) candidates.push({pairIndex:i, side:0});
+      }
     }
-    // right empty
-    if((!rightText || rightText.includes('???'))){
-      if(!leftText || leftText.includes('???')) return { pairIndex:i, side:1 };
-      const leftPot = leftEl.dataset.pot;
-      if(String(leftPot) !== String(team.pot)) return { pairIndex:i, side:1 };
+    // right possible?
+    if(rightEl && (rightText.includes('???'))){
+      if(!leftText || leftText.includes('???')) candidates.push({pairIndex:i, side:1});
+      else {
+        const lp = leftEl.dataset.pot;
+        if(String(lp) !== String(team.pot)) candidates.push({pairIndex:i, side:1});
+      }
     }
   }
-  // fallback: any empty
-  for(let i=0;i<7;i++){
-    const leftEl = document.getElementById(`n-${i}-0`), rightEl = document.getElementById(`n-${i}-1`);
-    if(leftEl && leftEl.textContent.includes('???')) return { pairIndex:i, side:0 };
-    if(rightEl && rightEl.textContent.includes('???')) return { pairIndex:i, side:1 };
+  if(candidates.length === 0){
+    // fallback: any empty
+    for(let i=0;i<7;i++){
+      const l = document.getElementById(`n-${i}-0`), r = document.getElementById(`n-${i}-1`);
+      if(l && l.textContent.includes('???')) return {pairIndex:i, side:0};
+      if(r && r.textContent.includes('???')) return {pairIndex:i, side:1};
+    }
+    return {pairIndex:null, side:null};
   }
-  return { pairIndex:null, side:null };
+  // return random candidate
+  return candidates[Math.floor(Math.random()*candidates.length)];
 }
 
-/* cinematic reveal (pending must be set first) – this shows overlay + reveals team name,
-   but does NOT put the name into bracket until Dismiss is pressed.
-*/
-async function cinematicRevealPending(){
-  if(!pending) return;
-  const { team } = pending;
-  // show small center status
-  revealBall.textContent = '...'; revealText.textContent = 'MỞ QUẢ BÓNG...';
+/* cinematic reveal animation (overlay) */
+async function cinematicRevealSequence(team){
+  // small center card update first
+  revealBall.textContent = '...';
+  revealText.textContent = 'MỞ QUẢ BÓNG...';
   play(audioDrum);
-  await sleep(700);
+  await sleep(800);
 
-  // show big overlay with strong spin/explosion
-  rball.textContent = '?'; rtext.textContent = 'ĐANG MỞ QUẢ BÓNG...';
+  // overlay: show ultra spin + explosion
+  rball.textContent = '?';
+  rtext.textContent = 'ĐANG MỞ QUẢ BÓNG...';
   revealOverlay.style.display = 'flex';
-  rball.style.animation = 'ballUltraSpin 2.6s cubic-bezier(.1,.9,.2,1), ballExplosion 1.4s ease-in-out';
-  play(audioDrum);
-  await sleep(2600);
+  rball.style.backgroundImage = ''; // reset
+  rball.style.animation = 'ballUltraSpin 2.4s cubic-bezier(.1,.9,.2,1), ballExplosion 1.4s ease-in-out';
+  play(audioGasp);
+  await sleep(1800);
+  play(audioPop);
+  await sleep(600);
 
-  // reveal epic (overlay shows name)
-  rball.style.animation = 'none';
-  // if logo available, show logo image inside overlay circle
-  if(team.logo){
-    rball.innerHTML = `<img src="${team.logo}" alt="" style="max-width:80%;max-height:80%;border-radius:50%"/>`;
+  // reveal name + logo (overlay)
+  // show logo if available
+  if(currentDraw && currentDraw.team.logo){
+    rball.style.backgroundImage = `url("${currentDraw.team.logo}")`;
+    rball.style.backgroundSize = 'cover';
+    rball.textContent = '';
   } else {
-    rball.textContent = shortLabel(team.name);
+    rball.textContent = currentDraw.team.name;
   }
-  rball.style.animation = 'textRevealEpic 900ms ease-out';
-  rtext.textContent = `CLAN: ${team.name}`;
+  rball.style.animation = 'textRevealEpic 0.9s ease-out';
+  rtext.textContent = `CLAN: ${currentDraw.team.name}`;
   play(audioApplause);
-  burstConfetti();
+  burstConfetti(120);
   cameraShake();
-
-  // WAIT: do NOT drop into bracket yet. Wait until user dismisses.
-  // pending currently holds assigned slot info.
+  // WAIT here to allow caster to speak — overlay stays until dismiss
 }
 
-/* handle dismiss: animate drop into bracket, then persist central bubble + log */
-async function onDismiss(){
-  if(!pending) { revealOverlay.style.display='none'; return; }
-  const { team, assigned } = pending;
-  // animate floating label from center overlay to bracket cell
-  const targetEl = (assigned && assigned.pairIndex !== null) ? document.getElementById(`n-${assigned.pairIndex}-${assigned.side}`) : null;
+/* wait for dismiss -> then drop into bracket and update main reveal card */
+async function onDismissHandler(){
+  if(!currentDraw) { revealOverlay.style.display='none'; return; }
+  // if keep locked, do nothing (but in our flow keep locks overlay active)
+  // Drop animation: fly name/logo from overlay center to bracket cell
+  const assigned = currentDraw.assigned;
+  if(assigned && assigned.pairIndex !== null){
+    const targetEl = document.getElementById(`n-${assigned.pairIndex}-${assigned.side}`);
+    // floating element to animate
+    const float = document.createElement('div');
+    float.style.position = 'fixed';
+    float.style.left = (window.innerWidth/2 - 120) + 'px';
+    float.style.top = (window.innerHeight/2 - 40) + 'px';
+    float.style.padding = '10px 18px';
+    float.style.borderRadius = '8px';
+    float.style.background = 'linear-gradient(180deg,#ffffff,#f6f6f6)';
+    float.style.color = '#021322';
+    float.style.fontWeight = '800';
+    float.style.boxShadow = '0 18px 60px rgba(0,0,0,0.6)';
+    float.style.zIndex = 14000;
+    // If logo exists, show small logo + name
+    if(currentDraw.team.logo){
+      const img = document.createElement('img');
+      img.src = currentDraw.team.logo;
+      img.style.height = '28px'; img.style.marginRight = '8px';
+      img.style.verticalAlign = 'middle';
+      float.appendChild(img);
+      const txt = document.createElement('span'); txt.textContent = currentDraw.team.name; float.appendChild(txt);
+    } else {
+      float.textContent = currentDraw.team.name;
+    }
+    document.body.appendChild(float);
 
-  // prepare floating item (show logo+name)
-  const float = document.createElement('div');
-  float.style.position = 'fixed';
-  float.style.left = (window.innerWidth/2 - 100) + 'px';
-  float.style.top = (window.innerHeight/2 - 40) + 'px';
-  float.style.padding = '10px 18px';
-  float.style.borderRadius = '10px';
-  float.style.background = 'linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.92))';
-  float.style.color = '#021322';
-  float.style.fontWeight = '800';
-  float.style.boxShadow = '0 28px 80px rgba(0,0,0,0.6)';
-  float.style.zIndex = 13000;
-
-  // content: logo (if exists) + name
-  if(team.logo){
-    const img = document.createElement('img');
-    img.src = team.logo; img.style.width='36px'; img.style.height='36px'; img.style.objectFit='cover'; img.style.borderRadius='6px'; img.style.marginRight='8px';
-    const span = document.createElement('span'); span.textContent = team.name;
-    float.appendChild(img); float.appendChild(span);
-  } else {
-    float.textContent = team.name;
-  }
-  document.body.appendChild(float);
-
-  // compute target
-  if(targetEl){
+    // compute travel
     const fromRect = float.getBoundingClientRect();
     const toRect = targetEl.getBoundingClientRect();
     const dx = (toRect.left + toRect.width/2) - (fromRect.left + fromRect.width/2);
     const dy = (toRect.top + toRect.height/2) - (fromRect.top + fromRect.height/2);
-    float.animate([{ transform: 'translate(0, -10px) scale(1.03)', opacity: 1 }, { transform: `translate(${dx}px, ${dy}px) scale(0.86)`, opacity: 0 }], { duration: 900, easing: 'cubic-bezier(.22,.9,.25,1)' });
-    // after animation, set bracket text + pot dataset and highlight
+
+    float.animate([{ transform: 'translate(0, -10px) scale(1.05)', opacity:1 }, { transform: `translate(${dx}px, ${dy}px) scale(0.9)`, opacity:0}], { duration:900, easing:'cubic-bezier(.22,.9,.25,1)'});
     await sleep(920);
-    targetEl.textContent = team.name;
-    targetEl.dataset.pot = team.pot;
-    targetEl.style.animation = 'bracketDrop 0.6s ease-out, bracketGlowStrong 1.2s ease-out';
-  } else {
-    // fallback: append to first empty slot text
-    for(let i=0;i<7;i++){
-      for(let s=0;s<2;s++){
-        const el = document.getElementById(`n-${i}-${s}`);
-        if(el && el.textContent.includes('???')){
-          el.textContent = team.name; el.dataset.pot = team.pot; el.style.animation='bracketDrop 0.6s ease-out, bracketGlowStrong 1.2s ease-out';
-          break;
-        }
-      }
-      if(!float.parentNode) break;
-    }
+    // set bracket cell text + pot data
+    targetEl.textContent = currentDraw.team.name;
+    targetEl.dataset.pot = currentDraw.team.pot;
+    targetEl.style.animation = 'dropFade .6s ease-out, bracketGlowStrong 1.2s ease-out';
+    try{ float.remove(); }catch(e){}
   }
 
-  // remove floating UI
-  try{ float.remove(); }catch(e){}
-  // Persist central (non-modal) reveal card to show logo+name (so stream shows "opened ball" in center)
-  if(team.logo){
-    // show image in central bubble
-    document.getElementById('revealBall').innerHTML = `<img src="${team.logo}" alt="" style="max-width:86%;max-height:86%;border-radius:50%"/>`;
+  // After drop, update main small reveal card (center) to show logo + name persistently
+  if(currentDraw.team.logo){
+    revealBall.style.backgroundImage = `url("${currentDraw.team.logo}")`;
+    revealBall.style.backgroundSize = 'cover';
+    revealBall.textContent = '';
   } else {
-    document.getElementById('revealBall').textContent = shortLabel(team.name);
+    revealBall.style.backgroundImage = '';
+    revealBall.textContent = currentDraw.team.name;
   }
-  document.getElementById('revealText').textContent = team.name;
+  revealText.textContent = currentDraw.team.name;
 
-  // store history now (after successful drop)
-  history.push({ ts: new Date().toISOString(), team: team.name, pot: team.pot, pairIndex: assigned ? assigned.pairIndex : null, side: assigned ? assigned.side : null });
-
+  // finalize history entry: update pairIndex/side stored earlier (already set), leave log
   // hide overlay
   revealOverlay.style.display = 'none';
-  pending = null;
+  // clear current draw so next draw can begin
+  currentDraw = null;
 }
 
-/* wait for reveal dismiss or lock via UI; hook listeners */
-function waitForRevealDismiss(){
-  // not used now; onDismiss handles logic directly via click/key
-  return Promise.resolve();
+/* wait for reveal dismiss (Dismiss button or Space/Enter) */
+function waitForDismissSetup(){
+  // dismiss button
+  dismissReveal.addEventListener('click', onDismissHandler);
+  keepReveal.addEventListener('click', ()=>{ lastLocked = true; });
+  window.addEventListener('keydown', function onKey(e){
+    if(e.code === 'Space' || e.key === 'Enter'){
+      if(revealOverlay.style.display === 'flex' && !lastLocked){
+        onDismissHandler();
+      }
+    }
+  });
 }
+waitForDismissSetup();
 
-/* mini countdown (visual) */
+/* mini countdown visual (center card) */
 async function miniCountdown(sec=2){
   revealText.textContent = 'Chuẩn bị...';
   play(audioDrum);
@@ -452,15 +433,15 @@ async function miniCountdown(sec=2){
 }
 
 /* confetti */
-function burstConfetti(){
+function burstConfetti(n=80){
   confettiRoot.innerHTML = '';
-  const colors = ['#00c2ff','#ffd54d','#ff6b6b','#8ef0ff'];
-  for(let i=0;i<110;i++){
+  const colors = ['#00e0ff','#ffd54d','#ff6b6b','#8ef0ff'];
+  for(let i=0;i<n;i++){
     const p = document.createElement('div');
     p.style.position='absolute'; p.style.left = Math.random()*100 + '%'; p.style.top = '-8%';
-    p.style.width = (6+Math.random()*8) + 'px'; p.style.height = (10+Math.random()*12) + 'px';
+    p.style.width = (6+Math.random()*10) + 'px'; p.style.height = (10+Math.random()*14) + 'px';
     p.style.background = colors[Math.floor(Math.random()*colors.length)]; p.style.opacity = 0.96; confettiRoot.appendChild(p);
-    const dur = 1400 + Math.random()*2000;
+    const dur = 1400 + Math.random()*2200;
     p.animate([{transform:`translateY(0) rotate(${Math.random()*360}deg)`},{transform:`translateY(${window.innerHeight+200}px) rotate(${Math.random()*720}deg)`}], { duration: dur, easing:'cubic-bezier(.2,.7,.3,1)'});
     setTimeout(()=>{ try{ p.remove(); }catch(e){} }, dur+220);
   }
@@ -472,9 +453,9 @@ function cameraShake(){
   setTimeout(()=> app.style.animation = 'none', 440);
 }
 
-/* undo last (reverse last history entry) */
+/* Undo last: remove last history entry and return to its pot */
 function undoLast(){
-  if(history.length===0) return;
+  if(history.length === 0) return;
   const last = history.pop();
   // remove from bracket
   for(let i=0;i<7;i++){
@@ -483,8 +464,9 @@ function undoLast(){
       if(el && el.textContent === last.team){
         el.textContent = '???';
         delete el.dataset.pot;
-        // return to pot (append)
-        pots[last.pot].push({ id:idGen(), name:last.team, logo:'', pot:last.pot });
+        // return to pot array
+        const pIndex = last.pot;
+        pots[pIndex].push({ id:idGen(), name:last.team, logo:'', pot:pIndex });
         renderPots();
         return;
       }
@@ -492,34 +474,20 @@ function undoLast(){
   }
 }
 
-/* export log */
+/* Export log JSON+CSV */
 function exportLog(){
-  if(history.length===0){ alert('Chưa có dữ liệu.'); return; }
+  if(history.length === 0){ alert('Chưa có dữ liệu.'); return; }
   const jsonBlob = new Blob([JSON.stringify(history, null, 2)], { type: 'application/json' });
   const csv = history.map(r=>`"${r.ts}","${r.team}","${r.pot}","${r.pairIndex}","${r.side}"`).join('\n');
   const csvBlob = new Blob([csv], { type: 'text/csv' });
   downloadBlob(jsonBlob, 'vh_draw_log.json'); downloadBlob(csvBlob, 'vh_draw_log.csv');
 }
-function downloadBlob(blob, filename){ const a=document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = filename; document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 500); }
+function downloadBlob(blob, filename){ const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = filename; document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 600); }
 
 /* helpers */
 function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
 
 /* UI wiring */
-dismissReveal.addEventListener('click', onDismiss);
-keepReveal.addEventListener('click', ()=>{ lastLocked = true; });
-document.addEventListener('keydown', (e)=>{
-  if(e.key === 'u') undoLast();
-  if(e.key === 'x') exportLog();
-  if(e.code === 'Space' || e.key === 'Enter'){
-    // if overlay visible and not locked: act as dismiss
-    if(revealOverlay.style.display === 'flex' && !lastLocked){
-      onDismiss();
-    } else if(revealOverlay.style.display === 'flex' && lastLocked){
-      // do nothing when locked
-    }
-  }
-});
 btnUndo.addEventListener('click', undoLast);
 btnExport.addEventListener('click', exportLog);
 btnObs.addEventListener('click', ()=>{
@@ -527,17 +495,23 @@ btnObs.addEventListener('click', ()=>{
   if(!on){ document.querySelectorAll('.controls, .btn').forEach(x=>x.classList.add('obsHide')); document.body.style.background='transparent'; btnObs.textContent='OBS: ON'; }
   else { document.querySelectorAll('.controls, .btn').forEach(x=>x.classList.remove('obsHide')); document.body.style.background=''; btnObs.textContent='OBS: OFF'; }
 });
-musicToggle.addEventListener('change', (e)=>{ if(e.target.checked) audioBG.play(); else audioBG.pause(); });
+musicToggle.addEventListener('change', (e)=> { if(e.target.checked) audioBG.play(); else audioBG.pause(); });
+
+/* keyboard shortcuts */
+window.addEventListener('keydown', async (e)=>{
+  if(e.key === '1') await drawFromPot(0);
+  if(e.key === '2') await drawFromPot(1);
+  if(e.key === '3') await drawFromPot(2);
+  if(e.key === 'u') undoLast();
+  if(e.key === 'x') exportLog();
+  if(e.code === 'Space' || e.key === 'Enter'){
+    if(revealOverlay.style.display === 'flex' && !lastLocked) onDismissHandler();
+  }
+});
 
 /* init */
 (async function init(){
   await loadTeams();
-  // keyboard quick draws
-  window.addEventListener('keydown', async (e)=>{
-    if(e.key === '1') await drawFromPot(0);
-    if(e.key === '2') await drawFromPot(1);
-    if(e.key === '3') await drawFromPot(2);
-  });
 })();
 </script>
 </body>
