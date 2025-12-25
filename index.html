@@ -3,18 +3,23 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Viet Haxball Cup | SS14 - Bốc Thăm (Gradient per Pot)</title>
+<title>Viet Haxball Cup | SS14 — Live Draw (Ultra Cinematic)</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;800&family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#031224; --accent:#00c2ff; --gold:#ffd54d; --muted:#9fb8cc;
-  --high-contrast: #ffffff;
+  --bg:#031224;
+  --accent:#00c2ff;
+  --gold:#ffd54d;
+  --muted:#9fb8cc;
+  --contrast:#ffffff;
+  --potA-from:#00c2ff; --potA-to:#0086d1;
+  --potB-from:#ffd54d; --potB-to:#ff9b1a;
+  --potC-from:#7ef0c7; --potC-to:#00b39f;
 }
-
 /* reset + viewport lock */
 *{box-sizing:border-box}
 html,body{height:100%;margin:0;overflow:hidden;background:linear-gradient(180deg,#021826,#031224);font-family:Inter,system-ui,Roboto,Arial;color:#e8f9ff}
-.container{height:100vh;display:grid;grid-template-rows:10vh 38vh 22vh 30vh;gap:10px;padding:12px;max-width:1920px;margin:0 auto}
+.container{height:100vh;display:grid;grid-template-rows:10vh 40vh 20vh 30vh;gap:10px;padding:12px;max-width:1920px;margin:0 auto}
 
 /* header */
 .header{display:flex;align-items:center;justify-content:space-between;padding:6px 18px}
@@ -38,54 +43,22 @@ html,body{height:100%;margin:0;overflow:hidden;background:linear-gradient(180deg
 /* reveal region (main small card visible during stream) */
 .reveal-zone{display:flex;align-items:center;justify-content:center}
 .reveal-card{width:80%;height:90%;border-radius:14px;background:linear-gradient(180deg,#022c34,#03282f);display:flex;align-items:center;justify-content:center;gap:24px;padding:22px;box-shadow:0 40px 160px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.03)}
-.reveal-ball{width:220px;height:220px;border-radius:50%;display:grid;place-items:center;font-family:Orbitron;font-weight:900;font-size:28px;color:#021322;box-shadow:0 60px 200px rgba(0,0,0,0.6)}
-.reveal-text{color:#dff7ff;font-size:20px;font-weight:700;text-align:left}
+.reveal-ball{width:220px;height:220px;border-radius:50%;display:grid;place-items:center;font-family:Orbitron;font-weight:900;font-size:28px;background:linear-gradient(180deg,var(--potA-from),var(--potA-to));color:#021322;box-shadow:0 60px 200px rgba(0,0,0,0.6)}
+.reveal-text{color:#dff7ff;font-size:20px;font-weight:700;text-align:left;min-width:320px}
 
 /* pots bottom */
 .pots-row{display:flex;align-items:center;justify-content:space-around;gap:20px;padding:8px;height:100%}
 .pot{width:30%;height:100%;border-radius:12px;background:linear-gradient(180deg,#072b38,#063246);border:1px solid rgba(255,255,255,0.03);display:flex;flex-direction:column;align-items:center;padding:12px;position:relative;box-shadow:0 18px 60px rgba(0,0,0,0.6)}
 .pot h4{margin:0;color:var(--gold);font-family:Orbitron;font-weight:700}
-.pot-bowl{width:100%;flex:1;display:flex;align-items:center;justify-content:space-evenly;gap:10px;flex-wrap:nowrap}
-.ball{width:84px;height:84px;border-radius:50%;display:grid;place-items:center;font-weight:900;color:#021322;box-shadow:0 30px 100px rgba(0,0,0,0.6);cursor:pointer;border:4px solid rgba(255,255,255,0.9)}
+.pot-bowl{width:100%;flex:1;display:flex;align-items:center;justify-content:space-evenly;gap:12px;flex-wrap:nowrap}
+.ball{width:84px;height:84px;border-radius:50%;display:grid;place-items:center;font-weight:900;color:#021322;box-shadow:0 30px 100px rgba(0,0,0,0.6);cursor:pointer;border:4px solid rgba(255,255,255,0.9);transition:transform .18s ease}
+.ball:active{transform:scale(.98)}
 .ball.hidden{color:transparent; /* keep symbol invisible until reveal */ box-shadow:0 30px 100px rgba(0,0,0,0.6), inset 0 0 40px rgba(255,255,255,0.02)}
+/* distinct pot gradients (colorblind-friendly contrast + border) */
+.ball.potA{background:linear-gradient(180deg,var(--potA-from),var(--potA-to)); border-color: #fff;}
+.ball.potB{background:linear-gradient(180deg,var(--potB-from),var(--potB-to)); border-color: #000000;}
+.ball.potC{background:linear-gradient(180deg,var(--potC-from),var(--potC-to)); border-color: #fff;}
 .pot .count{position:absolute;right:12px;bottom:12px;color:var(--muted);font-size:13px}
-
-/* === per-pot gradients & accessible patterns === */
-/* Pot A: cyan-blue gradient (high contrast) */
-.ball.pot-a{
-  background-image:
-    radial-gradient(circle at 20% 20%, rgba(255,255,255,0.12), rgba(255,255,255,0) 25%),
-    linear-gradient(135deg,#00d1ff 0%, #0088d1 100%);
-  border-color:#ffffff;
-  outline: 3px solid rgba(0,0,0,0.12);
-}
-/* Pot B: warm yellow-gold gradient (distinct) */
-.ball.pot-b{
-  background-image:
-    radial-gradient(circle at 80% 20%, rgba(255,255,255,0.12), rgba(255,255,255,0) 25%),
-    linear-gradient(135deg,#ffd54d 0%, #ff9a00 100%);
-  border-color:#ffffff;
-  outline: 3px solid rgba(0,0,0,0.12);
-}
-/* Pot C: green-teal gradient (distinct) */
-.ball.pot-c{
-  background-image:
-    radial-gradient(circle at 30% 70%, rgba(255,255,255,0.12), rgba(255,255,255,0) 25%),
-    linear-gradient(135deg,#7cffb2 0%, #00b07a 100%);
-  border-color:#ffffff;
-  outline: 3px solid rgba(0,0,0,0.12);
-}
-
-/* Add subtle pattern lines (help colorblind) */
-.ball.pot-a::after, .ball.pot-b::after, .ball.pot-c::after{
-  content: '';
-  position: absolute;
-  width: 90%; height: 90%;
-  border-radius: 50%;
-  background-image: repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0 4px, rgba(255,255,255,0) 4px 12px);
-  mix-blend-mode: overlay;
-  pointer-events:none;
-}
 
 /* confetti */
 .confetti{position:fixed;left:0;top:0;right:0;bottom:0;pointer-events:none;z-index:9999}
@@ -93,7 +66,7 @@ html,body{height:100%;margin:0;overflow:hidden;background:linear-gradient(180deg
 /* reveal overlay (big) */
 .reveal-overlay{position:fixed;left:0;top:0;right:0;bottom:0;display:flex;align-items:center;justify-content:center;pointer-events:auto;z-index:12000}
 .reveal-full{width:min(980px,94%);height:460px;border-radius:14px;background:linear-gradient(180deg,#012022,#02242a);display:flex;align-items:center;justify-content:center;gap:24px;padding:20px;box-shadow:0 60px 200px rgba(0,0,0,0.7);border:1px solid rgba(255,255,255,0.04)}
-.reveal-full .rball{width:320px;height:320px;border-radius:50%;display:grid;place-items:center;font-family:Orbitron;font-weight:900;font-size:34px;background:linear-gradient(180deg,#00e0ff,#006fb8);color:#021322;box-shadow:0 80px 260px rgba(0,0,0,0.7)}
+.reveal-full .rball{width:320px;height:320px;border-radius:50%;display:grid;place-items:center;font-family:Orbitron;font-weight:900;font-size:34px;background:linear-gradient(180deg,var(--potA-from),var(--potA-to));color:#021322;box-shadow:0 80px 260px rgba(0,0,0,0.7)}
 .reveal-full .rtext{color:#e6fffe;font-weight:800;font-size:20px}
 
 /* ========== cinematic effects ========== */
@@ -167,20 +140,23 @@ html,body{height:100%;margin:0;overflow:hidden;background:linear-gradient(180deg
   <audio id="audioBG" src="assets/epic.mp3" preload="auto" loop></audio>
 
 <script>
-/* Ultra cinematic live draw — FINAL with per-pot gradient colors
-   - balls per pot: pot-a (cyan), pot-b (gold), pot-c (green)
-   - balls are hidden (no name), removed when drawn
-   - reveal overlay shows logo/name; dismiss -> drop to bracket and main reveal shows logo+name
+/* Ultra cinematic final index.html
+   - distinct gradient per pot: potA (blue), potB (gold/orange), potC (teal)
+   - balls hidden (no names), removed when drawn
+   - random bracket assignment (respecting pot lock constraints)
+   - reveal overlay: epic spin -> reveal -> dismiss -> drop to bracket
+   - after dismiss: main reveal area shows logo/name persistently
+   - Undo / Export / OBS / Music toggle
 */
 
 const MAX = 14;
 let teams = [];
-let pots = [[],[],[]]; // each item: {id,name,logo,pot}
-let history = []; // entries for export
+let pots = [[],[],[]];
+let history = []; // {ts, team, pot, pairIndex, side}
 let lastLocked = false;
 let currentDraw = null; // {team,assigned,fromPot,ts}
 
-/* DOM */
+/* DOM refs */
 const pairGrid = document.getElementById('pairGrid');
 const bowlA = document.getElementById('bowlA'), bowlB = document.getElementById('bowlB'), bowlC = document.getElementById('bowlC');
 const countA = document.getElementById('countA'), countB = document.getElementById('countB'), countC = document.getElementById('countC');
@@ -196,14 +172,21 @@ function idGen(){ return 't'+Math.random().toString(36).slice(2,9); }
 function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
 function play(a){ try{ a.currentTime = 0; a.play(); }catch(e){} }
 
-/* load teams.json */
+/* fetch teams.json (same folder) */
 async function loadTeams(){
   try{
     const res = await fetch('teams.json', {cache:'no-store'});
     const data = await res.json();
     teams = data.slice(0, MAX).map((t,i)=>({ id:idGen(), name:t.name||`Đội ${i+1}`, logo:t.logo||'' }));
   }catch(e){
-    teams = Array.from({length:MAX},(_,i)=>({ id:idGen(), name:`Đội ${i+1}`, logo:'' }));
+    // fallback demo
+    teams = [
+      {id:idGen(),name:'Haxball Kings',logo:''},{id:idGen(),name:'Viet Stars',logo:''},{id:idGen(),name:'Legends United',logo:''},
+      {id:idGen(),name:'Fireballs',logo:''},{id:idGen(),name:'Thunder FC',logo:''},{id:idGen(),name:'Neon Tigers',logo:''},
+      {id:idGen(),name:'Rising Suns',logo:''},{id:idGen(),name:'Phantom XI',logo:''},{id:idGen(),name:'Ghosts',logo:''},
+      {id:idGen(),name:'Red Dragons',logo:''},{id:idGen(),name:'Blue Waves',logo:''},{id:idGen(),name:'Silver Storm',logo:''},
+      {id:idGen(),name:'Golden Eagles',logo:''},{id:idGen(),name:'Black Panthers',logo:''}
+    ];
   }
   preparePots();
 }
@@ -230,38 +213,39 @@ function buildPairs(){
   pairGrid.innerHTML = '';
   for(let i=0;i<7;i++){
     const el = document.createElement('div'); el.className='pair'; el.dataset.i=i;
-    el.innerHTML = `<div class="pair-row"><div class="slot"><div class="mini" id="mini-${i}-0">${i*2+1}</div><div class="name" id="n-${i}-0"><span class="placeholder">???</span></div></div><div class="vs">VS</div><div class="slot"><div class="name" id="n-${i}-1"><span class="placeholder">???</span></div><div class="mini" id="mini-${i}-1">${i*2+2}</div></div></div>`;
+    el.innerHTML = `<div class="pair-row">
+      <div class="slot"><div class="mini" id="mini-${i}-0">${i*2+1}</div><div class="name" id="n-${i}-0"><span class="placeholder">???</span></div></div>
+      <div class="vs">VS</div>
+      <div class="slot"><div class="name" id="n-${i}-1"><span class="placeholder">???</span></div><div class="mini" id="mini-${i}-1">${i*2+2}</div></div>
+      </div>`;
     pairGrid.appendChild(el);
   }
 }
 
-/* render pots — balls hidden (no names) and per-pot classes */
+/* render pots — balls are bright gradients and hidden (no text) */
 function renderPots(){
   bowlA.innerHTML = ''; bowlB.innerHTML=''; bowlC.innerHTML='';
   pots[0].forEach((t,idx)=> {
     const b = document.createElement('div');
-    b.className = 'ball hidden pot-a';
+    b.className = 'ball potA hidden';
     b.dataset.tid = t.id; b.dataset.p = 0; b.dataset.i = idx;
     b.setAttribute('aria-label', `Bóng Pot A vị trí ${idx+1}`);
-    b.textContent = '';
     b.addEventListener('click', onBallClick);
     bowlA.appendChild(b);
   });
   pots[1].forEach((t,idx)=> {
     const b = document.createElement('div');
-    b.className = 'ball hidden pot-b';
+    b.className = 'ball potB hidden';
     b.dataset.tid = t.id; b.dataset.p = 1; b.dataset.i = idx;
     b.setAttribute('aria-label', `Bóng Pot B vị trí ${idx+1}`);
-    b.textContent = '';
     b.addEventListener('click', onBallClick);
     bowlB.appendChild(b);
   });
   pots[2].forEach((t,idx)=> {
     const b = document.createElement('div');
-    b.className = 'ball hidden pot-c';
+    b.className = 'ball potC hidden';
     b.dataset.tid = t.id; b.dataset.p = 2; b.dataset.i = idx;
     b.setAttribute('aria-label', `Bóng Pot C vị trí ${idx+1}`);
-    b.textContent = '';
     b.addEventListener('click', onBallClick);
     bowlC.appendChild(b);
   });
@@ -275,14 +259,14 @@ function updateCounts(){
   countC.textContent = `${pots[2].length} đội`;
 }
 
-/* draw random from pot via keyboard or click */
+/* draw random from pot (keyboard) */
 async function drawFromPot(potIndex){
-  if(!pots[potIndex] || pots[potIndex].length===0) return;
-  const i = Math.floor(Math.random() * pots[potIndex].length);
+  if(!pots[potIndex] || pots[potIndex].length === 0) return;
+  const i = Math.floor(Math.random()*pots[potIndex].length);
   await doDraw(potIndex, i);
 }
 
-/* onBallClick */
+/* on ball click -> draw specific */
 async function onBallClick(e){
   const el = e.currentTarget;
   const potIndex = parseInt(el.dataset.p);
@@ -295,16 +279,23 @@ async function onBallClick(e){
 
 /* core draw flow */
 async function doDraw(potIndex, idxInPot){
-  const team = pots[potIndex].splice(idxInPot,1)[0]; // remove immediately
-  renderPots(); // update UI so ball disappears
-  const assigned = chooseRandomValidSlot(team); // random valid slot respecting pot rules
+  // remove ball from pot immediate (no longer clickable)
+  const team = pots[potIndex].splice(idxInPot,1)[0];
+  renderPots();
+
+  // choose random valid slot respecting pot constraints
+  const assigned = chooseRandomValidSlot(team);
+
+  // record current draw but DO NOT fill bracket yet
   currentDraw = { team, assigned, fromPot: potIndex, ts: new Date().toISOString() };
   history.push({ ts: currentDraw.ts, team: team.name, pot: team.pot, pairIndex: assigned ? assigned.pairIndex : null, side: assigned ? assigned.side : null });
+
+  // cinematic overlay reveal
   await cinematicRevealSequence(team);
-  // overlay remains until dismiss -> dismiss handler will place into bracket & update main reveal
+  // Wait for dismiss to drop into bracket (handled in dismiss handler)
 }
 
-/* choose random valid slot (mixing/random) */
+/* choose random valid slot (random among valid candidates) */
 function chooseRandomValidSlot(team){
   const candidates = [];
   for(let i=0;i<7;i++){
@@ -312,82 +303,86 @@ function chooseRandomValidSlot(team){
     const rightEl = document.getElementById(`n-${i}-1`);
     const leftText = leftEl ? leftEl.textContent : '';
     const rightText = rightEl ? rightEl.textContent : '';
-    if(leftEl && leftText.includes('???')){
-      if(!rightText || rightText.includes('???')) candidates.push({pairIndex:i,side:0});
-      else { if(String(rightEl.dataset.pot) !== String(team.pot)) candidates.push({pairIndex:i,side:0}); }
+    // left possible?
+    if(leftEl && (leftText.includes('???'))){
+      if(!rightText || rightText.includes('???')) candidates.push({pairIndex:i, side:0});
+      else {
+        const rp = rightEl.dataset.pot;
+        if(String(rp) !== String(team.pot)) candidates.push({pairIndex:i, side:0});
+      }
     }
-    if(rightEl && rightText.includes('???'){
-      ){
-      if(!leftText || leftText.includes('???')) candidates.push({pairIndex:i,side:1});
-      else { if(String(leftEl.dataset.pot) !== String(team.pot)) candidates.push({pairIndex:i,side:1}); }
+    // right possible?
+    if(rightEl && (rightText.includes('???'))){
+      if(!leftText || leftText.includes('???')) candidates.push({pairIndex:i, side:1});
+      else {
+        const lp = leftEl.dataset.pot;
+        if(String(lp) !== String(team.pot)) candidates.push({pairIndex:i, side:1});
+      }
     }
   }
-  // fallback any empty
   if(candidates.length === 0){
+    // fallback: any empty slot
     for(let i=0;i<7;i++){
       const l = document.getElementById(`n-${i}-0`), r = document.getElementById(`n-${i}-1`);
-      if(l && l.textContent.includes('???')) return {pairIndex:i,side:0};
-      if(r && r.textContent.includes('???')) return {pairIndex:i,side:1};
+      if(l && l.textContent.includes('???')) return {pairIndex:i, side:0};
+      if(r && r.textContent.includes('???')) return {pairIndex:i, side:1};
     }
     return {pairIndex:null, side:null};
   }
   return candidates[Math.floor(Math.random()*candidates.length)];
 }
 
-/* cinematic reveal overlay */
+/* cinematic overlay reveal sequence (epic) */
 async function cinematicRevealSequence(team){
-  // small center card
+  // small center: quick suspense
   revealBall.textContent = '...';
   revealText.textContent = 'MỞ QUẢ BÓNG...';
   play(audioDrum);
   await sleep(800);
 
-  // overlay spin + gasps
+  // overlay spin/explosion
   rball.textContent = '?';
   rtext.textContent = 'ĐANG MỞ QUẢ BÓNG...';
+  // set overlay ball gradient depending on pot for visual consistency
+  const potClass = team.pot === 0 ? 'potA' : team.pot === 1 ? 'potB' : 'potC';
+  rball.className = 'rball ' + potClass;
+  // show overlay
   revealOverlay.style.display = 'flex';
-  // pick gradient based on pot for overlay rball background accent (makes it obvious which pot)
-  if(team.pot === 0) rball.style.background = 'linear-gradient(180deg,#00d1ff,#0088d1)';
-  else if(team.pot === 1) rball.style.background = 'linear-gradient(180deg,#ffd54d,#ff9a00)';
-  else rball.style.background = 'linear-gradient(180deg,#7cffb2,#00b07a)';
+  // spin + explosion
   rball.style.animation = 'ballUltraSpin 2.4s cubic-bezier(.1,.9,.2,1), ballExplosion 1.4s ease-in-out';
   play(audioGasp);
   await sleep(1800);
   play(audioPop);
   await sleep(600);
 
-  // show logo or name big
+  // reveal name/logo in overlay
   if(team.logo){
     rball.style.backgroundImage = `url("${team.logo}")`;
     rball.style.backgroundSize = 'cover';
     rball.textContent = '';
   } else {
+    rball.style.backgroundImage = '';
     rball.textContent = team.name;
-    rball.style.color = '#021322';
   }
   rball.style.animation = 'textRevealEpic 0.9s ease-out';
   rtext.textContent = `CLAN: ${team.name}`;
   play(audioApplause);
   burstConfetti(120);
   cameraShake();
-  // overlay remains until dismiss (handled by dismiss handler)
+  // now overlay stays visible until user dismisses; drop happens in onDismissHandler
 }
 
-/* dismiss handler: animate drop into bracket and update main reveal */
+/* when Dismiss pressed (or Space/Enter) -> animate drop to bracket and update main reveal */
 async function onDismissHandler(){
-  if(!currentDraw){
-    revealOverlay.style.display='none';
-    return;
-  }
-  // fly to bracket
+  if(!currentDraw){ revealOverlay.style.display = 'none'; return; }
   const assigned = currentDraw.assigned;
   if(assigned && assigned.pairIndex !== null){
     const targetEl = document.getElementById(`n-${assigned.pairIndex}-${assigned.side}`);
-    // floating label
+    // build float element (logo + name)
     const float = document.createElement('div');
     float.style.position = 'fixed';
-    float.style.left = (window.innerWidth/2 - 120) + 'px';
-    float.style.top = (window.innerHeight/2 - 40) + 'px';
+    float.style.left = (window.innerWidth/2 - 160) + 'px';
+    float.style.top = (window.innerHeight/2 - 80) + 'px';
     float.style.padding = '10px 18px';
     float.style.borderRadius = '8px';
     float.style.background = 'linear-gradient(180deg,#ffffff,#f6f6f6)';
@@ -395,10 +390,10 @@ async function onDismissHandler(){
     float.style.fontWeight = '800';
     float.style.boxShadow = '0 18px 60px rgba(0,0,0,0.6)';
     float.style.zIndex = 14000;
+
     if(currentDraw.team.logo){
       const img = document.createElement('img');
-      img.src = currentDraw.team.logo;
-      img.style.height = '28px'; img.style.marginRight = '8px'; img.style.verticalAlign = 'middle';
+      img.src = currentDraw.team.logo; img.style.height = '30px'; img.style.marginRight = '10px'; img.style.verticalAlign = 'middle';
       float.appendChild(img);
       const txt = document.createElement('span'); txt.textContent = currentDraw.team.name; float.appendChild(txt);
     } else {
@@ -406,21 +401,23 @@ async function onDismissHandler(){
     }
     document.body.appendChild(float);
 
+    // compute travel
     const fromRect = float.getBoundingClientRect();
     const toRect = targetEl.getBoundingClientRect();
     const dx = (toRect.left + toRect.width/2) - (fromRect.left + fromRect.width/2);
     const dy = (toRect.top + toRect.height/2) - (fromRect.top + fromRect.height/2);
 
-    float.animate([{ transform: 'translate(0, -10px) scale(1.05)', opacity:1 }, { transform: `translate(${dx}px, ${dy}px) scale(0.9)`, opacity:0}], { duration:900, easing:'cubic-bezier(.22,.9,.25,1)'});
+    float.animate([{ transform: 'translate(0, -10px) scale(1.05)', opacity:1 }, { transform: `translate(${dx}px, ${dy}px) scale(0.9)`, opacity:0}], { duration:900, easing:'cubic-bezier(.22,.9,.25,1)' });
     await sleep(920);
 
+    // set bracket text + store pot
     targetEl.textContent = currentDraw.team.name;
     targetEl.dataset.pot = currentDraw.team.pot;
     targetEl.style.animation = 'dropFade .6s ease-out, bracketGlowStrong 1.2s ease-out';
     try{ float.remove(); }catch(e){}
   }
 
-  // update main small reveal to persist logo + name
+  // update small main reveal card to show persistent logo + name
   if(currentDraw.team.logo){
     revealBall.style.backgroundImage = `url("${currentDraw.team.logo}")`;
     revealBall.style.backgroundSize = 'cover';
@@ -431,24 +428,25 @@ async function onDismissHandler(){
   }
   revealText.textContent = currentDraw.team.name;
 
-  // finalize
+  // hide overlay
   revealOverlay.style.display = 'none';
+  // finalize last history entry already created in doDraw
   currentDraw = null;
 }
 
-/* setup dismiss listeners */
-function waitForDismissSetup(){
+/* setup dismiss listeners (click + keys) */
+function setupDismiss(){
   dismissReveal.addEventListener('click', onDismissHandler);
   keepReveal.addEventListener('click', ()=>{ lastLocked = true; });
-  window.addEventListener('keydown', function onKey(e){
-    if((e.code === 'Space' || e.key === 'Enter') && revealOverlay.style.display === 'flex' && !lastLocked){
-      onDismissHandler();
+  window.addEventListener('keydown', (e)=>{
+    if(e.code === 'Space' || e.key === 'Enter'){
+      if(revealOverlay.style.display === 'flex' && !lastLocked) onDismissHandler();
     }
   });
 }
-waitForDismissSetup();
+setupDismiss();
 
-/* mini countdown */
+/* mini countdown (visual on small reveal card) */
 async function miniCountdown(sec=2){
   revealText.textContent = 'Chuẩn bị...';
   play(audioDrum);
@@ -480,17 +478,20 @@ function cameraShake(){
   setTimeout(()=> app.style.animation = 'none', 440);
 }
 
-/* undo last */
+/* Undo last: remove last history and return to pot */
 function undoLast(){
   if(history.length === 0) return;
   const last = history.pop();
+  // remove from bracket
   for(let i=0;i<7;i++){
     for(let s=0;s<2;s++){
       const el = document.getElementById(`n-${i}-${s}`);
       if(el && el.textContent === last.team){
         el.textContent = '???';
         delete el.dataset.pot;
-        pots[last.pot].push({ id:idGen(), name:last.team, logo:'' , pot:last.pot });
+        // return to pot array
+        const pIndex = last.pot;
+        pots[pIndex].push({ id:idGen(), name:last.team, logo:'', pot:pIndex });
         renderPots();
         return;
       }
@@ -498,7 +499,7 @@ function undoLast(){
   }
 }
 
-/* export log */
+/* Export to JSON+CSV */
 function exportLog(){
   if(history.length === 0){ alert('Chưa có dữ liệu.'); return; }
   const jsonBlob = new Blob([JSON.stringify(history, null, 2)], { type: 'application/json' });
@@ -512,12 +513,19 @@ function downloadBlob(blob, filename){ const a = document.createElement('a'); a.
 function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
 
 /* UI wiring */
-btnUndo.addEventListener('click', undoLast);
-btnExport.addEventListener('click', exportLog);
+btnUndo.addEventListener('click', ()=> { undoLast(); });
+btnExport.addEventListener('click', ()=> { exportLog(); });
 btnObs.addEventListener('click', ()=>{
   const on = document.body.style.background === 'transparent';
-  if(!on){ document.querySelectorAll('.controls, .btn').forEach(x=>x.classList.add('obsHide')); document.body.style.background='transparent'; btnObs.textContent='OBS: ON'; }
-  else { document.querySelectorAll('.controls, .btn').forEach(x=>x.classList.remove('obsHide')); document.body.style.background=''; btnObs.textContent='OBS: OFF'; }
+  if(!on){
+    document.querySelectorAll('.controls, .btn').forEach(x=>x.classList.add('obsHide'));
+    document.body.style.background='transparent';
+    btnObs.textContent='OBS: ON';
+  } else {
+    document.querySelectorAll('.controls, .btn').forEach(x=>x.classList.remove('obsHide'));
+    document.body.style.background='';
+    btnObs.textContent='OBS: OFF';
+  }
 });
 musicToggle.addEventListener('change', (e)=> { if(e.target.checked) audioBG.play(); else audioBG.pause(); });
 
@@ -528,11 +536,21 @@ window.addEventListener('keydown', async (e)=>{
   if(e.key === '3') await drawFromPot(2);
   if(e.key === 'u') undoLast();
   if(e.key === 'x') exportLog();
-  if((e.code === 'Space' || e.key === 'Enter') && revealOverlay.style.display === 'flex' && !lastLocked) onDismissHandler();
+  if((e.code === 'Space' || e.key === 'Enter') && revealOverlay.style.display === 'flex' && !lastLocked){
+    onDismissHandler();
+  }
 });
 
 /* init */
 (async function init(){
+  // set CSS variables for pot colors (in case you want to change easily)
+  document.documentElement.style.setProperty('--potA-from', '#00c2ff');
+  document.documentElement.style.setProperty('--potA-to', '#0086d1');
+  document.documentElement.style.setProperty('--potB-from', '#ffd54d');
+  document.documentElement.style.setProperty('--potB-to', '#ff9b1a');
+  document.documentElement.style.setProperty('--potC-from', '#7ef0c7');
+  document.documentElement.style.setProperty('--potC-to', '#00b39f');
+
   await loadTeams();
 })();
 </script>
