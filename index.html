@@ -1,69 +1,76 @@
 <!doctype html>
 <html lang="vi">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Viet Haxball Cup | SS14</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Viet Haxball Cup | SS14 — Draw Manager (Ultra Cinematic)</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;800&family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#031224; --accent:#00c2ff; --gold:#ffd54d; --muted:#9fb8cc;
-  --potA-from:#00d1ff; --potA-to:#0086d1;
-  --potB-from:#ffd54d; --potB-to:#ff8c00;
-  --potC-from:#7ef07e; --potC-to:#2fb84f;
+  --bg:#031224; --accent:#00c2ff; --gold:#ffd54d; --muted:#9fb8cc; --high:#ffffff;
+  --potA-start:#00c2ff; --potA-end:#0077cc;
+  --potB-start:#ffd54d; --potB-end:#ff8c00;
+  --potC-start:#8ef08a; --potC-end:#3aa648;
 }
 *{box-sizing:border-box}
 html,body{height:100%;margin:0;overflow:hidden;background:linear-gradient(180deg,#021826,#031224);font-family:Inter,system-ui,Roboto,Arial;color:#e8f9ff}
-.container{height:100vh;display:grid;grid-template-rows:10vh 38vh 22vh 30vh;gap:10px;padding:12px;max-width:1920px;margin:0 auto}
+.container{height:100vh;display:grid;grid-template-rows:10vh 36vh 22vh 32vh;gap:10px;padding:12px;max-width:1920px;margin:0 auto}
 
 /* header */
 .header{display:flex;align-items:center;justify-content:space-between;padding:6px 18px}
 .brand{font-family:Orbitron;font-weight:800;color:var(--accent);font-size:20px}
 .controls{display:flex;gap:8px;align-items:center}
+.smallbtn{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted);padding:8px 10px;border-radius:10px;cursor:pointer;font-weight:700}
 .btn{background:var(--accent);color:#021322;border:none;padding:10px 12px;border-radius:10px;font-weight:800;cursor:pointer}
-.btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)}
-.toggle{color:var(--muted);font-size:13px}
+.label{font-size:13px;color:var(--muted)}
+
+/* layout left panel - settings (overlay into top of bracket) */
+.settings {
+  position:absolute; left:18px; top:72px; width:360px; z-index:120;
+  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius:12px;padding:12px;border:1px solid rgba(255,255,255,0.03);
+  box-shadow:0 20px 60px rgba(0,0,0,0.6);
+}
+.settings h4{margin:0 0 8px 0;font-family:Orbitron;color:var(--gold);font-size:14px}
+.row{display:flex;gap:8px;align-items:center;margin-bottom:8px}
+.input{width:100%;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.02);color:#eaf6ff}
 
 /* bracket */
-.bracket{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border-radius:12px;padding:12px;box-shadow:0 28px 80px rgba(0,0,0,0.6);overflow:hidden}
-.bracket .title{font-family:Orbitron;color:var(--gold);font-weight:700;font-size:18px}
+.bracket{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border-radius:12px;padding:12px;box-shadow:0 28px 80px rgba(0,0,0,0.6);overflow:hidden;position:relative}
+.bracket .title{font-family:Orbitron;color:var(--gold);font-weight:700;font-size:16px}
 .pair-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;height:100%;align-content:start}
-.pair{background:linear-gradient(180deg,rgba(255,255,255,0.01),transparent);padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);min-height:64px;display:flex;flex-direction:column;justify-content:center}
+.pair{background:linear-gradient(180deg,rgba(255,255,255,0.01),transparent);padding:8px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);min-height:64px;display:flex;flex-direction:column;justify-content:center}
 .pair-row{display:flex;align-items:center;justify-content:space-between}
 .slot{display:flex;gap:10px;align-items:center}
 .mini{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(180deg,#022434,#05354a);color:var(--muted);font-weight:800}
 .name{font-weight:800;color:#dff7ff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .vs{color:var(--muted);font-weight:800}
 
-/* reveal region (main small card visible during stream) */
+/* reveal region (main visible) */
 .reveal-zone{display:flex;align-items:center;justify-content:center}
-.reveal-card{width:80%;height:90%;border-radius:14px;background:linear-gradient(180deg,#022c34,#03282f);display:flex;align-items:center;justify-content:center;gap:24px;padding:22px;box-shadow:0 40px 160px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.03)}
-.reveal-ball{width:220px;height:220px;border-radius:50%;display:grid;place-items:center;font-family:Orbitron;font-weight:900;font-size:28px;background:linear-gradient(180deg,var(--potA-from),var(--potA-to));color:#021322;box-shadow:0 60px 200px rgba(0,0,0,0.6);position:relative;overflow:hidden}
-.reveal-ball img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:block}
-.reveal-ball .text{position:absolute;font-weight:900;color:#021322;z-index:2}
+.reveal-card{width:78%;height:90%;border-radius:14px;background:linear-gradient(180deg,#022c34,#03282f);display:flex;align-items:center;justify-content:flex-start;gap:22px;padding:22px;box-shadow:0 40px 160px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.03)}
+.reveal-ball{width:240px;height:240px;border-radius:50%;display:grid;place-items:center;font-family:Orbitron;font-weight:900;font-size:28px;background:linear-gradient(180deg,var(--potA-start),var(--potA-end));color:#021322;box-shadow:0 60px 200px rgba(0,0,0,0.6);position:relative;overflow:hidden}
+.reveal-ball img{max-width:86%;max-height:86%;object-fit:contain;display:block}
 .reveal-text{color:#dff7ff;font-size:20px;font-weight:700;text-align:left}
 
 /* pots bottom */
 .pots-row{display:flex;align-items:center;justify-content:space-around;gap:20px;padding:8px;height:100%}
 .pot{width:30%;height:100%;border-radius:12px;background:linear-gradient(180deg,#072b38,#063246);border:1px solid rgba(255,255,255,0.03);display:flex;flex-direction:column;align-items:center;padding:12px;position:relative;box-shadow:0 18px 60px rgba(0,0,0,0.6)}
 .pot h4{margin:0;color:var(--gold);font-family:Orbitron;font-weight:700}
-.pot-bowl{width:100%;flex:1;display:flex;align-items:center;justify-content:space-evenly;gap:10px;flex-wrap:nowrap}
-.ball{width:84px;height:84px;border-radius:50%;display:grid;place-items:center;font-weight:900;color:#021322;box-shadow:0 30px 100px rgba(0,0,0,0.6);cursor:pointer;border:4px solid rgba(255,255,255,0.85);overflow:hidden}
-.ball img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:block}
-.ball.pot-a{background:linear-gradient(180deg,var(--potA-from),var(--potA-to));}
-.ball.pot-b{background:linear-gradient(180deg,var(--potB-from),var(--potB-to));}
-.ball.pot-c{background:linear-gradient(180deg,var(--potC-from),var(--potC-to));}
-.ball.hidden{color:transparent; /* keep blank */}
+.pot-bowl{width:100%;flex:1;display:flex;align-items:center;justify-content:space-evenly;gap:12px;flex-wrap:nowrap}
+.ball{width:86px;height:86px;border-radius:50%;display:grid;place-items:center;font-weight:900;color:#021322;box-shadow:0 30px 100px rgba(0,0,0,0.6);cursor:pointer;overflow:hidden;border:3px solid rgba(255,255,255,0.07)}
+.ball img{max-width:78%;max-height:78%;object-fit:contain;display:block}
+.ball.hidden{background:linear-gradient(180deg,#0f4250,#08313b);color:transparent}
+.ball.potA{background:linear-gradient(180deg,var(--potA-start),var(--potA-end));}
+.ball.potB{background:linear-gradient(180deg,var(--potB-start),var(--potB-end));}
+.ball.potC{background:linear-gradient(180deg,var(--potC-start),var(--potC-end));}
 
-/* confetti */
-.confetti{position:fixed;left:0;top:0;right:0;bottom:0;pointer-events:none;z-index:9999}
-
-/* reveal overlay (big) */
-.reveal-overlay{position:fixed;left:0;top:0;right:0;bottom:0;display:flex;align-items:center;justify-content:center;pointer-events:auto;z-index:12000}
-.reveal-full{width:min(980px,94%);height:460px;border-radius:14px;background:linear-gradient(180deg,#012022,#02242a);display:flex;align-items:center;justify-content:center;gap:24px;padding:20px;box-shadow:0 60px 200px rgba(0,0,0,0.7);border:1px solid rgba(255,255,255,0.04)}
-.reveal-full .rball{width:320px;height:320px;border-radius:50%;display:grid;place-items:center;font-family:Orbitron;font-weight:900;font-size:34px;background:linear-gradient(180deg,#00e0ff,#006fb8);color:#021322;box-shadow:0 80px 260px rgba(0,0,0,0.7);overflow:hidden}
-.reveal-full .rball img{width:100%;height:100%;object-fit:cover;border-radius:50%}
-.reveal-full .rtext{color:#e6fffe;font-weight:800;font-size:20px}
+/* overlay reveal (big) */
+.reveal-overlay{position:fixed;left:0;top:0;right:0;bottom:0;display:flex;align-items:center;justify-content:center;pointer-events:auto;z-index:14000;background:linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.6))}
+.reveal-full{width:min(1080px,96%);height:520px;border-radius:14px;background:linear-gradient(180deg,#012022,#02242a);display:flex;align-items:center;justify-content:center;gap:28px;padding:20px;box-shadow:0 80px 320px rgba(0,0,0,0.75);border:1px solid rgba(255,255,255,0.04)}
+.rball{width:360px;height:360px;border-radius:50%;display:grid;place-items:center;font-family:Orbitron;font-weight:900;font-size:40px;background:linear-gradient(180deg,#00e0ff,#006fb8);color:#021322;overflow:hidden}
+.rball img{max-width:86%;max-height:86%;object-fit:contain}
+.rtext{color:#e6fffe;font-weight:800;font-size:20px}
 
 /* cinematic keyframes */
 @keyframes ballUltraSpin { 0%{transform:scale(.55)rotate(0)}40%{transform:scale(1.14)rotate(720deg)}70%{transform:scale(.98)rotate(1080deg)}100%{transform:scale(1)rotate(1440deg)} }
@@ -73,55 +80,92 @@ html,body{height:100%;margin:0;overflow:hidden;background:linear-gradient(180deg
 @keyframes bracketGlowStrong { 0%{box-shadow:0 0 0 rgba(255,213,77,0)}100%{box-shadow:0 0 30px rgba(255,213,77,1)} }
 @keyframes cameraShake { 0%{transform:translate(0,0)}20%{transform:translate(-6px,3px)}40%{transform:translate(5px,-3px)}60%{transform:translate(-3px,4px)}80%{transform:translate(2px,-1px)}100%{transform:translate(0,0)} }
 
-@media (max-width:1200px){ .pair-grid{grid-template-columns:repeat(2,1fr)} .pot{width:90%} .reveal-full{height:380px} .reveal-full .rball{width:220px;height:220px;font-size:20px} }
+/* small responsive */
+@media (max-width:1200px){ .pair-grid{grid-template-columns:repeat(2,1fr)} .settings{display:none} .pot{width:90%} .reveal-full{height:420px} .rball{width:260px;height:260px;font-size:22px} .reveal-ball{width:180px;height:180px} .reveal-card{flex-direction:column} }
 </style>
 </head>
 <body>
   <div class="container" id="app">
+    <!-- header -->
     <div class="header">
-      <div class="brand">Viet Haxball Cup | SS14 — Bốc Thăm</div>
+      <div class="brand">Viet Haxball Cup | SS14 — Draw Manager</div>
       <div class="controls">
-        <button id="btnExport" class="btn ghost">Export</button>
-        <button id="btnUndo" class="btn ghost">Undo</button>
-        <button id="btnObs" class="btn ghost">OBS: OFF</button>
-        <label class="toggle"><input id="musicToggle" type="checkbox"> Music</label>
+        <button id="btnExport" class="smallbtn">Export Log</button>
+        <button id="btnUndo" class="smallbtn">Undo</button>
+        <button id="btnClearPrev" class="smallbtn">Clear Prev Matches</button>
+        <label class="label" style="margin-left:8px">Cycle:
+          <select id="cycleSelect" class="input" style="margin-left:8px;padding:6px 8px">
+            <option value="cycle1">Cycle 1 — Random draw (N teams)</option>
+            <option value="c3_2">Cycle 3.2 — 8 teams → 4 matches</option>
+            <option value="c3_3">Cycle 3.3 — 6 teams → 3 matches</option>
+          </select>
+        </label>
       </div>
     </div>
 
+    <!-- bracket (main) -->
     <div class="bracket">
-      <div class="title">Bracket - Các cặp đấu</div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div class="title">Bracket</div>
+        <div style="color:var(--muted);font-size:13px">Previous pairs (avoided): <span id="prevCount">0</span></div>
+      </div>
       <div class="pair-grid" id="pairGrid"></div>
     </div>
 
+    <!-- reveal (MAIN small card) -->
     <div class="reveal-zone">
       <div class="reveal-card" id="revealCard" aria-hidden="true">
-        <div class="reveal-ball" id="revealBall">
-          <img id="revealLogo" alt="" style="display:none" />
-          <div class="text" id="revealBallText">...</div>
+        <div class="reveal-ball" id="revealBall"><!-- img or text inserted here --></div>
+        <div class="reveal-text" id="revealText">Chuẩn bị bốc...</div>
+      </div>
+
+      <!-- settings panel (on top-left) -->
+      <div class="settings" id="settingsPanel">
+        <h4>Setup & Teams</h4>
+
+        <div class="row">
+          <button id="loadTeamsBtn" class="smallbtn">Load teams.json</button>
+          <button id="pasteDefault" class="smallbtn">Default 14</button>
         </div>
-        <div class="reveal-text" id="revealText">MỞ QUẢ BÓNG...</div>
+
+        <div style="margin-bottom:8px">
+          <label class="label">Số đội dùng cho draw (N):</label>
+          <input id="teamsCount" class="input" type="number" min="2" max="14" value="14"/>
+        </div>
+
+        <div style="margin-bottom:8px">
+          <label class="label">Danh sách đội (mỗi dòng 1: Tên | logo_url)</label>
+          <textarea id="teamsInput" class="input" rows="6" placeholder="Ví dụ: Haxball Kings | https://.../logo.png"></textarea>
+        </div>
+
+        <div style="display:flex;gap:8px">
+          <button id="prepareBtn" class="btn">Prepare Draw</button>
+          <button id="startBtn" class="btn" style="background:#ff6b6b">Start Draw</button>
+        </div>
+
+        <div style="margin-top:8px;color:var(--muted);font-size:13px">
+          Chú ý: Cycle 3.2 & 3.3 cần chọn đúng số đội (8 hoặc 6). Tránh upload logo từ Discord nếu bị expired.
+        </div>
       </div>
     </div>
 
-    <div class="pots-row">
+    <!-- pots row -->
+    <div class="pots-row" id="potsRow">
       <div class="pot" id="potA"><h4>Pot A</h4><div class="pot-bowl" id="bowlA"></div><div class="count" id="countA">0</div></div>
       <div class="pot" id="potB"><h4>Pot B</h4><div class="pot-bowl" id="bowlB"></div><div class="count" id="countB">0</div></div>
       <div class="pot" id="potC"><h4>Pot C</h4><div class="pot-bowl" id="bowlC"></div><div class="count" id="countC">0</div></div>
     </div>
   </div>
 
-  <!-- overlay reveal -->
+  <!-- big overlay reveal (persistent) -->
   <div id="revealOverlay" class="reveal-overlay" style="display:none">
     <div class="reveal-full" id="revealFullCard" role="dialog">
-      <div class="rball" id="rball">
-        <img id="rballImg" alt="" style="display:none" />
-        <div id="rballText" style="position:absolute;z-index:2;font-weight:900;color:#021322">?</div>
-      </div>
+      <div class="rball" id="rball"><!-- img or text --></div>
       <div style="display:flex;flex-direction:column;gap:12px;align-items:flex-start;">
         <div class="rtext" id="rtext">Đang mở quả bóng...</div>
         <div style="display:flex;gap:8px;">
           <button id="dismissReveal" class="btn">Dismiss</button>
-          <button id="keepReveal" class="btn ghost">Keep</button>
+          <button id="keepReveal" class="smallbtn">Keep (lock)</button>
         </div>
       </div>
     </div>
@@ -137,289 +181,387 @@ html,body{height:100%;margin:0;overflow:hidden;background:linear-gradient(180deg
   <audio id="audioBG" src="assets/epic.mp3" preload="auto" loop></audio>
 
 <script>
-/* Full index.html script — final polished
-   - pot-specific gradients
-   - logos centered & cropped (object-fit:cover)
-   - reset small main reveal at start of each draw
-   - only show logo in main reveal after dismiss
-   - ball removed from pot immediately after click
-   - random valid bracket assignment (respect pot constraints)
+/* Full index.html script
+ - Supports Cycle1, Cycle3.2 (8 teams), Cycle3.3 (6 teams)
+ - Random bracket generation that avoids previous matches when possible
+ - Cinematic reveal per team; only after Dismiss the name drops into bracket
+ - Logos centered with object-fit; fallback to initials if image fails to load
+ - Pots have distinct gradient colors
 */
 
 const MAX = 14;
-let teams = [];
-let pots = [[],[],[]];
-let history = [];
-let lastLocked = false;
-let currentDraw = null;
+let allTeams = []; // [{id,name,logo}]
+let pots = [[],[],[]]; // unused for cycle but rendered for visual
+let history = []; // log of draws
+let previousPairs = []; // [{a,b}] used to avoid repeats
+let currentSequence = []; // sequence of teams to reveal (for the run)
+let currentPairing = []; // [{a,b}]
+let currentIndex = 0; // index in sequence
+let currentDraw = null; // currently being revealed team object
 
+/* DOM refs */
 const pairGrid = document.getElementById('pairGrid');
 const bowlA = document.getElementById('bowlA'), bowlB = document.getElementById('bowlB'), bowlC = document.getElementById('bowlC');
 const countA = document.getElementById('countA'), countB = document.getElementById('countB'), countC = document.getElementById('countC');
-const revealBall = document.getElementById('revealBall'), revealLogo = document.getElementById('revealLogo'), revealBallText = document.getElementById('revealBallText'), revealText = document.getElementById('revealText');
-const revealOverlay = document.getElementById('revealOverlay'), rball = document.getElementById('rball'), rballImg = document.getElementById('rballImg'), rballText = document.getElementById('rballText'), rtext = document.getElementById('rtext');
+const revealBall = document.getElementById('revealBall'), revealText = document.getElementById('revealText');
+const revealOverlay = document.getElementById('revealOverlay'), rball = document.getElementById('rball'), rtext = document.getElementById('rtext');
 const dismissReveal = document.getElementById('dismissReveal'), keepReveal = document.getElementById('keepReveal');
-const confettiRoot = document.getElementById('confetti');
+const prevCount = document.getElementById('prevCount');
+
+const teamsInput = document.getElementById('teamsInput');
+const teamsCountInput = document.getElementById('teamsCount');
+const loadTeamsBtn = document.getElementById('loadTeamsBtn'), pasteDefault = document.getElementById('pasteDefault');
+const prepareBtn = document.getElementById('prepareBtn'), startBtn = document.getElementById('startBtn');
+const cycleSelect = document.getElementById('cycleSelect');
+const btnUndo = document.getElementById('btnUndo'), btnExport = document.getElementById('btnExport'), btnClearPrev = document.getElementById('btnClearPrev');
+const musicToggle = document.getElementById('musicToggle');
 const audioDrum = document.getElementById('audioDrum'), audioPop = document.getElementById('audioPop'), audioApplause = document.getElementById('audioApplause'), audioGasp = document.getElementById('audioGasp'), audioBG = document.getElementById('audioBG');
-const btnUndo = document.getElementById('btnUndo'), btnExport = document.getElementById('btnExport'), btnObs = document.getElementById('btnObs'), musicToggle = document.getElementById('musicToggle');
+const confettiRoot = document.getElementById('confetti');
 const app = document.getElementById('app');
 
+/* utilities */
 function idGen(){ return 't'+Math.random().toString(36).slice(2,9); }
 function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
 function play(a){ try{ a.currentTime = 0; a.play(); }catch(e){} }
-function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]];} return a; }
+function initials(name){
+  return name.split(' ').map(s=>s[0]||'').slice(0,3).join('').toUpperCase();
+}
 
-/* load teams.json */
-async function loadTeams(){
+/* load teams from textarea or teams.json */
+loadTeamsBtn.addEventListener('click', async ()=> {
   try{
     const res = await fetch('teams.json', {cache:'no-store'});
     const data = await res.json();
-    teams = data.slice(0,MAX).map((t,i)=>({ id:idGen(), name:t.name||`Đội ${i+1}`, logo:t.logo||'' }));
+    teamsInput.value = data.map(t=> `${t.name}${t.logo ? ' | '+t.logo : ''}`).join('\\n');
+    alert('Loaded teams.json into textarea. Adjust N nếu cần rồi Prepare Draw.');
   }catch(e){
-    teams = Array.from({length:MAX},(_,i)=>({ id:idGen(), name:`Đội ${i+1}`, logo:'' }));
+    alert('Không tìm thấy teams.json hoặc fetch bị block. Dán danh sách vào ô rồi Prepare Draw.');
   }
-  preparePots();
-}
+});
+pasteDefault.addEventListener('click', ()=> {
+  teamsInput.value = [
+'Haxball Kings |',
+'Viet Stars |',
+'Legends United |',
+'Fireballs |',
+'Thunder FC |',
+'Neon Tigers |',
+'Rising Suns |',
+'Phantom XI |',
+'Ghosts |',
+'Red Dragons |',
+'Blue Waves |',
+'Silver Storm |',
+'Golden Eagles |',
+'Black Panthers |'
+  ].join('\\n');
+  teamsCountInput.value = 14;
+});
 
-/* prepare pots (5/5/4) */
-function preparePots(){
-  pots = [[],[],[]]; history = []; lastLocked=false; currentDraw = null;
-  const idx = shuffle([...Array(teams.length).keys()]);
+/* prepare draw: parse teams, create pots (for visuals), build empty bracket */
+prepareBtn.addEventListener('click', ()=> {
+  const raw = teamsInput.value.split('\\n').map(s => s.trim()).filter(Boolean);
+  const N = Math.min(Math.max(parseInt(teamsCountInput.value)||raw.length, 2), MAX);
+  allTeams = raw.slice(0, N).map((line,i)=>{
+    const parts = line.split('|').map(p=>p.trim());
+    return { id: idGen(), name: parts[0] || `Đội ${i+1}`, logo: parts[1] || '', pot: null };
+  });
+  // distribute pots visually (A/B/C) evenly: 5/5/4 or adjusted based on N
+  pots = [[],[],[]];
   const quotas = [5,5,4];
   let p=0;
-  idx.forEach(i=>{
-    while(pots[p].length >= quotas[p]) p++;
-    const t = Object.assign({}, teams[i]);
-    t.pot = p;
-    pots[p].push(t);
+  allTeams.forEach((t,i)=>{
+    while(pots[p].length >= Math.ceil(N/3) && p<2) p++;
+    t.pot = p; pots[p].push(t);
   });
-  renderPots(); buildPairs(); updateCounts();
+  renderPots(); buildPairs(); previousPairs = previousPairs || []; prevCount.textContent = previousPairs.length;
+  // reset history/sequence for a new session
+  history = history || [];
+  currentSequence = []; currentPairing=[]; currentIndex = 0; currentDraw = null;
+  revealBall.textContent = '...'; revealBall.style.backgroundImage='';
+  revealText.textContent = 'Ready — Prepare done';
+});
+
+/* render pots */
+function renderPots(){
+  bowlA.innerHTML=''; bowlB.innerHTML=''; bowlC.innerHTML='';
+  pots[0].forEach((t,idx)=> {
+    const b = document.createElement('div'); b.className='ball potA hidden';
+    b.dataset.tid = t.id; b.dataset.p=0; b.dataset.i=idx;
+    b.title = t.name;
+    // no small text to prevent reveal
+    b.addEventListener('click', ()=> {
+      // for this UI clicking pot is ignored (we do random draw), but keep handler
+      alert('Để bốc: nhấn Start Draw (draw theo random).');
+    });
+    bowlA.appendChild(b);
+  });
+  pots[1].forEach((t,idx)=> {
+    const b = document.createElement('div'); b.className='ball potB hidden'; b.dataset.tid = t.id; b.dataset.p=1; b.dataset.i=idx; b.title = t.name;
+    bowlB.appendChild(b);
+  });
+  pots[2].forEach((t,idx)=> {
+    const b = document.createElement('div'); b.className='ball potC hidden'; b.dataset.tid = t.id; b.dataset.p=2; b.dataset.i=idx; b.title = t.name;
+    bowlC.appendChild(b);
+  });
+  countA.textContent = `${pots[0].length} đội`; countB.textContent = `${pots[1].length} đội`; countC.textContent = `${pots[2].length} đội`;
 }
 
-/* build bracket */
+/* build blank bracket cells (7 pairs maximum) */
 function buildPairs(){
-  pairGrid.innerHTML='';
+  pairGrid.innerHTML = '';
   for(let i=0;i<7;i++){
-    const el = document.createElement('div'); el.className='pair'; el.dataset.i=i;
+    const el = document.createElement('div'); el.className='pair'; el.dataset.i = i;
     el.innerHTML = `<div class="pair-row"><div class="slot"><div class="mini" id="mini-${i}-0">${i*2+1}</div><div class="name" id="n-${i}-0"><span class="placeholder">???</span></div></div><div class="vs">VS</div><div class="slot"><div class="name" id="n-${i}-1"><span class="placeholder">???</span></div><div class="mini" id="mini-${i}-1">${i*2+2}</div></div></div>`;
     pairGrid.appendChild(el);
   }
 }
 
-/* render pots */
-function renderPots(){
-  bowlA.innerHTML=''; bowlB.innerHTML=''; bowlC.innerHTML='';
-  pots[0].forEach((t,idx) => {
-    const b = document.createElement('div'); b.className='ball pot-a hidden'; b.dataset.tid=t.id; b.dataset.p=0; b.dataset.i=idx; b.title='Bóng ẩn'; 
-    // do not put text or logo (keeps hidden)
-    b.addEventListener('click', onBallClick);
-    bowlA.appendChild(b);
-  });
-  pots[1].forEach((t,idx) => {
-    const b = document.createElement('div'); b.className='ball pot-b hidden'; b.dataset.tid=t.id; b.dataset.p=1; b.dataset.i=idx; b.title='Bóng ẩn';
-    b.addEventListener('click', onBallClick);
-    bowlB.appendChild(b);
-  });
-  pots[2].forEach((t,idx) => {
-    const b = document.createElement('div'); b.className='ball pot-c hidden'; b.dataset.tid=t.id; b.dataset.p=2; b.dataset.i=idx; b.title='Bóng ẩn';
-    b.addEventListener('click', onBallClick);
-    bowlC.appendChild(b);
-  });
-  updateCounts();
-}
-
-/* counts */
-function updateCounts(){
-  countA.textContent = `${pots[0].length} đội`;
-  countB.textContent = `${pots[1].length} đội`;
-  countC.textContent = `${pots[2].length} đội`;
-}
-
-/* draw helpers */
-async function drawFromPot(potIndex){
-  if(!pots[potIndex] || pots[potIndex].length===0) return;
-  const i = Math.floor(Math.random()*pots[potIndex].length);
-  await doDraw(potIndex, i);
-}
-async function onBallClick(e){
-  const el = e.currentTarget; const potIndex = parseInt(el.dataset.p); const tid = el.dataset.tid;
-  const pot = pots[potIndex]; const idx = pot.findIndex(x=>x.id===tid); if(idx === -1) return;
-  await doDraw(potIndex, idx);
-}
-
-/* main draw flow */
-async function doDraw(potIndex, idxInPot){
-  // reset main reveal (remove previous logo/text) at start so previous logo doesn't stick
-  resetMainReveal();
-  // remove ball from pot immediately (visual removal prevents double click)
-  const team = pots[potIndex].splice(idxInPot,1)[0];
-  renderPots();
-  const assigned = chooseRandomValidSlot(team); // choose random valid slot respecting pot constraints
-  currentDraw = { team, assigned, fromPot: potIndex, ts: new Date().toISOString() };
-  // push to history now (pairIndex/side will be set in assigned)
-  history.push({ ts: currentDraw.ts, team: team.name, pot: team.pot, pairIndex: assigned ? assigned.pairIndex : null, side: assigned ? assigned.side : null });
-  // run cinematic overlay reveal (overlay stays until dismiss)
-  await cinematicRevealSequence(team);
-}
-
-/* choose random valid slot */
-function chooseRandomValidSlot(team){
-  const candidates = [];
-  for(let i=0;i<7;i++){
-    const leftEl = document.getElementById(`n-${i}-0`);
-    const rightEl = document.getElementById(`n-${i}-1`);
-    const leftText = leftEl ? leftEl.textContent : '';
-    const rightText = rightEl ? rightEl.textContent : '';
-    if(leftEl && leftText.includes('???')){
-      if(!rightText || rightText.includes('???')) candidates.push({pairIndex:i, side:0});
-      else { const rp = rightEl.dataset.pot; if(String(rp)!==String(team.pot)) candidates.push({pairIndex:i, side:0}); }
+/* choose random pairing for a list of team objects, avoiding previousPairs if possible */
+function generatePairingAvoidingPrevious(list){
+  // list: array of team objects
+  const names = list.map(t=>t.name);
+  // helper to produce a random matching by shuffle + pair adjacent
+  function produceMatchingOnce(arr){
+    const a = arr.slice(); shuffle(a);
+    const pairs = [];
+    for(let i=0;i<a.length;i+=2){
+      if(i+1 < a.length) pairs.push([a[i], a[i+1]]);
+      else pairs.push([a[i], null]); // bye
     }
-    if(rightEl && rightText.includes('???')){
-      if(!leftText || leftText.includes('???')) candidates.push({pairIndex:i, side:1});
-      else { const lp = leftEl.dataset.pot; if(String(lp)!==String(team.pot)) candidates.push({pairIndex:i, side:1}); }
+    return pairs;
+  }
+  // compute repeats count for a matching
+  function repeatsCount(pairs){
+    let c=0;
+    for(const [a,b] of pairs){
+      if(!b) continue;
+      for(const prev of previousPairs){
+        if( (prev.a === a.name && prev.b === b.name) || (prev.a === b.name && prev.b === a.name) ) { c++; break; }
+      }
+    }
+    return c;
+  }
+  // try many random matchings and pick minimal repeats
+  let best = null, bestScore = Infinity;
+  const attempts = 1500; // enough attempts
+  for(let it=0; it<attempts; it++){
+    const pairs = produceMatchingOnce(list);
+    const score = repeatsCount(pairs);
+    if(score < bestScore){ best = pairs; bestScore = score; if(score === 0) break; }
+  }
+  // return best as array of {a,b} where a and b are team objects or null
+  return best.map(p=>({a:p[0], b:p[1] || null}));
+}
+
+/* Prepare sequence for selected cycle */
+startBtn.addEventListener('click', async ()=> {
+  if(allTeams.length < 2){ alert('Chưa có đội nào. Prepare trước.'); return; }
+  const cycle = cycleSelect.value;
+  currentSequence = []; currentPairing = []; currentIndex = 0; currentDraw = null;
+  // pick teams based on cycle
+  let participants = [];
+  if(cycle === 'cycle1'){
+    // use N teams as specified
+    participants = allTeams.slice(0, parseInt(teamsCountInput.value) || allTeams.length);
+  } else if(cycle === 'c3_2'){
+    // want 8 teams; if less than 8 exist, use available and alert
+    const need = 8;
+    if(allTeams.length < need){ alert(`Cycle 3.2 cần ${need} đội. Hiện có ${allTeams.length}. Hãy chọn Cycle phù hợp.`); return; }
+    // let user choose which 8? we'll take first N (user can reorder textarea before)
+    participants = allTeams.slice(0, need);
+  } else if(cycle === 'c3_3'){
+    const need = 6;
+    if(allTeams.length < need){ alert(`Cycle 3.3 cần ${need} đội. Hiện có ${allTeams.length}. Hãy chọn Cycle phù hợp.`); return; }
+    participants = allTeams.slice(0, need);
+  }
+
+  // create pairing avoiding previous pairs
+  const pairing = generatePairingAvoidingPrevious(participants);
+  currentPairing = pairing; // array of {a,b}
+  // build reveal sequence: for each pair reveal A then B (order randomized)
+  const seq = [];
+  for(const pair of pairing){
+    if(pair.b === null){
+      // bye: reveal the single team only
+      seq.push({team:pair.a, pairIndex: pairIndexOf(pairing, pair), side:0});
+    } else {
+      // randomize which side reveals first
+      const first = Math.random() < 0.5 ? pair.a : pair.b;
+      const second = (first === pair.a) ? pair.b : pair.a;
+      const idx = pairIndexOf(pairing, pair);
+      seq.push({team:first, pairIndex: idx, side: first === pair.a ? 0 : 1});
+      seq.push({team:second, pairIndex: idx, side: second === pair.a ? 0 : 1});
     }
   }
-  if(candidates.length===0){
-    for(let i=0;i<7;i++){
-      const l = document.getElementById(`n-${i}-0`), r = document.getElementById(`n-${i}-1`);
-      if(l && l.textContent.includes('???')) return {pairIndex:i, side:0};
-      if(r && r.textContent.includes('???')) return {pairIndex:i, side:1};
-    }
-    return {pairIndex:null, side:null};
+  currentSequence = seq;
+  currentIndex = 0;
+
+  // show pairing visually as placeholders (so bracket shows as random; names only fill after dismiss)
+  // clear bracket
+  buildPairs();
+  // record pairing in history (we already push to previousPairs after all matched)
+  revealText.textContent = `Ready — ${pairing.length} trận sẽ bốc (nhấn Start Draw để bắt đầu)`;
+  // play small cue
+  play(audioGasp);
+  // start auto-step if you want immediate start
+  // but we'll let user click Start Draw again to begin reveals sequentially
+  // We'll reuse Start Draw button as "Begin now" -> change its text and attach loop
+  startBtn.textContent = 'Begin: Reveal Next';
+});
+
+/* helper to find pair index reference */
+function pairIndexOf(pairing, pair){
+  for(let i=0;i<pairing.length;i++){
+    if(pairing[i] === pair) return i;
   }
-  return candidates[Math.floor(Math.random()*candidates.length)];
+  return -1;
 }
 
-/* reset small main reveal (so old logo doesn't persist when starting new draw) */
-function resetMainReveal(){
-  revealLogo.style.display = 'none';
-  revealLogo.src = '';
-  revealBallText.style.display = 'block';
-  revealBallText.textContent = '...';
-  revealBall.style.backgroundImage = ''; // keep pot gradient as default (potA gradient)
-  revealText.textContent = 'MỞ QUẢ BÓNG...';
+/* Reveal Next (reveal one team in sequence) */
+async function revealNext(){
+  if(currentIndex >= currentSequence.length){ revealText.textContent = 'Hoàn tất bốc.'; return; }
+  const item = currentSequence[currentIndex];
+  currentDraw = item;
+  // cinematic reveal for team
+  await cinematicRevealSequence(item.team);
+  // after overlay dismissed, dropping into bracket is handled in dismiss handler which uses currentDraw
+  // increment to next only after dismiss done. We'll wait until currentDraw becomes null (dismiss handler clears it)
+  // set a poll to continue when cleared
+  currentIndex++;
+  // wait until currentDraw cleared by onDismissHandler (which sets currentDraw = null)
+  while(currentDraw !== null){
+    await sleep(200);
+  }
+  // auto-continue to next team after short pause
+  await sleep(300);
+  // auto trigger next reveal if still in sequence
+  if(currentIndex < currentSequence.length){
+    revealText.textContent = `Sắp bốc: ${currentIndex+1}/${currentSequence.length}`;
+  } else {
+    revealText.textContent = 'Đã bốc xong tất cả.';
+    // after finished, add pairing to previousPairs
+    // convert currentPairing to previousPairs records
+    currentPairing.forEach(p=>{
+      if(p.b) previousPairs.push({a:p.a.name, b:p.b.name});
+      // if bye, no pair recorded
+    });
+    prevCount.textContent = previousPairs.length;
+  }
 }
 
-/* cinematic overlay reveal */
+/* cinematic reveal overlay for a team */
 async function cinematicRevealSequence(team){
-  // small center card update
-  revealBallText.textContent = '...';
+  // reset small main reveal
+  revealBall.innerHTML = '';
+  revealBall.style.backgroundImage = '';
   revealText.textContent = 'MỞ QUẢ BÓNG...';
   play(audioDrum);
   await sleep(700);
 
-  // overlay show
-  rballImg.style.display='none'; rballImg.src=''; rballText.style.display='block'; rballText.textContent='?';
-  rtext.textContent = 'ĐANG MỞ QUẢ BÓNG...';
+  // show overlay
+  rball.innerHTML = ''; rtext.textContent = 'ĐANG MỞ QUẢ BÓNG...';
   revealOverlay.style.display = 'flex';
-  rball.style.animation = 'ballUltraSpin 2.4s cubic-bezier(.1,.9,.2,1), ballExplosion 1.4s ease-in-out';
-  play(audioGasp); // gasp for drama
+  rball.style.animation = 'ballUltraSpin 2.6s cubic-bezier(.1,.9,.2,1), ballExplosion 1.4s ease-in-out';
+  play(audioGasp);
   await sleep(1700);
   play(audioPop);
   await sleep(500);
 
-  // reveal in overlay
+  // display logo or initials
+  rball.style.animation = 'none';
+  rball.innerHTML = '';
   if(team.logo){
-    rballImg.src = team.logo;
-    rballImg.style.display = 'block';
-    rballText.style.display = 'none';
+    const img = document.createElement('img'); img.src = team.logo; img.alt = team.name;
+    // if image fails to load use initials
+    img.onerror = ()=> { img.remove(); rball.textContent = initials(team.name); };
+    rball.appendChild(img);
   } else {
-    rballImg.style.display = 'none';
-    rballText.style.display = 'block';
-    rballText.textContent = team.name;
+    rball.textContent = initials(team.name);
   }
-  rball.style.animation = 'textRevealEpic 0.9s ease-out';
   rtext.textContent = `CLAN: ${team.name}`;
   play(audioApplause);
   burstConfetti(110);
   cameraShake();
-  // overlay persists until user dismiss (Dismiss button or Space/Enter) - dismissal handled by event handlers
+
+  // wait for dismiss (handled by onDismissHandler)
 }
 
-/* on dismiss: drop into bracket and update main reveal */
+/* dismiss handler: drop currentDraw into bracket and update main reveal */
 async function onDismissHandler(){
-  if(!currentDraw) { revealOverlay.style.display='none'; return; }
-  const { team, assigned } = currentDraw;
-  // animate float from overlay center to bracket cell
-  if(assigned && assigned.pairIndex !== null){
-    const targetEl = document.getElementById(`n-${assigned.pairIndex}-${assigned.side}`);
-    // create floating element
-    const float = document.createElement('div');
-    float.style.position='fixed';
-    float.style.left = (window.innerWidth/2 - 140) + 'px';
-    float.style.top = (window.innerHeight/2 - 60) + 'px';
-    float.style.padding = '8px 12px';
-    float.style.borderRadius = '10px';
-    float.style.background = 'linear-gradient(180deg,#fff,#f2f2f2)';
-    float.style.color = '#021322';
-    float.style.fontWeight = '800';
-    float.style.boxShadow = '0 18px 60px rgba(0,0,0,0.6)';
-    float.style.zIndex = 14000;
-    if(team.logo){
-      const img = document.createElement('img');
-      img.src = team.logo;
-      img.style.width = '34px'; img.style.height='34px'; img.style.objectFit='cover'; img.style.borderRadius='6px'; img.style.marginRight='8px'; img.style.verticalAlign='middle';
-      float.appendChild(img);
-      const t = document.createElement('span'); t.textContent = team.name; float.appendChild(t);
-    } else {
-      float.textContent = team.name;
-    }
-    document.body.appendChild(float);
+  if(!currentDraw){
+    // hide overlay if nothing
+    revealOverlay.style.display = 'none';
+    return;
+  }
+  // grab current team and assigned slot
+  const team = currentDraw.team;
+  const pairIndex = currentDraw.pairIndex;
+  const side = currentDraw.side;
+  // create floating element (logo + name) from overlay center to bracket cell
+  const float = document.createElement('div');
+  float.style.position = 'fixed';
+  float.style.left = (window.innerWidth/2 - 140) + 'px';
+  float.style.top = (window.innerHeight/2 - 60) + 'px';
+  float.style.padding = '8px 12px';
+  float.style.borderRadius = '10px';
+  float.style.background = 'linear-gradient(180deg,#ffffff,#f5f7fb)';
+  float.style.color = '#021322';
+  float.style.fontWeight = '800';
+  float.style.boxShadow = '0 18px 60px rgba(0,0,0,0.6)';
+  float.style.zIndex = 16000;
 
-    const fromRect = float.getBoundingClientRect();
-    const toRect = targetEl.getBoundingClientRect();
-    const dx = (toRect.left + toRect.width/2) - (fromRect.left + fromRect.width/2);
-    const dy = (toRect.top + toRect.height/2) - (fromRect.top + fromRect.height/2);
+  if(team.logo){
+    const img = document.createElement('img'); img.src = team.logo; img.style.height='28px'; img.style.objectFit='contain'; img.style.marginRight='8px';
+    img.onerror = ()=> { img.remove(); float.textContent = team.name; };
+    float.appendChild(img);
+    const txt = document.createElement('span'); txt.textContent = team.name; float.appendChild(txt);
+  } else {
+    float.textContent = team.name;
+  }
+  document.body.appendChild(float);
 
-    float.animate([{ transform: 'translate(0, -10px) scale(1.05)', opacity:1 }, { transform: `translate(${dx}px, ${dy}px) scale(0.9)`, opacity:0 }], { duration:900, easing:'cubic-bezier(.22,.9,.25,1)' });
-    await sleep(920);
-    // set bracket cell text and store pot
+  // compute travel target
+  const targetEl = document.getElementById(`n-${pairIndex}-${side}`);
+  const fromRect = float.getBoundingClientRect();
+  const toRect = targetEl.getBoundingClientRect();
+  const dx = (toRect.left + toRect.width/2) - (fromRect.left + fromRect.width/2);
+  const dy = (toRect.top + toRect.height/2) - (fromRect.top + fromRect.height/2);
+
+  float.animate([{ transform: 'translate(0, -10px) scale(1.03)', opacity:1 }, { transform: `translate(${dx}px, ${dy}px) scale(0.9)`, opacity:0 }], { duration:900, easing:'cubic-bezier(.22,.9,.25,1)'});
+  await sleep(920);
+
+  // set bracket cell text and pot data
+  if(targetEl){
     targetEl.textContent = team.name;
     targetEl.dataset.pot = team.pot;
     targetEl.style.animation = 'dropFade .6s ease-out, bracketGlowStrong 1.2s ease-out';
-    try{ float.remove(); }catch(e){}
   }
 
-  // update main reveal small card to show logo & name (persist until next draw)
+  try{ float.remove(); }catch(e){}
+  // update main small reveal card persistently with logo+name
+  revealBall.innerHTML = '';
+  revealBall.style.backgroundImage = '';
   if(team.logo){
-    revealLogo.src = team.logo;
-    revealLogo.style.display = 'block';
-    revealBallText.style.display = 'none';
+    const img2 = document.createElement('img'); img2.src = team.logo; img2.alt = team.name;
+    img2.onerror = ()=> { img2.remove(); revealBall.textContent = team.name; };
+    revealBall.appendChild(img2);
   } else {
-    revealLogo.style.display = 'none';
-    revealBallText.style.display = 'block';
-    revealBallText.textContent = team.name;
+    revealBall.textContent = team.name;
   }
   revealText.textContent = team.name;
 
-  // hide overlay
+  // hide overlay now
   revealOverlay.style.display = 'none';
-  // finalize history entry: pairIndex/side already stored when creating currentDraw
+
+  // finalize history entry: update last entry pairIndex/side are already there
+  // (we already pushed stub into history earlier); leave as is
   currentDraw = null;
 }
 
-/* setup dismissal handlers */
-function setupDismiss(){
-  dismissReveal.addEventListener('click', onDismissHandler);
-  keepReveal.addEventListener('click', ()=>{ lastLocked = true; });
-  window.addEventListener('keydown', (e)=>{
-    if(e.code === 'Space' || e.key === 'Enter'){
-      if(revealOverlay.style.display === 'flex' && !lastLocked) onDismissHandler();
-    }
-  });
-}
-setupDismiss();
-
-/* mini countdown (for click draw) */
-async function miniCountdown(sec=2){
-  revealText.textContent = 'Chuẩn bị...';
-  play(audioDrum);
-  for(let i=sec;i>0;i--){
-    revealBallText.textContent = i;
-    await sleep(700);
-  }
-  revealBallText.textContent = '...';
-}
+/* setup dismiss listeners once */
+dismissReveal.addEventListener('click', onDismissHandler);
+keepReveal.addEventListener('click', ()=> { lastLocked = true; });
 
 /* confetti */
 function burstConfetti(n=80){
@@ -427,11 +569,11 @@ function burstConfetti(n=80){
   const colors = ['#00e0ff','#ffd54d','#ff6b6b','#8ef0ff'];
   for(let i=0;i<n;i++){
     const p = document.createElement('div');
-    p.style.position='absolute'; p.style.left = Math.random()*100 + '%'; p.style.top = '-8%';
-    p.style.width = (6+Math.random()*10) + 'px'; p.style.height = (10+Math.random()*14) + 'px';
+    p.style.position='absolute'; p.style.left = Math.random()*100 + '%'; p.style.top = '-10%';
+    p.style.width = (6+Math.random()*12) + 'px'; p.style.height = (10+Math.random()*18) + 'px';
     p.style.background = colors[Math.floor(Math.random()*colors.length)]; p.style.opacity = 0.96; confettiRoot.appendChild(p);
-    const dur = 1400 + Math.random()*2200;
-    p.animate([{transform:`translateY(0) rotate(${Math.random()*360}deg)`},{transform:`translateY(${window.innerHeight+200}px) rotate(${Math.random()*720}deg)`}], { duration: dur, easing:'cubic-bezier(.2,.7,.3,1)'});
+    const dur = 1400 + Math.random()*2400;
+    p.animate([{transform:`translateY(0) rotate(${Math.random()*360}deg)`},{transform:`translateY(${window.innerHeight+300}px) rotate(${Math.random()*720}deg)`}], { duration: dur, easing:'cubic-bezier(.2,.7,.3,1)'});
     setTimeout(()=>{ try{ p.remove(); }catch(e){} }, dur+220);
   }
 }
@@ -442,17 +584,18 @@ function cameraShake(){
   setTimeout(()=> app.style.animation = 'none', 440);
 }
 
-/* undo */
-function undoLast(){
-  if(history.length === 0) return;
+/* undo: revert last bracket fill and pop from history */
+btnUndo.addEventListener('click', ()=> {
+  if(history.length === 0){ alert('Chưa có lịch sử.'); return; }
   const last = history.pop();
+  // remove from bracket
   for(let i=0;i<7;i++){
     for(let s=0;s<2;s++){
       const el = document.getElementById(`n-${i}-${s}`);
       if(el && el.textContent === last.team){
         el.textContent = '???';
         delete el.dataset.pot;
-        // return to pot
+        // return to pots as fallback
         const pIndex = last.pot;
         pots[pIndex].push({ id:idGen(), name:last.team, logo:last.logo||'', pot:pIndex });
         renderPots();
@@ -460,40 +603,79 @@ function undoLast(){
       }
     }
   }
-}
+});
 
-/* export */
-function exportLog(){
-  if(history.length === 0){ alert('Chưa có dữ liệu.'); return; }
+/* export log */
+btnExport.addEventListener('click', ()=> {
+  if(history.length === 0) return alert('Chưa có dữ liệu.');
   const jsonBlob = new Blob([JSON.stringify(history, null, 2)], { type: 'application/json' });
-  const csv = history.map(r=>`"${r.ts}","${r.team}","${r.pot}","${r.pairIndex}","${r.side}"`).join('\n');
+  const csv = history.map(r=>`"${r.ts}","${r.team}","${r.pot}","${r.pairIndex}","${r.side}"`).join('\\n');
   const csvBlob = new Blob([csv], { type: 'text/csv' });
   downloadBlob(jsonBlob, 'vh_draw_log.json'); downloadBlob(csvBlob, 'vh_draw_log.csv');
+});
+function downloadBlob(blob, filename){
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = filename; document.body.appendChild(a); a.click();
+  setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 500);
 }
-function downloadBlob(blob, filename){ const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = filename; document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 600); }
 
-/* UI wiring */
-btnUndo.addEventListener('click', undoLast);
-btnExport.addEventListener('click', exportLog);
-btnObs.addEventListener('click', ()=>{
-  const on = document.body.style.background === 'transparent';
-  if(!on){ document.querySelectorAll('.controls, .btn').forEach(x=>x.classList.add('obsHide')); document.body.style.background='transparent'; btnObs.textContent='OBS: ON'; }
-  else { document.querySelectorAll('.controls, .btn').forEach(x=>x.classList.remove('obsHide')); document.body.style.background=''; btnObs.textContent='OBS: OFF'; }
-});
-musicToggle.addEventListener('change', (e)=> { if(e.target.checked) audioBG.play(); else audioBG.pause(); });
-
-window.addEventListener('keydown', async (e)=>{
-  if(e.key === '1') await drawFromPot(0);
-  if(e.key === '2') await drawFromPot(1);
-  if(e.key === '3') await drawFromPot(2);
-  if(e.key === 'u') undoLast();
-  if(e.key === 'x') exportLog();
+/* clear previous pairs */
+btnClearPrev.addEventListener('click', ()=> {
+  if(!confirm('Xóa lịch sử cặp đã bốc?')) return;
+  previousPairs = []; prevCount.textContent = 0;
 });
 
-/* init */
-(async function init(){
-  await loadTeams();
+/* keyboard shortcuts: 1/2/3 draw random from pot, Space = dismiss overlay */
+window.addEventListener('keydown', async (e)=> {
+  if(e.key === '1') await drawRandomFromPot(0);
+  if(e.key === '2') await drawRandomFromPot(1);
+  if(e.key === '3') await drawRandomFromPot(2);
+  if(e.code === 'Space' || e.key === 'Enter'){
+    if(revealOverlay.style.display === 'flex' && !lastLocked) onDismissHandler();
+  }
+});
+
+/* draw one random team from a pot (legacy) */
+async function drawRandomFromPot(pIndex){
+  if(!pots[pIndex] || pots[pIndex].length===0) return;
+  const idx = Math.floor(Math.random() * pots[pIndex].length);
+  await doDrawFromPot(pIndex, idx);
+}
+
+/* do draw from pot (legacy support) */
+async function doDrawFromPot(pIndex, idx){
+  const team = pots[pIndex].splice(idx,1)[0];
+  renderPots();
+  // choose random valid slot
+  const assigned = generatePairingAvoidingPrevious([team].concat([]))[0] || {pairIndex:0, side:0};
+  // push to history
+  history.push({ ts: new Date().toISOString(), team: team.name, pot: team.pot, pairIndex: assigned.pairIndex, side:assigned.side, logo: team.logo });
+  // show reveal
+  currentDraw = { team, assigned, fromPot: pIndex };
+  await cinematicRevealSequence(team);
+  // then wait for dismiss
+}
+
+/* init: set defaults */
+(function init(){
+  // fill default textarea
+  pasteDefault.click();
+  teamsCountInput.value = 14;
+  // prepare default when loaded
+  prepareBtn.click();
+  // wire Start button to revealNext (Reveal sequence)
+  startBtn.addEventListener('click', async ()=>{
+    // if currentSequence empty, start generation (prepareBtn must be clicked before)
+    if(currentSequence.length === 0){
+      // trigger to prepare pairing (simulate pressing Start earlier)
+      startBtn.textContent = 'Begin: Reveal Next';
+      // call same as earlier Prepare but auto-generate pairing now:
+      // reuse same logic by programmatically clicking startBtn after prepare; simpler: call revealNext directly
+    }
+    // reveal next
+    await revealNext();
+  });
 })();
+
 </script>
 </body>
 </html>
