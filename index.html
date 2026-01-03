@@ -3,21 +3,22 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Viet Haxball Cup | SS14</title>
+<title>Viet Haxball Cup | SS14 — Live Draw (Pro Wizard)</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;800&family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#021826; --panel:#022a36; --accent:#00c2ff; --gold:#ffd54d; --muted:#9fb8cc;
-  --potA-start: #00c2ff; --potA-end:#0091d1;    /* blue */
-  --potB-start: #ffd54d; --potB-end:#ff9b1a;    /* gold/orange */
-  --potC-start: #7be38a; --potC-end:#28b463;    /* green */
+  --bg:#031224; --accent:#00c2ff; --gold:#ffd54d; --muted:#9fb8cc;
+  --potA-grad: linear-gradient(180deg,#00c2ff,#0086d1);
+  --potB-grad: linear-gradient(180deg,#ffd54d,#ffb400);
+  --potC-grad: linear-gradient(180deg,#a7ff83,#32d74b);
   --high-contrast: #ffffff;
 }
+/* Global reset & no scroll (broadcast-ready) */
 *{box-sizing:border-box}
-html,body{height:100%;margin:0;background:linear-gradient(180deg,#031624,#011018);font-family:Inter,system-ui,Roboto,Arial;color:#e8f9ff;overflow:hidden}
-.container{height:100vh;display:grid;grid-template-rows:8vh 38vh 22vh 32vh;gap:10px;padding:12px;max-width:1920px;margin:0 auto}
+html,body{height:100%;margin:0;overflow:hidden;background:linear-gradient(180deg,#021726,#031224);font-family:Inter,system-ui,Roboto,Arial;color:#e8f9ff;-webkit-font-smoothing:antialiased}
+.container{height:100vh;display:grid;grid-template-rows:10vh 40vh 20vh 30vh;padding:12px;gap:10px;max-width:1920px;margin:0 auto}
 
-/* Header */
+/* header */
 .header{display:flex;align-items:center;justify-content:space-between;padding:6px 18px}
 .brand{font-family:Orbitron;font-weight:800;color:var(--accent);font-size:20px}
 .controls{display:flex;gap:8px;align-items:center}
@@ -25,10 +26,10 @@ html,body{height:100%;margin:0;background:linear-gradient(180deg,#031624,#011018
 .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)}
 .toggle{color:var(--muted);font-size:13px}
 
-/* Bracket */
+/* bracket */
 .bracket{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border-radius:12px;padding:12px;box-shadow:0 28px 80px rgba(0,0,0,0.6);overflow:hidden}
-.bracket .title{font-family:Orbitron;color:var(--gold);font-weight:700;font-size:18px;margin-bottom:6px}
-.pair-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;height:calc(100% - 34px);align-content:start}
+.bracket .title{font-family:Orbitron;color:var(--gold);font-weight:700;font-size:18px}
+.pair-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;height:100%;align-content:start;padding:6px}
 .pair{background:linear-gradient(180deg,rgba(255,255,255,0.01),transparent);padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);min-height:64px;display:flex;flex-direction:column;justify-content:center}
 .pair-row{display:flex;align-items:center;justify-content:space-between}
 .slot{display:flex;gap:10px;align-items:center}
@@ -36,67 +37,67 @@ html,body{height:100%;margin:0;background:linear-gradient(180deg,#031624,#011018
 .name{font-weight:800;color:#dff7ff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .vs{color:var(--muted);font-weight:800}
 
-/* reveal small card (main visible area) */
+/* reveal region (main small card visible) */
 .reveal-zone{display:flex;align-items:center;justify-content:center}
-.reveal-card{width:84%;height:90%;border-radius:14px;background:linear-gradient(180deg,#022c34,#03282f);display:flex;align-items:center;justify-content:flex-start;gap:24px;padding:22px;box-shadow:0 40px 160px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.03)}
-.reveal-ball{width:200px;height:200px;border-radius:50%;display:grid;place-items:center;font-family:Orbitron;font-weight:900;font-size:28px;background:linear-gradient(180deg,#00d1ff,#0091d1);color:#021322;box-shadow:0 60px 200px rgba(0,0,0,0.6);overflow:hidden}
-.reveal-ball img{width:100%;height:100%;object-fit:cover;border-radius:50%}
-.reveal-text{color:#dff7ff;font-size:20px;font-weight:700;text-align:left;max-width:60%}
+.reveal-card{width:80%;height:90%;border-radius:14px;background:linear-gradient(180deg,#022c34,#03282f);display:flex;align-items:center;justify-content:space-between;gap:24px;padding:22px;box-shadow:0 40px 160px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.03)}
+.reveal-ball{width:220px;height:220px;border-radius:50%;display:grid;place-items:center;font-family:Orbitron;font-weight:900;font-size:28px;background:var(--potA-grad);color:#021322;box-shadow:0 60px 200px rgba(0,0,0,0.6)}
+.reveal-logo{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block}
 
-/* pots bottom (distinct gradient per pot) */
+/* text next to reveal circle */
+.reveal-text{color:#dff7ff;font-size:20px;font-weight:700;max-width:48%;text-align:left;display:flex;flex-direction:column;gap:8px}
+.reveal-text .big{font-size:22px;font-weight:900}
+.reveal-text .small{color:var(--muted);font-weight:600;font-size:13px}
+
+/* pots bottom */
 .pots-row{display:flex;align-items:center;justify-content:space-around;gap:20px;padding:8px;height:100%}
-.pot{width:30%;height:100%;border-radius:12px;border:1px solid rgba(255,255,255,0.03);display:flex;flex-direction:column;align-items:center;padding:12px;position:relative;box-shadow:0 18px 60px rgba(0,0,0,0.6);overflow:hidden}
-.pot h4{margin:0;font-family:Orbitron;font-weight:700}
-.pot .pot-inner{width:100%;height:100%;display:flex;flex-direction:column}
-.pot-bowl{width:100%;flex:1;display:flex;align-items:center;justify-content:space-evenly;gap:12px;flex-wrap:nowrap}
-
-/* pot-specific color classes */
-.potA{background:linear-gradient(180deg,var(--potA-start),var(--potA-end))}
-.potB{background:linear-gradient(180deg,var(--potB-start),var(--potB-end))}
-.potC{background:linear-gradient(180deg,var(--potC-start),var(--potC-end))}
-
-.ball{width:84px;height:84px;border-radius:50%;display:grid;place-items:center;font-weight:900;color:#021322;box-shadow:0 30px 100px rgba(0,0,0,0.6);cursor:pointer; border:4px solid rgba(255,255,255,0.9); overflow:hidden}
+.pot{width:30%;height:100%;border-radius:12px;background:linear-gradient(180deg,#072b38,#063246);border:1px solid rgba(255,255,255,0.03);display:flex;flex-direction:column;align-items:center;padding:12px;position:relative;box-shadow:0 18px 60px rgba(0,0,0,0.6)}
+.pot h4{margin:0;color:var(--gold);font-family:Orbitron;font-weight:700}
+.pot-bowl{width:100%;flex:1;display:flex;align-items:center;justify-content:space-evenly;gap:10px;flex-wrap:nowrap}
+.ball{width:84px;height:84px;border-radius:50%;display:grid;place-items:center;font-weight:900;color:#021322;box-shadow:0 30px 100px rgba(0,0,0,0.6);cursor:pointer;border:4px solid rgba(255,255,255,0.12)}
+.ball.potA{background:var(--potA-grad); border-color: rgba(255,255,255,0.95)}
+.ball.potB{background:var(--potB-grad); border-color: rgba(255,255,255,0.95)}
+.ball.potC{background:var(--potC-grad); border-color: rgba(255,255,255,0.95)}
 .ball.hidden{color:transparent}
-.ball .initials{font-weight:900;color:#021322}
-.ball img{width:100%;height:100%;object-fit:cover;border-radius:50%}
-
-/* confetti */
-.confetti{position:fixed;left:0;top:0;right:0;bottom:0;pointer-events:none;z-index:9999}
+.pot .count{position:absolute;right:12px;bottom:12px;color:var(--muted);font-size:13px}
 
 /* reveal overlay (big) */
-.reveal-overlay{position:fixed;left:0;top:0;right:0;bottom:0;display:flex;align-items:center;justify-content:center;pointer-events:auto;z-index:12000}
-.reveal-full{width:min(980px,94%);height:460px;border-radius:14px;background:linear-gradient(180deg,#012022,#02242a);display:flex;align-items:center;justify-content:center;gap:24px;padding:20px;box-shadow:0 60px 200px rgba(0,0,0,0.7);border:1px solid rgba(255,255,255,0.04)}
-.reveal-full .rball{width:320px;height:320px;border-radius:50%;display:grid;place-items:center;font-family:Orbitron;font-weight:900;font-size:34px;background:linear-gradient(180deg,#00e0ff,#006fb8);color:#021322;box-shadow:0 80px 260px rgba(0,0,0,0.7);overflow:hidden}
-.reveal-full .rball img{width:100%;height:100%;object-fit:cover;border-radius:50%}
-.reveal-full .rtext{color:#e6fffe;font-weight:800;font-size:20px}
-
-/* wizard modal (OS installer style) */
-.wizard-backdrop{position:fixed;left:0;top:0;right:0;bottom:0;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;z-index:20000}
-.wizard{width:920px;max-width:96%;background:linear-gradient(180deg,#0b1621,#07121a);border-radius:12px;padding:18px;border:1px solid rgba(255,255,255,0.04)}
-.wizard .steps{display:flex;gap:8px;margin-bottom:12px}
-.step{flex:1;padding:8px;border-radius:8px;background:rgba(255,255,255,0.02);text-align:center;font-weight:700}
-.step.active{background:linear-gradient(90deg,var(--accent),var(--gold));color:#021322}
-.wizard .content{max-height:420px;overflow:auto;padding:8px}
-.team-list{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
-.team-item{display:flex;align-items:center;gap:8px;padding:8px;border-radius:8px;background:rgba(255,255,255,0.02)}
-.select-row{display:flex;gap:8px;align-items:center;justify-content:flex-end;margin-top:10px}
+.reveal-overlay{position:fixed;left:0;top:0;right:0;bottom:0;display:flex;align-items:center;justify-content:center;pointer-events:auto;z-index:12000;background:linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.75))}
+.reveal-full{width:min(980px,94%);height:480px;border-radius:14px;background:linear-gradient(180deg,#012022,#02242a);display:flex;align-items:center;justify-content:center;gap:24px;padding:20px;box-shadow:0 60px 200px rgba(0,0,0,0.7);border:1px solid rgba(255,255,255,0.04)}
+.rball{width:320px;height:320px;border-radius:50%;display:grid;place-items:center;font-family:Orbitron;font-weight:900;font-size:34px;background:linear-gradient(180deg,#00e0ff,#006fb8);color:#021322;box-shadow:0 80px 260px rgba(0,0,0,0.7);overflow:hidden}
+.rlogo{width:100%;height:100%;object-fit:cover;border-radius:50%;display:block}
+.rtext{color:#e6fffe;font-weight:800;font-size:20px}
 
 /* cinematic effects */
-@keyframes ballUltraSpin { 0%{transform:scale(.55)rotate(0)}40%{transform:scale(1.14)rotate(720deg)}70%{transform:scale(.98)rotate(1080deg)}100%{transform:scale(1)rotate(1440deg)} }
-@keyframes ballExplosion { 0%{box-shadow:0 0 0 rgba(255,255,255,0)} 100%{box-shadow:0 0 30px rgba(0,194,255,0.95),0 0 100px rgba(255,213,77,0.95),0 0 200px rgba(255,255,255,0.6)} }
-@keyframes textRevealEpic { 0%{opacity:0;transform:scale(.4);filter:blur(6px)}60%{opacity:1;transform:scale(1.08)}100%{transform:scale(1)} }
-@keyframes dropFade { 0%{transform:translateY(-40px);opacity:0}100%{transform:translateY(0);opacity:1} }
-@keyframes bracketGlowStrong { 0%{box-shadow:0 0 0 rgba(255,213,77,0)}100%{box-shadow:0 0 30px rgba(255,213,77,1)} }
-@keyframes cameraShake { 0%{transform:translate(0,0)}20%{transform:translate(-6px,3px)}40%{transform:translate(5px,-3px)}60%{transform:translate(-3px,4px)}80%{transform:translate(2px,-1px)}100%{transform:translate(0,0)} }
+@keyframes ballUltraSpin {0%{transform:scale(.55)rotate(0)}40%{transform:scale(1.14)rotate(720deg)}70%{transform:scale(.98)rotate(1080deg)}100%{transform:scale(1)rotate(1440deg)}}
+@keyframes ballExplosion {0%{box-shadow:0 0 0 rgba(255,255,255,0)}100%{box-shadow:0 0 30px rgba(0,194,255,0.95),0 0 100px rgba(255,213,77,0.95),0 0 200px rgba(255,255,255,0.6)}}
+@keyframes textRevealEpic {0%{opacity:0;transform:scale(.4);filter:blur(6px)}60%{opacity:1;transform:scale(1.08)}100%{transform:scale(1)}}
+@keyframes dropFade {0%{transform:translateY(-40px);opacity:0}100%{transform:translateY(0);opacity:1}}
+@keyframes bracketGlowStrong {0%{box-shadow:0 0 0 rgba(255,213,77,0)}100%{box-shadow:0 0 30px rgba(255,213,77,1)}}
+@keyframes cameraShake {0%{transform:translate(0,0)}20%{transform:translate(-6px,3px)}40%{transform:translate(5px,-3px)}60%{transform:translate(-3px,4px)}80%{transform:translate(2px,-1px)}100%{transform:translate(0,0)}}
 
-@media (max-width:1200px){ .pair-grid{grid-template-columns:repeat(2,1fr)} .pot{width:90%} .reveal-full{height:380px} .reveal-full .rball{width:220px;height:220px;font-size:20px} .team-list{grid-template-columns:1fr} }
+/* wizard modal (full screen, OS-install style) */
+.wizard-backdrop{position:fixed;left:0;top:0;right:0;bottom:0;background:linear-gradient(180deg, rgba(0,0,0,0.7), rgba(0,0,0,0.85));z-index:13000;display:flex;align-items:center;justify-content:center}
+.wizard{width:min(980px,94%);background:#061425;border-radius:14px;padding:18px;color:#e8f9ff;box-shadow:0 40px 140px rgba(0,0,0,0.7)}
+.wiz-step{display:none}
+.wiz-step.active{display:block}
+.wiz-nav{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
+.option-grid{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}
+.option{padding:12px 16px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);cursor:pointer}
+.opt-selected{box-shadow:0 8px 34px rgba(0,0,0,0.6);border-color:var(--accent);background:linear-gradient(180deg, rgba(0,194,255,0.06), rgba(0,194,255,0.02))}
+.team-list{max-height:320px;overflow:auto;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);margin-top:12px}
+.team-item{display:flex;align-items:center;gap:8px;padding:8px;border-radius:8px}
+.team-item img{width:36px;height:36px;border-radius:50%;object-fit:cover}
+
+/* responsiveness */
+@media (max-width:1200px){ .pair-grid{grid-template-columns:repeat(2,1fr)} .pot{width:95%} .reveal-full{height:420px} .rball{width:220px;height:220px;font-size:20px} .reveal-card{flex-direction:column;gap:12px} }
+
 </style>
 </head>
 <body>
   <div class="container" id="app">
     <!-- header -->
     <div class="header">
-      <div class="brand">Viet Haxball Cup | SS14 — Bốc Thăm</div>
+      <div class="brand">Viet Haxball Cup | SS14 — Live Draw</div>
       <div class="controls">
         <button id="openWizard" class="btn ghost">Settings</button>
         <button id="btnExport" class="btn ghost">Export</button>
@@ -108,57 +109,82 @@ html,body{height:100%;margin:0;background:linear-gradient(180deg,#031624,#011018
 
     <!-- bracket -->
     <div class="bracket">
-      <div class="title">Bracket - Các cặp đấu</div>
+      <div class="title">Bracket — Các cặp đấu</div>
       <div class="pair-grid" id="pairGrid"></div>
     </div>
 
-    <!-- reveal small -->
+    <!-- reveal (MAIN visible area) -->
     <div class="reveal-zone">
       <div class="reveal-card" id="revealCard" aria-hidden="true">
-        <div class="reveal-ball" id="revealBall"><!-- image or initials here --></div>
-        <div class="reveal-text" id="revealText">Chưa có đội</div>
+        <div class="reveal-ball" id="revealBall" aria-hidden="true">
+          <!-- logo img goes here if available -->
+        </div>
+        <div class="reveal-text" id="revealText">
+          <div class="big" id="revealName">MỞ QUẢ BÓNG...</div>
+          <div class="small" id="revealSub">Click quả bóng để bốc — Tên sẽ đưa vào bracket sau khi Dismiss</div>
+        </div>
       </div>
     </div>
 
     <!-- pots -->
     <div class="pots-row">
-      <div class="pot potA" id="potA"><h4>Pot A</h4><div class="pot-inner"><div class="pot-bowl" id="bowlA"></div></div><div class="count" id="countA">0</div></div>
-      <div class="pot potB" id="potB"><h4>Pot B</h4><div class="pot-inner"><div class="pot-bowl" id="bowlB"></div></div><div class="count" id="countB">0</div></div>
-      <div class="pot potC" id="potC"><h4>Pot C</h4><div class="pot-inner"><div class="pot-bowl" id="bowlC"></div></div><div class="count" id="countC">0</div></div>
+      <div class="pot" id="potA"><h4>Pot A</h4><div class="pot-bowl" id="bowlA"></div><div class="count" id="countA">0</div></div>
+      <div class="pot" id="potB"><h4>Pot B</h4><div class="pot-bowl" id="bowlB"></div><div class="count" id="countB">0</div></div>
+      <div class="pot" id="potC"><h4>Pot C</h4><div class="pot-bowl" id="bowlC"></div><div class="count" id="countC">0</div></div>
     </div>
   </div>
 
   <!-- reveal overlay (persistent until dismiss) -->
   <div id="revealOverlay" class="reveal-overlay" style="display:none">
     <div class="reveal-full" id="revealFullCard" role="dialog">
-      <div class="rball" id="rball"><!-- logo or initials --></div>
+      <div class="rball" id="rball" aria-hidden="true"></div>
       <div style="display:flex;flex-direction:column;gap:12px;align-items:flex-start;">
         <div class="rtext" id="rtext">Đang mở quả bóng...</div>
         <div style="display:flex;gap:8px;">
           <button id="dismissReveal" class="btn">Dismiss</button>
-          <button id="keepReveal" class="btn ghost">Keep</button>
+          <button id="keepReveal" class="btn ghost">Keep (lock)</button>
         </div>
       </div>
     </div>
   </div>
 
   <!-- wizard modal -->
-  <div id="wizardBackdrop" class="wizard-backdrop" style="display:none">
+  <div id="wizard" class="wizard-backdrop" style="display:flex">
     <div class="wizard" role="dialog" aria-modal="true">
-      <div class="steps" id="wizardSteps">
-        <div class="step active" data-step="1">1. Cycle</div>
-        <div class="step" data-step="2">2. Số đội</div>
-        <div class="step" data-step="3">3. Chọn đội</div>
-        <div class="step" data-step="4">4. Confirm</div>
+      <!-- Step 1: Choose cycle -->
+      <div class="wiz-step active" data-step="1" id="wizStep1">
+        <h2>1/3 — Chọn Cycle Bốc Thăm</h2>
+        <div class="option-grid" id="cycleOptions">
+          <div class="option option-cycle" data-cycle="cycle1">Cycle 1 — 14 đội (Normal draw)</div>
+          <div class="option option-cycle" data-cycle="cycle3.2">Cycle 3.2 — 8 đội (special)</div>
+          <div class="option option-cycle" data-cycle="cycle3.3">Cycle 3.3 — 6 đội (special)</div>
+        </div>
+        <div class="wiz-nav">
+          <div></div>
+          <div><button id="wizNext1" class="btn">Next →</button></div>
+        </div>
       </div>
 
-      <div class="content" id="wizardContent">
-        <!-- step contents injected here -->
+      <!-- Step 2: Choose number of teams -->
+      <div class="wiz-step" data-step="2" id="wizStep2">
+        <h2>2/3 — Chọn số đội dùng cho lần bốc này</h2>
+        <div class="option-grid" id="numOptions"></div>
+        <div style="margin-top:8px;color:var(--muted)">Chọn số đội (từ 6 đến 14) — hệ thống sẽ lấy đội từ danh sách teams.json.</div>
+        <div class="wiz-nav">
+          <button id="wizBack2" class="btn ghost">← Back</button>
+          <button id="wizNext2" class="btn">Next →</button>
+        </div>
       </div>
 
-      <div style="display:flex;justify-content:space-between;margin-top:12px">
-        <div><button id="wizardBack" class="btn ghost">Back</button></div>
-        <div style="display:flex;gap:8px"><button id="wizardNext" class="btn">Next</button><button id="wizardClose" class="btn ghost">Close</button></div>
+      <!-- Step 3: Select teams (checkbox) -->
+      <div class="wiz-step" data-step="3" id="wizStep3">
+        <h2>3/3 — Chọn danh sách đội (tick những đội sẽ tham gia lần bốc này)</h2>
+        <div id="teamCountInfo" style="color:var(--muted);margin-top:6px"></div>
+        <div class="team-list" id="teamList"></div>
+        <div style="margin-top:12px;display:flex;justify-content:space-between">
+          <button id="wizBack3" class="btn ghost">← Back</button>
+          <div><button id="wizFinish" class="btn">Apply & Start</button></div>
+        </div>
       </div>
     </div>
   </div>
@@ -173,509 +199,493 @@ html,body{height:100%;margin:0;background:linear-gradient(180deg,#031624,#011018
   <audio id="audioBG" src="assets/epic.mp3" preload="auto" loop></audio>
 
 <script>
-/* Full index.js inside the file
-   Features implemented:
-   - Wizard (Cycle selection / team count / pick teams / confirm)
-   - Load teams.json
-   - Distribute pots (balanced: ceil/floor)
-   - Random bracket placement, while respecting lock rules (no repeat match-ups)
-   - Reveal overlay (spin->explode->reveal), logo cover in circle with fallback initials
-   - After Dismiss, main reveal card shows logo+name persistently; name then drops into bracket (random valid slot)
-   - Balls removed when drawn and not show small name
-   - Undo / Export / OBS / Music
-   - History of pairings persistent in localStorage (avoid repeats across cycles)
-*/
+/* =============================
+  Full index.html logic
+  - Wizard settings (3 steps)
+  - Dynamic pot distribution based on selected team count
+  - Random draw, balls colored per pot (gradient)
+  - Logo displayed in circular crop (cover)
+  - Reveal overlay: spin -> explosion -> reveal -> wait for Dismiss
+  - On Dismiss: animate drop into bracket and update main reveal card with logo+name
+  - Prevent pairing repeats across cycles using localStorage
+  - Undo & Export
+  - Hotkeys: 1/2/3 = draw from pot A/B/C, Space = Dismiss, U = Undo, X = Export
+================================= */
 
-/* ---------- Utilities ---------- */
 const MAX = 14;
-const pairsHistoryKey = 'vh_pairs_history_v1'; // localStorage key
+let allTeams = []; // from teams.json
+let selectedTeams = []; // teams selected for current draw
+let pots = [[],[],[]]; // each element: {id,name,logo,pot}
+let history = []; // events logged
+let currentCycle = 'cycle1';
+let selectedCount = 14;
+let currentDraw = null; // {team, assigned}
+let lastLocked = false;
 
-function idGen(){ return 't'+Math.random().toString(36).slice(2,9); }
-function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
-function play(a){ try{ a.currentTime=0; a.play(); }catch(e){} }
-function initialsOf(name){
-  if(!name) return '';
-  return name.split(' ').map(p=>p[0]).slice(0,3).join('').toUpperCase();
-}
-function downloadBlob(blob, filename){ const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=filename; document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 500); }
+/* DOM refs */
+const wizard = document.getElementById('wizard');
+const cycleOptions = document.getElementById('cycleOptions');
+const numOptions = document.getElementById('numOptions');
+const teamList = document.getElementById('teamList');
+const teamCountInfo = document.getElementById('teamCountInfo');
+const wizStepEls = document.querySelectorAll('.wiz-step');
 
-/* ---------- State ---------- */
-let teams = []; // from teams.json
-let selectedTeams = []; // teams chosen for this draw (objects)
-let pots = [[],[],[]]; // arrays with team objects (id,name,logo,pot)
-let history = []; // local session history entries {ts,team,pot,pairIndex,side}
-let persistentPairs = JSON.parse(localStorage.getItem(pairsHistoryKey) || '[]'); // array of pair strings 'A|B' (sorted)
-let currentDraw = null; // {team,assigned,fromPot}
-let wizardState = { step:1, cycle:'cycle1', teamCount:14, picks: [] };
-
-/* ---------- DOM refs ---------- */
 const pairGrid = document.getElementById('pairGrid');
 const bowlA = document.getElementById('bowlA'), bowlB = document.getElementById('bowlB'), bowlC = document.getElementById('bowlC');
 const countA = document.getElementById('countA'), countB = document.getElementById('countB'), countC = document.getElementById('countC');
-const revealBall = document.getElementById('revealBall'), revealText = document.getElementById('revealText');
+const revealBall = document.getElementById('revealBall'), revealText = document.getElementById('revealText'), revealName = document.getElementById('revealName');
 const revealOverlay = document.getElementById('revealOverlay'), rball = document.getElementById('rball'), rtext = document.getElementById('rtext');
 const dismissReveal = document.getElementById('dismissReveal'), keepReveal = document.getElementById('keepReveal');
 const confettiRoot = document.getElementById('confetti');
+
 const btnUndo = document.getElementById('btnUndo'), btnExport = document.getElementById('btnExport'), btnObs = document.getElementById('btnObs'), musicToggle = document.getElementById('musicToggle');
-const btnOpenWizard = document.getElementById('openWizard');
-const wizardBackdrop = document.getElementById('wizardBackdrop');
-const wizardContent = document.getElementById('wizardContent');
-const wizardSteps = document.getElementById('wizardSteps');
-const wizardBack = document.getElementById('wizardBack'), wizardNext = document.getElementById('wizardNext'), wizardClose = document.getElementById('wizardClose');
+const openWizard = document.getElementById('openWizard');
 
 const audioDrum = document.getElementById('audioDrum'), audioPop = document.getElementById('audioPop'), audioApplause = document.getElementById('audioApplause'), audioGasp = document.getElementById('audioGasp'), audioBG = document.getElementById('audioBG');
 const app = document.getElementById('app');
 
-/* ---------- Load teams.json ---------- */
-async function loadTeamsFromJSON(){
-  try{
-    const res = await fetch('teams.json', {cache:'no-store'});
-    const data = await res.json();
-    teams = data.slice(0, MAX).map((t,i)=>({ id: idGen(), name: t.name || `Đội ${i+1}`, logo: t.logo || '' }));
-  }catch(e){
-    // fallback default list
-    teams = Array.from({length:MAX}, (_,i) => ({ id:idGen(), name:`Đội ${i+1}`, logo: '' }));
-  }
+/* helpers */
+function idGen(){ return 't'+Math.random().toString(36).slice(2,9); }
+function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
+function play(a){ try{ a.currentTime = 0; a.play(); }catch(e){} }
+function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]] } return a; }
+
+/* ========== Wizard flow ========== */
+let wizState = { step:1, cycle: 'cycle1', count: 14, selected: [] };
+
+function showStep(n){
+  wizStepEls.forEach(el=>el.classList.remove('active'));
+  document.querySelector(`.wiz-step[data-step="${n}"]`).classList.add('active');
+  wizState.step = n;
 }
 
-/* ---------- Wizard UI ---------- */
-function openWizard(){
-  wizardBackdrop.style.display = 'flex';
-  wizardState.step = 1;
-  renderWizard();
-}
-function closeWizard(){ wizardBackdrop.style.display='none'; }
-btnOpenWizard.addEventListener('click', openWizard);
-wizardClose.addEventListener('click', closeWizard);
-
-function renderWizard(){
-  // update steps bar
-  document.querySelectorAll('.step').forEach(el=> el.classList.remove('active'));
-  document.querySelector(`.step[data-step="${wizardState.step}"]`).classList.add('active');
-
-  if(wizardState.step === 1){
-    wizardContent.innerHTML = `
-      <h3>Chọn Cycle</h3>
-      <div style="display:flex;gap:12px;margin-top:10px">
-        <label><input type="radio" name="cycle" value="cycle1" ${wizardState.cycle==='cycle1'?'checked':''}> Cycle 1 (Full 14 draw)</label>
-        <label><input type="radio" name="cycle" value="cycle3.2" ${wizardState.cycle==='cycle3.2'?'checked':''}> Cycle 3.2</label>
-        <label><input type="radio" name="cycle" value="cycle3.3" ${wizardState.cycle==='cycle3.3'?'checked':''}> Cycle 3.3</label>
-      </div>
-      <p style="color:var(--muted);margin-top:12px">Mô tả: chọn cycle bạn muốn bốc (một lần). Lịch sử cặp đấu sẽ được tránh lặp lại giữa cycles.</p>
-    `;
-    wizardContent.querySelectorAll('input[name="cycle"]').forEach(r=> r.addEventListener('change', e=> wizardState.cycle = e.target.value));
-  } else if(wizardState.step === 2){
-    // choose team count between 6 and 14
-    let opts = '';
-    for(let n=6;n<=14;n++) opts += `<option value="${n}" ${wizardState.teamCount===n?'selected':''}>${n} đội</option>`;
-    wizardContent.innerHTML = `
-      <h3>Chọn số đội tham gia (6 - 14)</h3>
-      <div style="margin-top:10px"><select id="selectTeamCount">${opts}</select></div>
-      <p style="color:var(--muted);margin-top:12px">Chọn số đội sẽ tham gia vòng bốc hiện tại.</p>
-    `;
-    document.getElementById('selectTeamCount').addEventListener('change', e=> wizardState.teamCount = parseInt(e.target.value));
-  } else if(wizardState.step === 3){
-    // team pick list
-    // mark preselected from previous picks or first N teams by default
-    if(!wizardState.picks || wizardState.picks.length === 0){
-      wizardState.picks = teams.slice(0, wizardState.teamCount).map(t=>t.id);
-    }
-    wizardContent.innerHTML = `
-      <h3>Chọn đội trong danh sách bốc</h3>
-      <div style="margin-top:8px;color:var(--muted);font-size:13px">Tô tối thiểu ${wizardState.teamCount} đội được chọn. Bỏ tick để loại đội khỏi lần bốc này.</div>
-      <div class="team-list" id="teamList" style="margin-top:12px"></div>
-      <div class="select-row">
-        <button id="selectAll" class="btn ghost">Select All</button>
-        <button id="selectDefault" class="btn ghost">Auto-fill first ${wizardState.teamCount}</button>
-      </div>
-    `;
-    const teamList = document.getElementById('teamList');
-    teams.forEach(t=>{
-      const checked = wizardState.picks.includes(t.id) ? 'checked' : '';
-      const item = document.createElement('div'); item.className = 'team-item';
-      item.innerHTML = `<input type="checkbox" data-id="${t.id}" ${checked}> <div style="width:36px;height:28px;background:#fff;color:#021322;border-radius:6px;display:grid;place-items:center;font-weight:800">${initialsOf(t.name)}</div> <div style="flex:1">${t.name}</div>`;
-      teamList.appendChild(item);
-    });
-    document.getElementById('selectAll').addEventListener('click', ()=> {
-      wizardState.picks = teams.map(t=>t.id);
-      renderWizard(); // re-render step
-    });
-    document.getElementById('selectDefault').addEventListener('click', ()=> {
-      wizardState.picks = teams.slice(0, wizardState.teamCount).map(t=>t.id);
-      renderWizard();
-    });
-    // attach checkbox listeners later on next/back
-    setTimeout(()=> {
-      document.querySelectorAll('#teamList input[type="checkbox"]').forEach(ch=>{
-        ch.addEventListener('change', (e)=>{
-          const id = e.target.dataset.id;
-          if(e.target.checked) {
-            if(!wizardState.picks.includes(id)) wizardState.picks.push(id);
-          } else {
-            wizardState.picks = wizardState.picks.filter(x=>x!==id);
-          }
-        });
-      });
-    }, 30);
-  } else if(wizardState.step === 4){
-    wizardContent.innerHTML = `
-      <h3>Xác nhận</h3>
-      <div style="margin-top:10px;color:var(--muted)">
-        <div><strong>Cycle:</strong> ${wizardState.cycle}</div>
-        <div><strong>Số đội:</strong> ${wizardState.teamCount}</div>
-        <div><strong>Đội tham gia:</strong> ${wizardState.picks.length} (click để xem)</div>
-      </div>
-      <div style="margin-top:12px;max-height:240px;overflow:auto;border-radius:8px;padding:10px;background:rgba(255,255,255,0.02)">
-        ${wizardState.picks.map(id => {
-          const t = teams.find(x=>x.id===id);
-          return `<div style="padding:6px;border-bottom:1px solid rgba(255,255,255,0.02)">${t ? t.name : id}</div>`;
-        }).join('')}
-      </div>
-      <div style="margin-top:12px;color:var(--muted)">Bấm <strong>Next</strong> để apply và tạo draw.</div>
-    `;
-  }
-}
-
-/* wizard navigation */
-wizardBack.addEventListener('click', ()=>{
-  if(wizardState.step>1){ wizardState.step--; renderWizard(); }
-});
-wizardNext.addEventListener('click', ()=>{
-  if(wizardState.step<4){
-    // validations
-    if(wizardState.step === 2){
-      // ensure teamCount <= total teams available
-      if(wizardState.teamCount > teams.length){ alert('Không đủ đội trong teams.json'); return; }
-    }
-    if(wizardState.step === 3){
-      if(wizardState.picks.length < wizardState.teamCount){
-        if(!confirm(`Bạn chỉ chọn ${wizardState.picks.length} đội — cần ${wizardState.teamCount}. Tiếp tục?`)) return;
-      }
-    }
-    wizardState.step++; renderWizard();
-  } else {
-    // apply settings and close
-    applyWizardSettings();
-    closeWizard();
-  }
-});
-wizardClose.addEventListener('click', closeWizard);
-
-/* ---------- Apply settings (after wizard finished) ---------- */
-function applyWizardSettings(){
-  // build selectedTeams from picks (if picks length > teamCount, use first teamCount)
-  selectedTeams = wizardState.picks.slice(0, wizardState.teamCount).map(id => {
-    const t = teams.find(x=>x.id===id);
-    return Object.assign({}, t);
+document.querySelectorAll('.option-cycle').forEach(o=>{
+  o.addEventListener('click', ()=> {
+    document.querySelectorAll('.option-cycle').forEach(x=>x.classList.remove('opt-selected'));
+    o.classList.add('opt-selected');
+    wizState.cycle = o.dataset.cycle;
   });
-  // if picks < required — pad with available teams
-  if(selectedTeams.length < wizardState.teamCount){
-    const missing = wizardState.teamCount - selectedTeams.length;
-    const remaining = teams.filter(t=> !wizardState.picks.includes(t.id)).slice(0, missing);
-    selectedTeams = selectedTeams.concat(remaining.map(r=>Object.assign({}, r)));
+});
+
+/* populate number options 6..14 */
+function initNumOptions(){
+  numOptions.innerHTML = '';
+  for(let n=6;n<=14;n++){
+    const d = document.createElement('div');
+    d.className = 'option option-num';
+    d.textContent = `${n} đội`;
+    d.dataset.n = n;
+    if(n===14) d.classList.add('opt-selected'), wizState.count=14;
+    d.addEventListener('click', ()=>{ document.querySelectorAll('.option-num').forEach(x=>x.classList.remove('opt-selected')); d.classList.add('opt-selected'); wizState.count = n; updateTeamList(); });
+    numOptions.appendChild(d);
   }
-  // distribute into pots balanced
-  distributePots(selectedTeams.length);
-  renderPots();
-  buildPairsForTeamCount(selectedTeams.length);
-  // clear currentDraw and reveal card
-  currentDraw = null;
-  clearMainReveal();
-  // push UI hint
-  alert(`Applied settings: ${wizardState.cycle} — ${selectedTeams.length} đội`);
 }
 
-/* ---------- Pots & Bracket building ---------- */
-function distributePots(N){
-  // balanced across 3 pots: base = Math.floor(N/3), remainder goes to first pots
-  const base = Math.floor(N/3);
-  let rem = N % 3;
-  pots = [[],[],[]];
-  // take a shuffled copy of selectedTeams
-  const shuffled = shuffle([...selectedTeams]);
-  let index = 0;
-  for(let p=0;p<3;p++){
-    const size = base + (rem>0?1:0);
-    rem = Math.max(0, rem-1);
-    for(let k=0;k<size;k++){
-      const t = Object.assign({}, shuffled[index++]); t.pot = p;
-      pots[p].push(t);
+/* load teams.json and build team list */
+async function loadAllTeams(){
+  try{
+    const r = await fetch('teams.json', {cache:'no-store'});
+    const data = await r.json();
+    allTeams = data.map((t,i)=>({ id:idGen(), name: t.name || `Đội ${i+1}`, logo: t.logo || '' }));
+  }catch(e){
+    // fallback sample
+    allTeams = Array.from({length:14},(_,i)=>({ id:idGen(), name:`Đội ${i+1}`, logo:'' }));
+  }
+  updateTeamList();
+}
+
+/* render team checkbox list */
+function updateTeamList(){
+  const n = wizState.count || 14;
+  teamList.innerHTML = '';
+  teamCountInfo.textContent = `Chọn ${n} đội cho lần bốc này — mặc định chọn top ${n}`;
+  // default: first n are checked; but allow uncheck
+  for(let i=0;i<allTeams.length;i++){
+    const t = allTeams[i];
+    const row = document.createElement('label'); row.className='team-item';
+    const chk = document.createElement('input'); chk.type='checkbox';
+    // default behavior: check if within first n
+    chk.checked = i < n;
+    chk.dataset.tid = t.id;
+    const img = document.createElement('img');
+    // logo preview: if logo available and accessible, show; else show placeholder circle
+    if(t.logo){
+      img.src = t.logo;
+      img.onerror = ()=>{ img.src = ''; img.style.background = '#2a3a4a'; img.textContent = t.name[0] || '?'; };
+    } else {
+      img.src = ''; img.style.background = '#2a3a4a';
     }
+    const span = document.createElement('span'); span.textContent = ` ${t.name}`;
+    row.appendChild(chk); row.appendChild(img); row.appendChild(span);
+    teamList.appendChild(row);
   }
 }
 
-function buildPairsForTeamCount(N){
-  // compute num pairs = floor(N/2)
-  const numPairs = Math.floor(N/2);
+/* wizard button wiring */
+document.getElementById('wizNext1').addEventListener('click', ()=> { showStep(2); });
+document.getElementById('wizBack2').addEventListener('click', ()=>{ showStep(1); });
+document.getElementById('wizNext2').addEventListener('click', ()=>{ showStep(3); });
+document.getElementById('wizBack3').addEventListener('click', ()=>{ showStep(2); });
+document.getElementById('wizFinish').addEventListener('click', ()=>{ // apply settings
+  const checked = Array.from(teamList.querySelectorAll('input[type=checkbox]')).filter(i=>i.checked).map(i=>i.dataset.tid);
+  // build selectedTeams from checked
+  selectedTeams = allTeams.filter(t=>checked.includes(t.id)).slice(0, wizState.count);
+  if(selectedTeams.length < 2){ alert('Phải chọn ít nhất 2 đội'); return; }
+  // set globals
+  currentCycle = wizState.cycle;
+  selectedCount = wizState.count;
+  wizard.style.display = 'none';
+  startDrawWithSelected();
+});
+
+/* open wizard button */
+openWizard.addEventListener('click', ()=>{ wizard.style.display='flex'; showStep(1); });
+
+/* init wizard UI */
+initNumOptions();
+loadAllTeams();
+
+/* ========== Draw setup ==========
+  - prepare pots based on selectedTeams and distribution algorithm
+  - build bracket slots depending on selectedCount
+================================= */
+
+function computeQuotas(n){
+  const base = Math.floor(n/3);
+  const rem = n % 3;
+  const q = [ base + (rem>0?1:0), base + (rem>1?1:0), base ];
+  // ensure sum == n
+  let s = q[0]+q[1]+q[2];
+  let i=0;
+  while(s < n){ q[i%3]++; s++; i++; }
+  return q;
+}
+
+function preparePotsFromSelected(){
+  pots = [[],[],[]];
+  const n = selectedTeams.length;
+  const quotas = computeQuotas(n); // e.g. 14 -> [5,5,4]
+  const idx = shuffle([...Array(n).keys()]);
+  let p=0;
+  idx.forEach(i=>{
+    while(pots[p].length >= quotas[p]) p++;
+    const t = Object.assign({}, selectedTeams[i]);
+    t.pot = p;
+    pots[p].push(t);
+  });
+  renderPots();
+  buildPairsForCount(selectedTeams.length);
+  updateCounts();
+}
+
+/* render pots (balls are blanks so no names shown) */
+function renderPots(){
+  bowlA.innerHTML=''; bowlB.innerHTML=''; bowlC.innerHTML='';
+  pots[0].forEach((t,idx)=>{
+    const b = document.createElement('div'); b.className = 'ball potA hidden'; b.dataset.tid=t.id; b.dataset.p=0; b.dataset.i=idx;
+    b.setAttribute('aria-label', `Pot A vị trí ${idx+1}`);
+    b.addEventListener('click', onBallClick);
+    bowlA.appendChild(b);
+  });
+  pots[1].forEach((t,idx)=>{
+    const b = document.createElement('div'); b.className = 'ball potB hidden'; b.dataset.tid=t.id; b.dataset.p=1; b.dataset.i=idx;
+    b.setAttribute('aria-label', `Pot B vị trí ${idx+1}`);
+    b.addEventListener('click', onBallClick);
+    bowlB.appendChild(b);
+  });
+  pots[2].forEach((t,idx)=>{
+    const b = document.createElement('div'); b.className = 'ball potC hidden'; b.dataset.tid=t.id; b.dataset.p=2; b.dataset.i=idx;
+    b.setAttribute('aria-label', `Pot C vị trí ${idx+1}`);
+    b.addEventListener('click', onBallClick);
+    bowlC.appendChild(b);
+  });
+}
+
+/* build bracket slots depending on count */
+function buildPairsForCount(n){
   pairGrid.innerHTML = '';
-  for(let i=0;i<numPairs;i++){
-    const el = document.createElement('div'); el.className='pair'; el.dataset.i = i;
+  const pairs = Math.ceil(n/2);
+  // grid layout: we will still show pairs in the existing grid but only create 'pairs' items
+  for(let i=0;i<pairs;i++){
+    const el = document.createElement('div'); el.className='pair'; el.dataset.i=i;
     el.innerHTML = `<div class="pair-row"><div class="slot"><div class="mini" id="mini-${i}-0">${i*2+1}</div><div class="name" id="n-${i}-0"><span class="placeholder">???</span></div></div><div class="vs">VS</div><div class="slot"><div class="name" id="n-${i}-1"><span class="placeholder">???</span></div><div class="mini" id="mini-${i}-1">${i*2+2}</div></div></div>`;
     pairGrid.appendChild(el);
   }
 }
 
-/* renderPots: show balls (no names). Each pot uses its gradient classes */
-function renderPots(){
-  bowlA.innerHTML=''; bowlB.innerHTML=''; bowlC.innerHTML='';
-  pots[0].forEach((t,idx)=> {
-    const b = document.createElement('div'); b.className='ball hidden'; b.dataset.tid=t.id; b.dataset.p=0; b.dataset.i=idx;
-    // accessible label
-    b.setAttribute('aria-label', `Pot A ‧ vị trí ${idx+1}`);
-    // put img tag inside so that background cover works and onerror fallback
-    if(t.logo){
-      const img = document.createElement('img'); img.src = t.logo; img.alt = t.name;
-      img.onerror = ()=> { img.remove(); const span = document.createElement('div'); span.className='initials'; span.textContent = initialsOf(t.name); b.appendChild(span); };
-      b.appendChild(img);
-    } else {
-      const span = document.createElement('div'); span.className='initials'; span.textContent = initialsOf(t.name); b.appendChild(span);
-    }
-    b.addEventListener('click', onBallClick);
-    bowlA.appendChild(b);
-  });
-  pots[1].forEach((t,idx)=> {
-    const b = document.createElement('div'); b.className='ball alt hidden'; b.dataset.tid=t.id; b.dataset.p=1; b.dataset.i=idx;
-    b.setAttribute('aria-label', `Pot B ‧ vị trí ${idx+1}`);
-    if(t.logo){
-      const img = document.createElement('img'); img.src = t.logo; img.alt = t.name;
-      img.onerror = ()=> { img.remove(); const span = document.createElement('div'); span.className='initials'; span.textContent = initialsOf(t.name); b.appendChild(span); };
-      b.appendChild(img);
-    } else {
-      const span = document.createElement('div'); span.className='initials'; span.textContent = initialsOf(t.name); b.appendChild(span);
-    }
-    b.addEventListener('click', onBallClick);
-    bowlB.appendChild(b);
-  });
-  pots[2].forEach((t,idx)=> {
-    const b = document.createElement('div'); b.className='ball hidden'; b.dataset.tid=t.id; b.dataset.p=2; b.dataset.i=idx;
-    b.setAttribute('aria-label', `Pot C ‧ vị trí ${idx+1}`);
-    if(t.logo){
-      const img = document.createElement('img'); img.src = t.logo; img.alt = t.name;
-      img.onerror = ()=> { img.remove(); const span = document.createElement('div'); span.className='initials'; span.textContent = initialsOf(t.name); b.appendChild(span); };
-      b.appendChild(img);
-    } else {
-      const span = document.createElement('div'); span.className='initials'; span.textContent = initialsOf(t.name); b.appendChild(span);
-    }
-    b.addEventListener('click', onBallClick);
-    bowlC.appendChild(b);
-  });
-  updateCounts();
+/* update counts */
+function updateCounts(){
+  countA.textContent = `${pots[0].length} đội`;
+  countB.textContent = `${pots[1].length} đội`;
+  countC.textContent = `${pots[2].length} đội`;
 }
 
-/* ---------- Draw flow ---------- */
+/* ========== Pairing memory (localStorage) ==========
+   store pairings per cycle to avoid repeats across cycles
+   stored as array of pairs like ["Team A|Team B"]
+================================= */
+
+function storePairing(cycleKey, a, b){
+  const key = `vh_pairs_${cycleKey}`;
+  const arr = JSON.parse(localStorage.getItem(key) || '[]');
+  arr.push(`${a}||${b}`); // store canonical
+  localStorage.setItem(key, JSON.stringify(arr));
+}
+function wasPairedBefore(a,b){
+  // check cycle1 (previous cycles) depending on currentCycle
+  const checkCycles = ['cycle1'];
+  if(currentCycle === 'cycle3.2' || currentCycle === 'cycle3.3') {
+    // avoid pairs that happened in cycle1
+    checkCycles.push('cycle1');
+  }
+  for(const cyc of checkCycles){
+    const key = `vh_pairs_${cyc}`;
+    const arr = JSON.parse(localStorage.getItem(key) || '[]');
+    if(arr.includes(`${a}||${b}`) || arr.includes(`${b}||${a}`)) return true;
+  }
+  return false;
+}
+
+/* ========== Draw logic ==========
+  - clicking a ball removes it immediately
+  - choose a random valid slot (avoid repeating pairings)
+  - show cinematic overlay reveal
+  - on dismiss: animate drop to bracket, update main reveal area (logo+name)
+================================= */
 
 async function onBallClick(e){
   const el = e.currentTarget;
   const potIndex = parseInt(el.dataset.p);
   const tid = el.dataset.tid;
   const pot = pots[potIndex];
-  const idx = pot.findIndex(x=>x.id===tid);
-  if(idx === -1) return; // already removed
+  const idx = pot.findIndex(x=>x.id === tid);
+  if(idx === -1) return;
   await doDraw(potIndex, idx);
 }
 
 async function drawFromPot(potIndex){
-  if(!pots[potIndex] || pots[potIndex].length === 0) return;
-  const i = Math.floor(Math.random()*pots[potIndex].length);
-  await doDraw(potIndex, i);
+  if(!pots[potIndex] || pots[potIndex].length===0) return;
+  const idx = Math.floor(Math.random() * pots[potIndex].length);
+  await doDraw(potIndex, idx);
 }
 
 async function doDraw(potIndex, idxInPot){
-  // remove from pot immediately
+  // remove ball
   const team = pots[potIndex].splice(idxInPot,1)[0];
   renderPots();
+  updateCounts();
 
-  // pick random valid slot (respect pot constraint and avoid repeats using persistentPairs)
-  const assigned = chooseRandomValidSlotAvoidRepeats(team);
-
-  // store current draw (do not place into bracket yet)
+  // choose a random valid slot with constraints and avoid previous pairings
+  const assigned = chooseRandomValidSlotAvoiding(team);
+  // record current draw so overlay & dismiss handler can use it
   currentDraw = { team, assigned, fromPot: potIndex, ts: new Date().toISOString() };
-  history.push({ ts: currentDraw.ts, team: team.name, pot: team.pot, pairIndex: assigned ? assigned.pairIndex : null, side: assigned ? assigned.side : null });
+  // store to history (we'll update bracket info after dismiss)
+  history.push({ ts: currentDraw.ts, team: team.name, pot: team.pot, pairIndex: assigned ? assigned.pairIndex : null, side: assigned ? assigned.side : null, cycle: currentCycle });
 
-  // cinematic reveal sequence (overlay)
+  // cinematic overlay
   await cinematicRevealSequence(team);
-  // after reveal, we WAIT for user to Dismiss to drop into bracket
 }
 
-/* choose random candidate slot while avoiding already-played pairs */
-function chooseRandomValidSlotAvoidRepeats(team){
+/* chooseRandomValidSlotAvoiding(team) -> returns a candidate slot (random among candidates), avoids repeats */
+function chooseRandomValidSlotAvoiding(team){
   const candidates = [];
-  const numPairs = Math.floor(selectedTeams.length/2);
-  for(let i=0;i<numPairs;i++){
-    const leftEl = document.getElementById(`n-${i}-0`);
-    const rightEl = document.getElementById(`n-${i}-1`);
-    const leftText = leftEl ? leftEl.textContent : '';
-    const rightText = rightEl ? rightEl.textContent : '';
+  const pairs = Math.ceil(selectedTeams.length/2);
+  for(let i=0;i<pairs;i++){
+    const l = document.getElementById(`n-${i}-0`);
+    const r = document.getElementById(`n-${i}-1`);
+    const leftText = l ? l.textContent : '';
+    const rightText = r ? r.textContent : '';
 
-    // left empty?
-    if(leftEl && leftText.includes('???')){
-      // if right empty -> candidate
-      if(rightText.includes('???')) candidates.push({pairIndex:i, side:0});
-      else {
-        const oppName = rightText;
-        // avoid if oppName already played with team (persistentPairs)
-        if(!hasPlayed(team.name, oppName)) candidates.push({pairIndex:i, side:0});
+    // left empty? allowed if right empty OR right's pot != team.pot and not previously paired
+    if(l && leftText.includes('???')){
+      if(r && rightText && !rightText.includes('???')){
+        // r occupied: check pot and previous pairing
+        const rp = r.dataset.pot;
+        if(String(rp) !== String(team.pot) && !wasPairedBefore(team.name, r.textContent)) candidates.push({pairIndex:i, side:0});
+      } else {
+        // both empty -> candidate
+        candidates.push({pairIndex:i, side:0});
       }
     }
+
     // right empty?
-    if(rightEl && rightText.includes('???')){
-      if(leftText.includes('???')) candidates.push({pairIndex:i, side:1});
-      else {
-        const oppName = leftText;
-        if(!hasPlayed(team.name, oppName)) candidates.push({pairIndex:i, side:1});
+    if(r && rightText.includes('???')){
+      if(l && leftText && !leftText.includes('???')){
+        const lp = l.dataset.pot;
+        if(String(lp) !== String(team.pot) && !wasPairedBefore(team.name, l.textContent)) candidates.push({pairIndex:i, side:1});
+      } else {
+        candidates.push({pairIndex:i, side:1});
       }
     }
   }
-  if(candidates.length === 0){
+
+  // remove duplicates
+  const uniq = [];
+  const keys = new Set();
+  for(const c of candidates){
+    const k = `${c.pairIndex}-${c.side}`;
+    if(!keys.has(k)){ keys.add(k); uniq.push(c); }
+  }
+  if(uniq.length === 0){
     // fallback: any empty slot
-    const numPairs = Math.floor(selectedTeams.length/2);
-    for(let i=0;i<numPairs;i++){
+    for(let i=0;i<pairs;i++){
       const l = document.getElementById(`n-${i}-0`), r = document.getElementById(`n-${i}-1`);
       if(l && l.textContent.includes('???')) return {pairIndex:i, side:0};
       if(r && r.textContent.includes('???')) return {pairIndex:i, side:1};
     }
     return {pairIndex:null, side:null};
   }
-  return candidates[Math.floor(Math.random()*candidates.length)];
+  return uniq[Math.floor(Math.random()*uniq.length)];
 }
 
-/* check persistent history for pair (either order) */
-function hasPlayed(a, b){
-  if(!a || !b) return false;
-  const key = [a,b].sort().join('|');
-  return persistentPairs.includes(key);
+/* cinematic reveal overlay */
+async function cinematicRevealSequence(team){
+  // center small card update
+  revealBall.innerHTML=''; // clear previous circle
+  revealBall.style.background = (team.pot===0) ? 'var(--potA-grad)' : (team.pot===1 ? 'var(--potB-grad)' : 'var(--potC-grad)');
+  revealName.textContent = 'MỞ QUẢ BÓNG...';
+  revealText.querySelector('.small').textContent = 'Đang mở — chờ khán giả...';
+  play(audioDrum);
+  await sleep(800);
+
+  // overlay animation
+  rball.innerHTML = ''; rball.style.backgroundImage = ''; rball.style.animation = 'ballUltraSpin 2.2s cubic-bezier(.1,.9,.2,1), ballExplosion 1.2s ease-in-out';
+  rtext.textContent = 'ĐANG MỞ QUẢ BÓNG...';
+  revealOverlay.style.display = 'flex';
+  play(audioGasp);
+  await sleep(1800);
+  play(audioPop);
+  await sleep(600);
+
+  // reveal name + logo in overlay
+  rball.style.animation = 'none';
+  if(currentDraw.team.logo){
+    // show logo as img inside rball
+    rball.innerHTML = '';
+    const img = document.createElement('img'); img.className='rlogo';
+    img.src = currentDraw.team.logo;
+    img.alt = currentDraw.team.name;
+    // onerror -> hide img; will show text instead
+    img.onerror = ()=>{ img.remove(); rball.textContent = currentDraw.team.name; };
+    rball.appendChild(img);
+  } else {
+    rball.textContent = currentDraw.team.name;
+  }
+  rball.style.animation = 'textRevealEpic 0.9s ease-out';
+  rtext.textContent = `CLAN: ${currentDraw.team.name}`;
+  play(audioApplause);
+  burstConfetti(140);
+  cameraShake();
+
+  // overlay remains until Dismiss; dismiss handler will drop into bracket and update main reveal
 }
 
-/* after dismiss -> drop into bracket and update main reveal card */
+/* dismiss handler (drop to bracket + update main reveal area) */
 async function onDismissHandler(){
   if(!currentDraw) { revealOverlay.style.display='none'; return; }
-  // drop into bracket
+
+  // animate floating element from overlay center to bracket slot
   const assigned = currentDraw.assigned;
   if(assigned && assigned.pairIndex !== null){
     const targetEl = document.getElementById(`n-${assigned.pairIndex}-${assigned.side}`);
-    // floating element
+    // build floating box (logo+name)
     const float = document.createElement('div');
     float.style.position = 'fixed';
     float.style.left = (window.innerWidth/2 - 140) + 'px';
-    float.style.top = (window.innerHeight/2 - 80) + 'px';
-    float.style.padding = '8px 14px';
+    float.style.top = (window.innerHeight/2 - 60) + 'px';
+    float.style.padding = '8px 12px';
     float.style.borderRadius = '10px';
-    float.style.background = 'linear-gradient(180deg,#ffffff,#f2f2f2)';
+    float.style.background = 'linear-gradient(180deg,#ffffff,#f0f0f0)';
     float.style.color = '#021322';
     float.style.fontWeight = '800';
     float.style.boxShadow = '0 18px 60px rgba(0,0,0,0.6)';
     float.style.zIndex = 14000;
 
     if(currentDraw.team.logo){
-      const img = document.createElement('img'); img.src = currentDraw.team.logo; img.style.height='28px'; img.style.marginRight='8px'; img.onerror = ()=> img.remove();
-      float.appendChild(img);
+      const img = document.createElement('img'); img.src = currentDraw.team.logo; img.style.height='36px'; img.style.width='36px'; img.style.objectFit='cover'; img.style.borderRadius='6px'; img.style.marginRight='8px'; float.appendChild(img);
       const txt = document.createElement('span'); txt.textContent = currentDraw.team.name; float.appendChild(txt);
     } else {
       float.textContent = currentDraw.team.name;
     }
     document.body.appendChild(float);
 
-    // compute travel
     const fromRect = float.getBoundingClientRect();
     const toRect = targetEl.getBoundingClientRect();
     const dx = (toRect.left + toRect.width/2) - (fromRect.left + fromRect.width/2);
     const dy = (toRect.top + toRect.height/2) - (fromRect.top + fromRect.height/2);
 
-    float.animate([{ transform: 'translate(0, -10px) scale(1.05)', opacity:1 }, { transform: `translate(${dx}px, ${dy}px) scale(0.9)`, opacity:0 }], { duration:900, easing:'cubic-bezier(.22,.9,.25,1)' });
+    float.animate([{ transform: 'translate(0,-8px) scale(1.03)', opacity:1 }, { transform: `translate(${dx}px, ${dy}px) scale(0.9)`, opacity:0}], { duration:900, easing:'cubic-bezier(.22,.9,.25,1)'});
     await sleep(920);
-    // set bracket
+
+    // set bracket cell text + pot dataset
     targetEl.textContent = currentDraw.team.name;
     targetEl.dataset.pot = currentDraw.team.pot;
-    targetEl.style.animation = 'dropFade .6s ease-out, bracketGlowStrong 1.2s ease-out';
-    try{ float.remove(); }catch(e){}
-    // also record persistent pair to avoid in future (if opponent exists)
+    // store pairing to localStorage for the current cycle to avoid repeats later
+    // opponent may be on opposite cell; get opponent name
     const oppSide = assigned.side === 0 ? 1 : 0;
     const oppName = document.getElementById(`n-${assigned.pairIndex}-${oppSide}`).textContent;
     if(oppName && !oppName.includes('???')){
-      const key = [currentDraw.team.name, oppName].sort().join('|');
-      if(!persistentPairs.includes(key)){
-        persistentPairs.push(key);
-        localStorage.setItem(pairsHistoryKey, JSON.stringify(persistentPairs));
-      }
+      storePairing(currentCycle, currentDraw.team.name, oppName);
     }
+    targetEl.style.animation = 'dropFade .6s ease-out, bracketGlowStrong 1.2s ease-out';
+    try{ float.remove(); }catch(e){}
   }
 
-  // update main reveal small card to show logo+name persistently
+  // Update the small main reveal card to show logo + name persistently
+  const mainCircle = revealBall;
+  mainCircle.innerHTML = '';
   if(currentDraw.team.logo){
-    // show image inside revealBall
-    revealBall.innerHTML = ''; revealBall.style.background = 'transparent';
-    const img = document.createElement('img'); img.src = currentDraw.team.logo; img.alt = currentDraw.team.name;
-    img.onerror = ()=> { img.remove(); revealBall.textContent = initialsOf(currentDraw.team.name); revealBall.style.background = 'linear-gradient(180deg,#00d1ff,#0091d1)'; };
-    revealBall.appendChild(img);
+    const img = document.createElement('img'); img.className='reveal-logo';
+    img.src = currentDraw.team.logo; img.alt = currentDraw.team.name;
+    img.onerror = ()=>{ img.remove(); mainCircle.textContent = currentDraw.team.name; };
+    mainCircle.appendChild(img);
   } else {
-    revealBall.innerHTML = ''; revealBall.style.background = 'linear-gradient(180deg,#00d1ff,#0091d1)'; revealBall.textContent = currentDraw.team.name;
+    mainCircle.textContent = currentDraw.team.name;
   }
-  revealText.textContent = currentDraw.team.name;
+  document.getElementById('revealName').textContent = currentDraw.team.name;
+  revealText.querySelector('.small').textContent = `Đã mở: ${currentDraw.team.name}`;
 
-  // hide overlay and cleanup
+  // finalize history already added; close overlay
   revealOverlay.style.display = 'none';
-  // clear currentDraw
+
+  // push pairing record in history
+  // find last history entry and update (it was created in doDraw)
+  const last = history[history.length-1];
+  if(last && last.team === currentDraw.team.name && last.ts === currentDraw.ts) {
+    last.pairedTo = null;
+    if(currentDraw.assigned) { last.pairIndex = currentDraw.assigned.pairIndex; last.side = currentDraw.assigned.side; }
+  }
+
+  // clear current draw so next draw fresh (but main reveal still shows previous)
   currentDraw = null;
 }
 
-/* keep button */
-keepReveal.addEventListener('click', ()=>{ /* lock overlay on-screen: do nothing, just prevent Space dismiss until clicked */ lastLocked = true; });
-
-/* wait for dismiss handlers (buttons & keyboard) */
+/* setup dismiss handlers once */
 dismissReveal.addEventListener('click', onDismissHandler);
-window.addEventListener('keydown', (e)=>{
-  if((e.code === 'Space' || e.key === 'Enter') && revealOverlay.style.display === 'flex' && !lastLocked){
-    onDismissHandler();
+keepReveal.addEventListener('click', ()=>{ lastLocked = true; });
+
+window.addEventListener('keydown', function(e){
+  if(e.code === 'Space' || e.key === 'Enter'){
+    if(revealOverlay.style.display === 'flex' && !lastLocked) onDismissHandler();
   }
 });
 
-/* cinematic reveal sequence */
-async function cinematicRevealSequence(team){
-  // small center update
-  revealBall.innerHTML = ''; revealBall.style.background = 'linear-gradient(180deg,#00d1ff,#0091d1)';
-  revealBall.textContent = '...';
-  revealText.textContent = 'MỞ QUẢ BÓNG...';
+/* mini countdown for tactile feel */
+async function miniCountdown(sec=2){
+  revealName.textContent = 'Chuẩn bị...';
   play(audioDrum);
-  await sleep(800);
-
-  // overlay show spin -> explosion
-  rball.innerHTML = ''; rball.style.background = 'linear-gradient(180deg,#00e0ff,#006fb8)'; rball.textContent = '?';
-  rtext.textContent = 'ĐANG MỞ QUẢ BÓNG...';
-  revealOverlay.style.display = 'flex';
-  rball.style.animation = 'ballUltraSpin 2.4s cubic-bezier(.1,.9,.2,1), ballExplosion 1.4s ease-in-out';
-  play(audioGasp);
-  await sleep(1800);
-  play(audioPop);
-  await sleep(600);
-
-  // reveal in overlay
-  if(team.logo){
-    rball.innerHTML = ''; // create img inside
-    const img = document.createElement('img'); img.src = team.logo; img.alt = team.name;
-    img.onerror = ()=> { img.remove(); rball.textContent = initialsOf(team.name); };
-    rball.appendChild(img);
-  } else {
-    rball.textContent = team.name;
+  for(let i=sec;i>0;i--){
+    revealBall.textContent = i;
+    await sleep(700);
   }
-  rball.style.animation = 'textRevealEpic 0.9s ease-out';
-  rtext.textContent = `CLAN: ${team.name}`;
-  play(audioApplause);
-  burstConfetti(100);
-  cameraShake();
-  // overlay remains until Dismiss pressed
-}
-
-/* clear main reveal */
-function clearMainReveal(){
-  revealBall.innerHTML = ''; revealBall.style.background = 'linear-gradient(180deg,#00d1ff,#0091d1)'; revealBall.textContent = '...';
-  revealText.textContent = 'Chờ bốc bóng...';
+  revealBall.textContent = '...';
 }
 
 /* confetti */
-function burstConfetti(count=80){
+function burstConfetti(n=80){
   confettiRoot.innerHTML = '';
   const colors = ['#00e0ff','#ffd54d','#ff6b6b','#8ef0ff'];
-  for(let i=0;i<count;i++){
+  for(let i=0;i<n;i++){
     const p = document.createElement('div');
     p.style.position='absolute'; p.style.left = Math.random()*100 + '%'; p.style.top = '-8%';
     p.style.width = (6+Math.random()*10) + 'px'; p.style.height = (10+Math.random()*14) + 'px';
@@ -692,24 +702,21 @@ function cameraShake(){
   setTimeout(()=> app.style.animation = 'none', 440);
 }
 
-/* Undo last: revert bracket & return to pots (append) */
+/* Undo last */
 function undoLast(){
   if(history.length === 0) return;
   const last = history.pop();
-  // remove name from bracket
-  for(let i=0;i<Math.floor(selectedTeams.length/2);i++){
+  // remove from bracket if exists
+  for(let i=0;i<Math.ceil(selectedTeams.length/2);i++){
     for(let s=0;s<2;s++){
       const el = document.getElementById(`n-${i}-${s}`);
       if(el && el.textContent === last.team){
-        el.textContent = '???';
-        delete el.dataset.pot;
-        // return to pot
+        el.textContent = '???'; delete el.dataset.pot;
+        // return to pot array
         const pIndex = last.pot;
-        pots[pIndex].push({ id:idGen(), name:last.team, logo:'', pot:pIndex });
+        pots[pIndex].push({ id:idGen(), name:last.team, logo:last.logo || '', pot:pIndex });
         renderPots();
-        // also remove persistent pair entries containing this team (optional: keep)
-        persistentPairs = persistentPairs.filter(k => !k.includes(last.team));
-        localStorage.setItem(pairsHistoryKey, JSON.stringify(persistentPairs));
+        updateCounts();
         return;
       }
     }
@@ -720,49 +727,45 @@ function undoLast(){
 function exportLog(){
   if(history.length === 0){ alert('Chưa có dữ liệu.'); return; }
   const jsonBlob = new Blob([JSON.stringify(history, null, 2)], { type: 'application/json' });
-  const csv = history.map(r=>`"${r.ts}","${r.team}",${r.pot},"${r.pairIndex}","${r.side}"`).join('\n');
+  const csv = history.map(r=>`"${r.ts}","${r.team}","${r.pot}","${r.pairIndex}","${r.side}","${r.cycle || ''}"`).join('\n');
   const csvBlob = new Blob([csv], { type: 'text/csv' });
   downloadBlob(jsonBlob, 'vh_draw_log.json'); downloadBlob(csvBlob, 'vh_draw_log.csv');
 }
+function downloadBlob(blob, filename){ const a=document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = filename; document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 600); }
 
-/* ---------- Helpers ---------- */
-function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+/* ========== Utility: start draw after wizard settings applied ========== */
+function startDrawWithSelected(){
+  // if selectedTeams empty, use all
+  if(!selectedTeams || selectedTeams.length === 0) selectedTeams = allTeams.slice(0, selectedCount);
+  // prepare pots & bracket
+  preparePotsFromSelected();
+  // persist currentCycle selection to global
+  // we leave wizard closed
+}
 
-/* ---------- UI wiring ---------- */
-btnExport.addEventListener('click', exportLog);
+/* setup hotkeys and UI wiring */
 btnUndo.addEventListener('click', undoLast);
+btnExport.addEventListener('click', exportLog);
 btnObs.addEventListener('click', ()=>{
   const on = document.body.style.background === 'transparent';
-  if(!on){
-    document.querySelectorAll('.controls, .btn').forEach(x=>x.classList.add('obsHide'));
-    document.body.style.background='transparent';
-    btnObs.textContent='OBS: ON';
-  } else {
-    document.querySelectorAll('.controls, .btn').forEach(x=>x.classList.remove('obsHide'));
-    document.body.style.background='';
-    btnObs.textContent='OBS: OFF';
-  }
+  if(!on){ document.querySelectorAll('.controls, .btn').forEach(x=>x.classList.add('obsHide')); document.body.style.background='transparent'; btnObs.textContent='OBS: ON'; }
+  else { document.querySelectorAll('.controls, .btn').forEach(x=>x.classList.remove('obsHide')); document.body.style.background=''; btnObs.textContent='OBS: OFF'; }
 });
-musicToggle.addEventListener('change', (e)=> { if(e.target.checked) audioBG.play(); else audioBG.pause(); });
+musicToggle.addEventListener('change', (e)=>{ if(e.target.checked) audioBG.play(); else audioBG.pause(); });
 
-/* keyboard assoc */
+// hotkeys
 window.addEventListener('keydown', async (e)=>{
   if(e.key === '1') await drawFromPot(0);
   if(e.key === '2') await drawFromPot(1);
   if(e.key === '3') await drawFromPot(2);
   if(e.key === 'u') undoLast();
   if(e.key === 'x') exportLog();
-  if((e.code === 'Space' || e.key === 'Enter') && revealOverlay.style.display === 'flex' && !lastLocked){
-    onDismissHandler();
-  }
+  if((e.code === 'Space' || e.key === 'Enter') && revealOverlay.style.display === 'flex' && !lastLocked) onDismissHandler();
 });
 
-/* ---------- Init ---------- */
-(async function init(){
-  await loadTeamsFromJSON();
-  // initial wizard auto-open
-  openWizard();
-})();
+/* ================= init default: show wizard on first load ================= */
+showStep(1);
+wizard.style.display = 'flex';
 </script>
 </body>
 </html>
