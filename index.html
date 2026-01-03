@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Viet Haxball Cup | SS14 — Live Draw (Pro Wizard)</title>
+<title>Viet Haxball Cup | SS14 - Bốc Thăm</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;800&family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -97,11 +97,11 @@ html,body{height:100%;margin:0;overflow:hidden;background:linear-gradient(180deg
   <div class="container" id="app">
     <!-- header -->
     <div class="header">
-      <div class="brand">Viet Haxball Cup | SS14 — Live Draw</div>
+      <div class="brand">Viet Haxball Cup | SS14 - Bốc Thăm</div>
       <div class="controls">
-        <button id="openWizard" class="btn ghost">Settings</button>
-        <button id="btnExport" class="btn ghost">Export</button>
-        <button id="btnUndo" class="btn ghost">Undo</button>
+        <button id="openWizard" class="btn ghost">Cài Đặt</button>
+        <button id="btnExport" class="btn ghost">Xuất</button>
+        <button id="btnUndo" class="btn ghost">Hoàn Tác</button>
         <button id="btnObs" class="btn ghost">OBS: OFF</button>
         <label class="toggle"><input id="musicToggle" type="checkbox"> Music</label>
       </div>
@@ -109,7 +109,7 @@ html,body{height:100%;margin:0;overflow:hidden;background:linear-gradient(180deg
 
     <!-- bracket -->
     <div class="bracket">
-      <div class="title">Bracket — Các cặp đấu</div>
+      <div class="title">Bracket - Các cặp đấu</div>
       <div class="pair-grid" id="pairGrid"></div>
     </div>
 
@@ -121,7 +121,7 @@ html,body{height:100%;margin:0;overflow:hidden;background:linear-gradient(180deg
         </div>
         <div class="reveal-text" id="revealText">
           <div class="big" id="revealName">MỞ QUẢ BÓNG...</div>
-          <div class="small" id="revealSub">Click quả bóng để bốc — Tên sẽ đưa vào bracket sau khi Dismiss</div>
+          <div class="small" id="revealSub">Click quả bóng để bốc</div>
         </div>
       </div>
     </div>
@@ -155,9 +155,9 @@ html,body{height:100%;margin:0;overflow:hidden;background:linear-gradient(180deg
       <div class="wiz-step active" data-step="1" id="wizStep1">
         <h2>1/3 — Chọn Cycle Bốc Thăm</h2>
         <div class="option-grid" id="cycleOptions">
-          <div class="option option-cycle" data-cycle="cycle1">Cycle 1 — 14 đội (Normal draw)</div>
-          <div class="option option-cycle" data-cycle="cycle3.2">Cycle 3.2 — 8 đội (special)</div>
-          <div class="option option-cycle" data-cycle="cycle3.3">Cycle 3.3 — 6 đội (special)</div>
+          <div class="option option-cycle" data-cycle="cycle1">Cycle 1</div>
+          <div class="option option-cycle" data-cycle="cycle3.2">Cycle 3.2</div>
+          <div class="option option-cycle" data-cycle="cycle3.3">Cycle 3.3</div>
         </div>
         <div class="wiz-nav">
           <div></div>
@@ -169,7 +169,7 @@ html,body{height:100%;margin:0;overflow:hidden;background:linear-gradient(180deg
       <div class="wiz-step" data-step="2" id="wizStep2">
         <h2>2/3 — Chọn số đội dùng cho lần bốc này</h2>
         <div class="option-grid" id="numOptions"></div>
-        <div style="margin-top:8px;color:var(--muted)">Chọn số đội (từ 6 đến 14) — hệ thống sẽ lấy đội từ danh sách teams.json.</div>
+        <div style="margin-top:8px;color:var(--muted)">Chọn số đội (từ 6 đến 14)</div>
         <div class="wiz-nav">
           <button id="wizBack2" class="btn ghost">← Back</button>
           <button id="wizNext2" class="btn">Next →</button>
@@ -544,7 +544,7 @@ async function cinematicRevealSequence(team){
   revealBall.innerHTML=''; // clear previous circle
   revealBall.style.background = (team.pot===0) ? 'var(--potA-grad)' : (team.pot===1 ? 'var(--potB-grad)' : 'var(--potC-grad)');
   revealName.textContent = 'MỞ QUẢ BÓNG...';
-  revealText.querySelector('.small').textContent = 'Đang mở — chờ khán giả...';
+  revealText.querySelector('.small').textContent = 'Đang mở';
   play(audioDrum);
   await sleep(800);
 
